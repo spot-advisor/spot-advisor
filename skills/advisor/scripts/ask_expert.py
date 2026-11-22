@@ -1066,7 +1066,19 @@ def run_consultation(args: argparse.Namespace, packet: str) -> dict:
                 "total_input_tokens": summary["cumulative_tokens"]["input_tokens"],
                 "total_output_tokens": summary["cumulative_tokens"]["output_tokens"], **summary}
 
-    task = read_task_state(args.state_file) if args.protocol == "v2" else None
+    task = None
+    if args.protocol == "v2":
+        if args.state_file is not None:
+            task = read_task_state(args.state_file)
+        else:
+            task = {
+                "task_id": "preview-example", "revision": "example",
+                "goal": "Evaluate one proposed next action.",
+                "phase": "Offline preview with no task state.",
+                "constraints": ["The executor owns edits and verification."],
+                "acceptance": ["Give one action and a local check."],
+                "evidence": [],
+            }
     instruction = ADVISOR_INSTRUCTION
     if task is not None:
         if session["task_id"] not in (None, task["task_id"]):
@@ -1123,7 +1135,10 @@ def main() -> int:
         raise SystemExit("--timeout-seconds must be positive.")
     if args.max_rounds is not None and args.max_rounds < 1:
         raise SystemExit("--max-rounds must be at least 1.")
-    if args.protocol == "v2" and (args.state_file is None or args.session_file is None or args.image):
+    standalone_preview = (args.preview and args.question is not None
+                          and args.state_file is None and args.session_file is None)
+    if args.protocol == "v2" and (args.image or not standalone_preview
+                                  and (args.state_file is None or args.session_file is None)):
         raise SystemExit("Protocol v2 requires --state-file, --session-file, and a text-only packet.")
     if args.preview and args.protocol != "v2":
         raise SystemExit("--preview requires --protocol v2.")

@@ -16,7 +16,7 @@ from pathlib import Path
 
 from checkpoint import Checkpoint, repository_snapshot
 from direct_session import DirectSession, ExecutorError
-from run import ADVISOR, ASTRA, LUNA, TOOLS, TaskExecution, dump, grade, prepare_inputs
+from run import ADVISOR, ASTRA, LUNA, TOOLS, TaskExecution, dump, ensure_image, grade, prepare_inputs
 from sandbox import Sandbox, SandboxError
 from suites import diagnostic_tasks, load_swe_instances, pilot_diagnostics
 
@@ -25,14 +25,17 @@ EXECUTOR_SECONDS = 120
 
 
 def run_case(task, folder: Path, seed: int, *, natural_trigger: bool, prefix_seconds: int,
-             continuation_seconds: int) -> None:
+             continuation_seconds: int, compare_questions: bool = False,
+             require_behavioral_check: bool = False) -> None:
     with ExitStack() as snapshots:
         run_continuations(task, folder, seed, natural_trigger=natural_trigger, snapshots=snapshots,
-                          prefix_seconds=prefix_seconds, continuation_seconds=continuation_seconds)
+                          prefix_seconds=prefix_seconds, continuation_seconds=continuation_seconds,
+                          compare_questions=compare_questions, require_behavioral_check=require_behavioral_check)
 
 
 def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, snapshots: ExitStack,
-                      prefix_seconds: int, continuation_seconds: int) -> None:
+                      prefix_seconds: int, continuation_seconds: int, compare_questions: bool,
+                      require_behavioral_check: bool) -> None:
     folder.mkdir()
     work = prepare_inputs(folder, task)
     verified_task = task if task.upstream else replace(task, grader=task.inputs["check.py"] + "\n" + task.grader)
@@ -46,20 +49,45 @@ def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, s
             f"{task.goal}\nConstraints: {task.constraints}\nAcceptance: {task.acceptance}\n"
             f"First run verify_checkpoint with {task.public_check!r}, then repair and verify."
         )
+        if require_behavioral_check:
+            prompt += (
+                " Use verify_checkpoint for a focused behavior test or a local reproduction of the task's "
+                "acceptance condition. Check named dependencies and fixtures first. If the same behavior "
+                "still fails after a repair attempt, rerun that focused command. Use run_command to inspect "
+                "files and environment. A diff check only verifies patch formatting."
+            )
+        prefix_checks = []
+        last_verify_executed = False
+
+        def handle_prefix(call):
+            nonlocal last_verify_executed
+            previous_count = len(execution.checkpoints)
+            answer = execution.handle(call)
+            if call["tool"] == "verify_checkpoint":
+                last_verify_executed = len(execution.checkpoints) > previous_count
+            if call["tool"] == "verify_checkpoint" and last_verify_executed:
+                command = call["arguments"].get("command") or task.public_check
+                prefix_checks.append({"command": command.strip(), **execution.checkpoints[-1]})
+            return answer
 
         def checkpoint_ready():
-            if not execution.checkpoints:
+            if not prefix_checks:
                 return False
-            latest = execution.checkpoints[-1]
-            return bool(latest["trigger"]) if natural_trigger else not latest["passed"]
+            latest = prefix_checks[-1]
+            eligible = bool(latest["trigger"]) if natural_trigger else not latest["passed"]
+            if not eligible or not require_behavioral_check:
+                return eligible
+            return (last_verify_executed and latest["command"] != task.public_check
+                    and latest["revision"] == execution.revision())
 
         try:
             turn = prefix.continue_run(
-                LUNA, "max", [{"role": "user", "content": prompt}], TOOLS, execution.handle, prefix_seconds,
+                LUNA, "max", [{"role": "user", "content": prompt}], TOOLS, handle_prefix, prefix_seconds,
                 stop_after_batch=checkpoint_ready,
             )
         except (TimeoutError, ExecutorError, subprocess.TimeoutExpired) as exc:
             turn = {"status": "prefix_failed", "error": str(exc)}
+        dump(folder / "prefix-checks.json", prefix_checks)
         if turn["status"] != "checkpoint" or execution.tools == TOOL_ALLOWANCE:
             workspace = sandbox.patch() if task.upstream else sandbox.archive()
             (folder / artifact_name).write_bytes(workspace)
@@ -87,6 +115,8 @@ def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, s
     message_path = folder / "checkpoint-messages.json"
     dump(message_path, turn["messages"])
     order = ["luna_only", "luna_advice", "astra_takeover"]
+    if compare_questions:
+        order.append("luna_generic_question")
     random.Random(seed).shuffle(order)
     dump(folder / "checkpoint-summary.json", {
         "task": task.id, "order": order,
@@ -98,6 +128,7 @@ def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, s
         "trigger": trigger,
     })
     for arm in order:
+        started = time.monotonic()
         output = folder / arm
         output.mkdir()
         session = DirectSession(output / "attempts.jsonl")
@@ -110,21 +141,27 @@ def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, s
                 messages = checkpoint.restore(sandbox)
             execution = TaskExecution(task, arm, sandbox, output, time.monotonic() + 60,
                                       tool_limit=remaining_tools)
-            if arm == "luna_advice":
+            if arm in {"luna_advice", "luna_generic_question"}:
                 checks = {item["call_id"] for item in messages
                           if item.get("type") == "function_call" and item.get("name") == "verify_checkpoint"}
                 evidence = next(
                     item["output"] for item in reversed(messages)
                     if item.get("type") == "function_call_output" and item["call_id"] in checks
                 )
-                advice = execution.consult(trigger, evidence, execution.revision())
+                if compare_questions:
+                    question = ("What should I do?" if arm == "luna_generic_question" else
+                                "Which next repair is best supported by the failed check, and which single "
+                                "local assertion would distinguish it from the strongest alternative?")
+                    advice = execution.consult(trigger, evidence, execution.revision(), question=question)
+                else:
+                    advice = execution.consult(trigger, evidence, execution.revision())
                 if advice.strip():
                     messages.append({"role": "user", "content": advice})
             if arm == "astra_takeover":
                 # Astra receives visible evidence, not Luna's model-specific reasoning items.
                 messages = [item for item in messages if item.get("type") != "reasoning"]
             model, effort = (ASTRA, "medium") if arm == "astra_takeover" else (LUNA, "max")
-            execution.deadline = time.monotonic() + continuation_seconds
+            execution.deadline = (started if compare_questions else time.monotonic()) + continuation_seconds
             try:
                 outcome = session.continue_run(model, effort, messages, TOOLS, execution.handle,
                                                execution.remaining(continuation_seconds))
@@ -143,6 +180,7 @@ def run_continuations(task, folder: Path, seed: int, *, natural_trigger: bool, s
             "verification_error": verification_error,
             "usage": session.usage(), "consultations": execution.consultations,
             "executor_tools": min(execution.tools, execution.tool_limit),
+            "wall_seconds": round(time.monotonic() - started, 3),
             "workspace_sha256": hashlib.sha256(patch).hexdigest(),
         })
 
@@ -155,6 +193,8 @@ def main() -> None:
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--limit", type=int, choices=range(1, len(pilots) + 1))
     selection.add_argument("--case", choices=cases, action="append")
+    selection.add_argument("--study22", action="store_true",
+                           help="Screen the frozen 2.2 cohort in order for up to 12 comparison checkpoints.")
     selection.add_argument("--public-qutebrowser", dest="public_case", action="store_const",
                            const="qutebrowser", help="Use the screened color-helper refactor.")
     selection.add_argument("--public-openlibrary", dest="public_case", action="store_const",
@@ -163,15 +203,27 @@ def main() -> None:
                            const="process_replay", help="Replay the 2.0 process cleanup regression case.")
     parser.add_argument("--natural-trigger", action="store_true",
                         help="Fork only on the skill's repeated-failure or conflicting-evidence trigger.")
+    parser.add_argument("--compare-questions", action="store_true",
+                        help="Add the generic-question arm when qualifying a local checkpoint.")
     args = parser.parse_args()
     folder = args.output.resolve()
     private_runs = Path(__file__).resolve().parent / "runs"
     if private_runs not in folder.parents:
         parser.error("Use an output directory under eval/runs/ for model transcripts and workspaces.")
-    folder.mkdir(parents=True)
-    shutil.copyfile(ADVISOR, folder / "advisor-frozen.py")
     prefix_seconds = continuation_seconds = EXECUTOR_SECONDS
-    if args.public_case:
+    if args.study22:
+        manifest = json.loads((Path(__file__).with_name("checkpoint_tasks.json")).read_bytes())
+        registered = json.loads((Path(__file__).with_name("study22-tasks.json")).read_bytes())
+        prefix_seconds, continuation_seconds = manifest["prefix_seconds"], manifest["continuation_seconds"]
+        upstream = private_runs / "swe-bench-pro-source"
+        revision = subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip()
+        changes = subprocess.check_output(["git", "-C", str(upstream), "status", "--porcelain"], text=True).strip()
+        if revision != registered["source_revision"] or changes:
+            parser.error("The public checkpoint run requires the clean, pinned upstream verifier checkout.")
+        selected = load_swe_instances(upstream, registered["tasks"])
+        args.natural_trigger = True
+        args.compare_questions = True
+    elif args.public_case:
         manifest = json.loads((Path(__file__).with_name("checkpoint_tasks.json")).read_text(encoding="utf-8"))
         prefix_seconds = manifest["prefix_seconds"]
         continuation_seconds = manifest["continuation_seconds"]
@@ -196,21 +248,35 @@ def main() -> None:
         selected = [replace(task, public_check=public_check)]
     else:
         selected = [cases[case] for case in dict.fromkeys(args.case)] if args.case else pilots[:args.limit]
+    folder.mkdir(parents=True)
+    shutil.copyfile(ADVISOR, folder / "advisor-frozen.py")
     dump(folder / "pilot-plan.json", {
         "cases": [task.id for task in selected],
         "seed": 20261121,
         "tool_allowance": TOOL_ALLOWANCE,
         "prefix_seconds": prefix_seconds,
         "continuation_seconds": continuation_seconds,
-        "purpose": {
+        "purpose": "Exploratory 2.2 maintenance continuations." if args.study22 else {
             "process_replay": "Regression replay of a 2.0 consultation case.",
             None: "Diagnostic qualification.",
         }.get(args.public_case, "Public repository qualification."),
         "natural_trigger": args.natural_trigger,
+        "compare_questions": args.compare_questions,
+        "eligible_checkpoint_cap": 12 if args.study22 else None,
+        "require_behavioral_check": args.study22,
+        "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "source_revision": registered["source_revision"] if args.study22 else None,
     })
+    checkpoints = 0
     for index, task in enumerate(selected):
+        if args.study22:
+            if checkpoints == 12:
+                break
+            ensure_image(task)
         run_case(task, folder / task.id, 20261121 + index, natural_trigger=args.natural_trigger,
-                 prefix_seconds=prefix_seconds, continuation_seconds=continuation_seconds)
+                 prefix_seconds=prefix_seconds, continuation_seconds=continuation_seconds,
+                 compare_questions=args.compare_questions, require_behavioral_check=args.study22)
+        checkpoints += int((folder / task.id / "checkpoint-summary.json").is_file())
 
 
 if __name__ == "__main__":

@@ -15,15 +15,16 @@ from urllib.error import HTTPError, URLError
 from claude_advisor_probe import send_native
 from claude_native_session import run_native
 from direct_session import DirectSession, ExecutorError
-from run import ADVISOR, LUNA, TOOLS, TaskExecution, dump, grade, prepare_inputs
+from run import ADVISOR, LUNA, ROOT, TOOLS, TaskExecution, dump, ensure_image, grade, prepare_inputs
 from sandbox import Sandbox
-from suites import diagnostic_tasks
+from suites import diagnostic_tasks, load_swe_instances
 
 
 def main() -> None:
     cases = {task.id: task for task in diagnostic_tasks()}
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--case", required=True, choices=cases)
+    parser.add_argument("--case", required=True, help="Diagnostic ID or a frozen 2.2 peer issue with --public.")
+    parser.add_argument("--public", action="store_true", help="Use the pinned 2.2 SWE-bench peer subset.")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--arm", choices=("claude_native", "spot_advisor"), default="claude_native")
     args = parser.parse_args()
@@ -33,7 +34,18 @@ def main() -> None:
     folder = args.output.resolve()
     if Path(__file__).resolve().parent / "runs" not in folder.parents:
         parser.error("Use an output directory under eval/runs/.")
-    task = cases[args.case]
+    if args.public:
+        peers = json.loads((ROOT / "eval/study22-tasks.json").read_bytes())["peer_tasks"]
+        if args.case not in peers:
+            parser.error("The issue is outside the frozen 2.2 peer subset.")
+        task, = load_swe_instances(ROOT / "eval/runs/swe-bench-pro-source", [args.case])
+        ensure_image(task)
+    elif args.case in cases:
+        task = cases[args.case]
+    else:
+        parser.error("Unknown diagnostic case.")
+    tool_limit = 100 if args.public else 40
+    seconds = task.timeout if args.public else 240
     frozen = folder / "advisor-frozen.py"
     advisor_digest = None
     if args.arm == "spot_advisor":
@@ -48,18 +60,24 @@ def main() -> None:
         advisor_digest = hashlib.sha256(source).hexdigest()
     folder = folder / task.id / args.arm
     folder.mkdir(parents=True, exist_ok=False)
-    verified_task = replace(task, grader=task.inputs["check.py"] + "\n" + task.grader)
+    verified_task = task if task.upstream else replace(task, grader=task.inputs["check.py"] + "\n" + task.grader)
     dump(folder / "manifest.json", {
         "task": task.id, "arm": args.arm, "image": task.image,
-        "tool_limit": 40, "executor_seconds": 240,
-        "inputs_sha256": hashlib.sha256(json.dumps(task.inputs, sort_keys=True).encode()).hexdigest(),
-        "grader_sha256": hashlib.sha256(verified_task.grader.encode()).hexdigest(),
+        "tool_limit": tool_limit, "executor_seconds": seconds,
+        "inputs_sha256": hashlib.sha256(json.dumps(
+            [task.goal, task.constraints, task.acceptance, task.inputs], sort_keys=True).encode()).hexdigest(),
+        "grader_sha256": hashlib.sha256(verified_task.grader.encode()).hexdigest() if not task.upstream else None,
+        "upstream_revision": subprocess.check_output(
+            ["git", "-C", str(task.upstream.parents[2]), "rev-parse", "HEAD"], text=True).strip()
+        if task.upstream else None,
         "spot_advisor_sha256": advisor_digest,
     })
     work = prepare_inputs(folder, task)
+    started = time.monotonic()
     with Sandbox(task.image) as sandbox, (folder / "receipts.jsonl").open("x", encoding="utf-8") as journal:
         sandbox.initial(task, work)
-        execution = TaskExecution(task, args.arm, sandbox, folder, time.monotonic() + 240, tool_limit=40)
+        execution = TaskExecution(task, args.arm, sandbox, folder, time.monotonic() + seconds,
+                                  tool_limit=tool_limit)
 
         def record(receipt):
             journal.write(json.dumps(receipt) + "\n")
@@ -75,16 +93,17 @@ def main() -> None:
                                   execution.handle, execution.remaining, on_receipt=record)
             else:
                 session = DirectSession(folder / "executor-attempts.jsonl")
-                turn = session.run(LUNA, "max", prompt, TOOLS, execution.handle, execution.remaining(240))
+                turn = session.run(LUNA, "max", prompt, TOOLS, execution.handle, execution.remaining(seconds))
         except HTTPError as exc:
             turn = {"status": "anthropic_http_error", "code": exc.code}
         except (URLError, TimeoutError, ExecutorError, subprocess.TimeoutExpired):
             turn = {"status": "executor_interrupted"}
-        patch = sandbox.archive()
-    (folder / "workspace.tar").write_bytes(patch)
+        patch = sandbox.patch() if task.upstream else sandbox.archive()
+    (folder / ("model.patch" if task.upstream else "workspace.tar")).write_bytes(patch)
     accepted, verdict = grade(verified_task, work, patch, folder)
     dump(folder / "result.json", {"task": task.id, "arm": args.arm, "accepted": accepted,
-                                  "verdict": verdict, "turn": turn, "consultations": execution.consultations})
+                                  "verdict": verdict, "turn": turn, "consultations": execution.consultations,
+                                  "wall_seconds": round(time.monotonic() - started, 3)})
 
 
 if __name__ == "__main__":

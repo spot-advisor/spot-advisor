@@ -74,6 +74,7 @@ def summarize(path: Path) -> dict:
     usage_complete = result["turn"]["status"] in {"completed", "end_turn", "max_tokens"}
     return {
         "task": result["task"], "arm": result["arm"], "accepted": result["accepted"],
+        "wall_seconds": result.get("wall_seconds"),
         "executor": executor_totals, "advisor": advisor_totals, "turn_status": result["turn"]["status"],
         "total_tokens": sum_known([*executor_totals.values(), *advisor_totals.values()]) if usage_complete else None,
         "api_equivalent_usd": cost if usage_complete else None,

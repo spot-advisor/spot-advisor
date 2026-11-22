@@ -23,3 +23,5 @@ Use the same session file for a task (default three rounds). For a code excerpt 
 After an interruption, inspect the local session with `--status --session-file PATH`. It shows the consultation ID when available, remaining rounds, possible dispatch, receipt availability, and unknown usage. On `dispatch_unresolved`, continue the local investigation and leave the interrupted call alone. On `recovered_receipt`, the prior round has been reconciled. Start another round only if the current evidence still leaves a decision that needs advice.
 
 A state file selects v2 automatically. Plain questions and gateway images default to the original `Verdict / Next / Prompt / Risk` format.
+
+To preview a sample v2 packet without a task or session file, use `--preview --protocol v2 --question "Which check should I run next?"`. The preview prints locally without sending a request or spending a round.

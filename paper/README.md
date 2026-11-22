@@ -1,32 +1,21 @@
-# `spot-advisor` Paper (`paper/`)
+# Spot Advisor research
 
-This directory holds the arXiv LaTeX manuscript scaffold for `spot-advisor`.
+*When Is Frontier Advice Worth Asking For?* is a working manuscript by **Stan Chen**. It examines when a coding agent should ask for one frontier-model judgment and how the resulting workflow changes independent verification, elapsed time, token use, and estimated cost.
 
-- **Working Title:** *Spot Advisor: Decoupling Local Execution from Compressed, One-Turn Frontier Judgment for Small Coding Agents*
-- **Target arXiv Categories:** Primary **`cs.SE`** (Software Engineering); Cross-list **`cs.AI`** (Artificial Intelligence)
-- **Pre-Registered Protocol:** [`../docs/research-protocol.md`](../docs/research-protocol.md)
-- **Evaluation Data Source:** [`../eval/README.md`](../eval/README.md)
+The 2.2 study compares four workflows on the same repair assignments. The evaluation records executor and advisor usage, including cached inputs, and grades final patches with the same upstream tests. A separate study design compares question formats from a common saved decision point. The [roadmap](../ROADMAP.md) describes the peer comparisons and visual pilot.
 
----
+The manuscript and replication data are in private review. The public repository includes a LaTeX scaffold, run commands, and the task manifest.
 
-## Local Build Instructions
+[Research protocol](../docs/research-protocol.md) · [Task assignments](../eval/study22-tasks.json) · [Evaluation guide](../eval/README.md)
 
-```bash
-cd paper
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
+## Verify a 2.2 draft
+
+With an extracted replication package, run `python -B analysis/replication22.py` from its root. To regrade a selected patch, supply the clean upstream benchmark checkout at the package's pinned revision, the task image, and a new output directory. Use the README included in the package for the exact command.
+
+To generate a draft from your own scored run, provide the LaTeX source and a fresh output directory.
+
+```sh
+python -B eval/build_study22_paper.py eval/runs/22-coding-score --manuscript path/to/manuscript.tex --output eval/runs/draft
 ```
 
-*(Note: Build artifacts `*.aux`, `*.log`, `*.out`, `*.bbl`, `*.blg`, and `*.pdf` are git-ignored until final release packaging.)*
-
----
-
-## arXiv Eligibility & Submission Checklist
-
-1. **Empirical Numbers Integrity:** All `TBD` table cells in [`main.tex`](main.tex) MUST be populated strictly by Phase 2 artifact scripts reading [`../eval/results/`](../eval/README.md). Never hand-edit or extrapolate benchmark numbers.
-2. **Author Metadata:** Replace the `% TODO` placeholder in [`main.tex`](main.tex) with complete author name(s), affiliation (or independent researcher designation), and contact email before uploading.
-3. **arXiv Source Bundle:** Submit the self-contained LaTeX source archive (`main.tex`, `references.bib` plus generated `main.bbl`, and vector PDF/EPS figures)—arXiv rejects PDF-only uploads when LaTeX source is available.
-4. **First-Time Submission Endorsement:** If submitting to `cs.SE` / `cs.AI` for the first time without an institutional exemption, obtain endorsement from an established arXiv author in `cs.SE` or `cs.AI` prior to final upload.
-5. **Frozen Reproducibility Tag:** Create a matching immutable GitHub release tag (e.g., `v1.0-arxiv`) in `stancsz/spot-advisor` and update [`../CITATION.cff`](../CITATION.cff) and [`../README.md`](../README.md) once the arXiv ID is assigned.
+The builder expects a title, author, and abstract, along with inputs for the generated sections and figures. It uses Tectonic to compile the source, records arXiv metadata, and creates a reproducibility archive. The public [LaTeX scaffold](main.tex) can be built separately with `pdflatex` and `bibtex`.

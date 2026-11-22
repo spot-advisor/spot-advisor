@@ -5,7 +5,10 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import subprocess
 import sys
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.error import HTTPError, URLError
@@ -76,12 +79,12 @@ def test_gateway_happy_path_and_token_limit(monkeypatch):
 
     monkeypatch.setattr(ask_expert, "urlopen", fake_urlopen)
     monkeypatch.setenv("EXPERTS_API_KEY", "sk-secret-test")
-    args = SimpleNamespace(base_url="http://127.0.0.1:4040/v1", timeout_seconds=10.0, image_parts=[])
+    args = SimpleNamespace(base_url="https://gateway.example.test/v1", timeout_seconds=10.0, image_parts=[])
     result = ask_expert.call_gateway(args, "gpt-6.2-astra", [{"role": "user", "content": "hi"}])
 
     assert calls == [
-        "http://127.0.0.1:4040/v1/responses/input_tokens",
-        "http://127.0.0.1:4040/v1/chat/completions",
+        "https://gateway.example.test/v1/responses/input_tokens",
+        "https://gateway.example.test/v1/chat/completions",
     ]
     assert result["transport"] == "gateway"
     assert result["input_tokens"] == 120
@@ -104,7 +107,7 @@ def test_gateway_401_redacts_api_key(monkeypatch):
 
     monkeypatch.setattr(ask_expert, "urlopen", fake_urlopen)
     monkeypatch.setenv("EXPERTS_API_KEY", "sk-secret-xyz")
-    args = SimpleNamespace(base_url="http://127.0.0.1:4040/v1", timeout_seconds=10.0, image_parts=[])
+    args = SimpleNamespace(base_url="https://gateway.example.test/v1", timeout_seconds=10.0, image_parts=[])
     with pytest.raises(RuntimeError, match="HTTP 401") as exc_info:
         ask_expert.call_gateway(args, "gpt-6.2-astra", [{"role": "user", "content": "hi"}])
     assert "sk-secret-xyz" not in str(exc_info.value)
@@ -308,7 +311,7 @@ def test_auto_transport_prefers_direct_codex_first(monkeypatch, capsys, tmp_path
     monkeypatch.setattr(
         sys,
         "argv",
-        ["ask_expert.py", "--question", "Decision: Test direct #1?", "--base-url", "http://127.0.0.1:4040/v1"],
+        ["ask_expert.py", "--question", "Decision: Test direct #1?", "--base-url", "https://gateway.example.test/v1"],
     )
     assert ask_expert.main() == 0
     out = json.loads(capsys.readouterr().out)
@@ -563,3 +566,69 @@ def test_interrupted_dispatch_is_never_repeated(monkeypatch, tmp_path, capsys, f
         after = json.loads(capsys.readouterr().out)
         assert after["pending_attempt"] is None
         assert after["cumulative_tokens"] == {"input_tokens": 12, "output_tokens": 3}
+
+
+def test_cli_reopen_after_process_death_does_not_send_again(monkeypatch, tmp_path):
+    dispatched, release = threading.Event(), threading.Event()
+    generations = []
+
+    class Gateway(BaseHTTPRequestHandler):
+        def log_message(self, *_args):
+            pass
+
+        def do_POST(self):
+            self.rfile.read(int(self.headers["Content-Length"]))
+            if self.path == "/v1/responses/input_tokens":
+                body = b'{"input_tokens":180}'
+            elif self.path == "/v1/chat/completions":
+                generations.append(self.path)
+                dispatched.set()
+                release.wait(15)
+                body = b"{}"
+            else:
+                self.send_error(404)
+                return
+            try:
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+            except (BrokenPipeError, ConnectionResetError):
+                pass  # The test deliberately terminates the requesting process.
+
+    monkeypatch.setenv("EXPERTS_API_KEY", "loopback-test")
+    monkeypatch.setenv("NO_PROXY", "127.0.0.1")
+    state, session = tmp_path / "state.json", tmp_path / "session.json"
+    state.write_text(json.dumps({"task_id": "override", "revision": "1", "goal": "Preserve False",
+                                 "phase": "decision", "constraints": ["Keep the API"],
+                                 "acceptance": ["False survives"], "evidence": ["False now returns the default"]}),
+                     encoding="utf-8")
+    caller = [sys.executable, "-B", str(CALLER)]
+    with ThreadingHTTPServer(("127.0.0.1", 0), Gateway) as server:
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        args = [*caller, "--transport", "gateway", "--base-url", f"http://127.0.0.1:{server.server_port}/v1",
+                "--state-file", str(state), "--session-file", str(session),
+                "--question", "Which lookup rule should change?"]
+        process = subprocess.Popen(args, cwd=tmp_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            assert dispatched.wait(10)
+            process.terminate()
+            process.communicate(timeout=10)
+            status = subprocess.run([*caller, "--status", "--session-file", str(session)], cwd=tmp_path,
+                                    capture_output=True, text=True, timeout=10, check=True)
+            reported = json.loads(status.stdout)
+            assert reported["dispatch_possible"] is True
+            assert reported["provider_receipt"] is False
+            assert reported["unknown_usage_rounds"] == 1
+            retry = subprocess.run(args, cwd=tmp_path, capture_output=True, text=True, timeout=10, check=False)
+            assert retry.returncode == 1
+            assert json.loads(retry.stdout)["status"] == "dispatch_unresolved"
+            assert generations == ["/v1/chat/completions"]
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                process.communicate(timeout=10)
+            release.set()
+            server.shutdown()
+            worker.join()

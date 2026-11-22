@@ -6,6 +6,8 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
+from urllib.error import URLError
 
 import pytest
 
@@ -53,6 +55,46 @@ def test_resume_at_a_complete_tool_batch_without_replaying_tools(monkeypatch):
     assert outcome == {"turn_id": "continued", "status": "completed"}
     assert requests[1] == state["messages"]
     assert handled == ["verify_checkpoint", "run_command"]
+
+
+@pytest.mark.parametrize("budget, elapsed, socket_timeout, deadline_reached", [
+    (240, 90, 90, False),
+    (2, 2.1, 2, True),
+])
+def test_direct_timeout_records_budget_in_sanitized_receipts(monkeypatch, tmp_path, budget, elapsed,
+                                                            socket_timeout, deadline_reached):
+    import direct_session
+    from build_study22_paper import archived_receipts
+    from report import SCHEMA, clean
+
+    session = direct_session.DirectSession.__new__(direct_session.DirectSession)
+    session.headers = {}
+    session.journal = tmp_path / "executor-attempts.jsonl"
+    session.attempts = []
+    clock = 0.0
+    monkeypatch.setattr(direct_session, "time", SimpleNamespace(monotonic=lambda: clock))
+
+    def time_out(request, *, timeout):
+        nonlocal clock
+        assert timeout == socket_timeout
+        clock = elapsed
+        raise URLError(TimeoutError("socket read timed out"))
+
+    monkeypatch.setattr(direct_session.transport, "urlopen", time_out)
+    with pytest.raises(direct_session.ExecutorError, match="transport failed"):
+        session.request("gpt-6-luna", "max", [], [], budget)
+
+    dispatched, finished = map(json.loads, session.journal.read_text(encoding="utf-8").splitlines())
+    assert dispatched["event"] == "dispatched" and finished["event"] == "finished"
+    timings = {"remaining_budget_seconds": budget, "request_timeout_seconds": socket_timeout,
+               "deadline_reached_at_timeout": deadline_reached}
+    assert "deadline_reached_at_timeout" not in dispatched
+    assert dispatched["request_timeout_seconds"] == socket_timeout
+    evidence = clean({"turn": {}, "executor_attempts": session.attempts, "consultations": [], "tool_events": []})
+    attempt = evidence["executor_attempts"][0]
+    SCHEMA.evolve(schema={"$defs": SCHEMA.schema["$defs"], "$ref": "#/$defs/attempt"}).validate(attempt)
+    for receipt in (finished, attempt, archived_receipts(session.journal, "executor")[0]):
+        assert {key: receipt[key] for key in timings} == timings
 
 
 def test_native_advisor_pause_preserves_server_blocks_and_executes_only_client_tools():

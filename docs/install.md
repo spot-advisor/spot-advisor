@@ -78,7 +78,7 @@ After an interruption, `python $advisorScript --status --session-file tmp/adviso
 
 Reuse the session file for the task. Its first invocation sets the persistent round limit. Advice that passes validation is available in `advice_fields`; use `status` to distinguish valid, stale, and unusable replies. The adjacent `.attempts.jsonl` records possible dispatches and provider token receipts. An explicit `--receipt-file` can choose a different journal.
 
-Append `--preview` to inspect the task packet before sending it. The Claude Code route adds a short reply-format reminder. The preview reads the current round and leaves the session and journal untouched. On a tight follow-up, the packer keeps the question, constraints and acceptance checks, and excerpts the head and tail of long evidence. Supply a short `decision_focus` in the task state if the full goal leaves insufficient space. A `packet_too_large` result identifies an input to shorten and has an empty attempts list.
+Append `--preview` to inspect the task packet before sending it. The Claude Code route adds a short reply-format reminder. The preview reads the current round and leaves the session and journal untouched. Use `--preview --protocol v2 --question` without either file to see a sample packet offline. On a tight follow-up, the packer keeps the question, constraints and acceptance checks, and excerpts the head and tail of long evidence. Supply a short `decision_focus` in the task state if the full goal leaves insufficient space. A `packet_too_large` result identifies an input to shorten and has an empty attempts list.
 
 For exact local evidence, select `--snippet PATH:FIRST-LAST`, `--diff`, or `--error-tail PATH` from the repository root. Read the included evidence before sending it. Use `--protocol v1` for the original four-line format and image attachments.
 
@@ -89,7 +89,7 @@ For exact local evidence, select `--snippet PATH:FIRST-LAST`, `--diff`, or `--er
 [`skills/advisor/scripts/ask_expert.py`](../skills/advisor/scripts/ask_expert.py) defaults to `--transport auto`, routing as follows:
 
 1. **Direct Codex (`--transport auto` #1 default / `--transport codex`):** Uses `~/.codex/auth.json` (`codex login`) directly against ChatGPT OAuth for `gpt-6.2-astra` (default), `gpt-6.2-sol`, or `gpt-6-luna`. No gateway or separate API key required.
-2. **OpenAI-Compatible Gateway (`--transport gateway`):** Set `EXPERTS_BASE_URL` (e.g., OpenRouter, LiteLLM, Subroute, `http://127.0.0.1:4040/v1`) and `EXPERTS_API_KEY`. Used automatically by `auto` when `--image` screenshots are attached or when requesting non-Codex models via `--model` / `CODEX_ADVISOR_MODEL`.
+2. **OpenAI-Compatible Gateway (`--transport gateway`):** Set `EXPERTS_BASE_URL` and `EXPERTS_API_KEY`. The route must implement both `/responses/input_tokens` and `/chat/completions`. The preflight must succeed before generation. Automatic mode uses this route for image attachments and can use it for explicitly selected non-Codex models.
 3. **Claude Code CLI (`--transport claude`):** Invokes `claude -p --no-session-persistence --tools ""` for text consultations when Codex auth and gateway are unavailable.
 
 ---
