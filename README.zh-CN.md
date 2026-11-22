@@ -1,77 +1,87 @@
 <p align="center">
-  <img src="docs/assets/spot-advisor-hero.webp" alt="戴着珊瑚色领巾的斑点小狗 Spot，叼着一封金色小信，跑向一颗星星" width="900">
+  <img src="docs/assets/spot-advisor-hero.zh-CN.webp" alt="Spot Advisor：一份精简的证据材料交给前沿顾问，返回可执行的下一步和验证方法。" width="900">
 </p>
 
-<h1 align="center">Spot Advisor</h1>
+<h1 align="center">Spot Advisor 2.2</h1>
 
-<p align="center"><strong>把前沿模型的 Token 留给真正棘手的判断。</strong></p>
+<p align="center"><strong>按需调用前沿判断，然后继续手头的工作。</strong></p>
 
 <p align="center">
   <a href="README.md">English</a> · <strong>简体中文</strong><br>
-  <a href="docs/install.md">🚀 安装</a> ·
-  <a href="paper/spot-advisor-preprint.pdf">📄 arXiv 论文草稿（PDF）</a> ·
-  <a href="eval/README.md">📊 评测</a>
+  <a href="#离线试一试">离线预览</a> ·
+  <a href="docs/install.md">安装</a> ·
+  <a href="#研究与论文">研究与论文</a>
 </p>
 
-Spot Advisor 是一项给编程智能体用的技能。让成本更低的模型在当前会话里排查、改代码、跑测试。遇到难以取舍的问题时，再带着相关证据向前沿模型问一个具体问题，拿回下一步建议和一项可执行的验证。
+Spot Advisor 是面向编程智能体的技能。它会引导当前智能体整理一份精简、可检查的问题材料，在确有判断分岔时向前沿模型咨询。顾问根据材料给出建议和验证方法；修改代码、运行本地检查仍由当前智能体负责。
 
-## 🐾 怎样省前沿模型的 Token
+## 什么时候值得问
 
-如果整项修复都由前沿模型来做，排查、工具输出、改代码和反复跑测试都会消耗它的 Token。使用 Spot Advisor 后，这些步骤由当前的编程智能体完成。前沿模型只接收一份简短的材料，里面有待决问题、约束和关键证据。能自行解决的问题就可以跳过咨询。
+先确认目标检查确实运行，相关依赖也可用。如果证据仍对应着会导致不同修改的下一步，或同一个针对性检查已经连续失败两次，就可以考虑咨询。如果一个快速的本地检查足以区分方案，先做检查。咨询应该帮助执行者作出新的判断，而不是重复它已经能够验证的工作。
 
-```mermaid
+## 工作流程
+
+~~~mermaid
 flowchart TB
-    A["编程智能体复现失败，检查依赖"] --> B{"仍有难以取舍的问题？"}
-    B -->|有| C["发出一个具体问题和相关证据"]
-    C --> D["前沿顾问给出下一步建议和验证方法"]
-    D --> E["编程智能体改代码，运行针对性测试"]
-    B -->|没有| E
-    classDef agent fill:#d9f2ed,stroke:#24796e,color:#102e2d
-    classDef advisor fill:#ffe4a8,stroke:#aa6e12,color:#362508
-    class A,B,E agent
+    A["编程智能体复现问题并检查依赖"] --> B{"本地检查能决定下一步吗？"}
+    B -->|能| F["继续本地处理并验证"]
+    B -->|不能| C["预览精简材料，提出一个聚焦问题"]
+    C --> D["前沿顾问返回判断和验证方法"]
+    D --> F
+    classDef executor fill:#e8f1e9,stroke:#35815f,color:#274c3b
+    classDef advisor fill:#e8edfb,stroke:#385bca,color:#20283a
+    class A,B,F executor
     class C,D advisor
-```
+~~~
 
-发送前可以预览材料的完整内容。顾问根据这份材料作答，不会调用仓库工具。改代码和验证仍由当前的编程智能体负责。
+这项技能不会自行读取仓库。编程智能体会选择要发送的证据，你可以在发送前预览完整材料。顾问只依据这份材料作答，不会调用仓库工具。
 
-## 🚀 离线试一试
+## 离线试一试
 
 装好 Git 和 Python 后，克隆仓库并运行预览。如果已经克隆过，在仓库根目录运行最后一行即可。
 
-```sh
+~~~sh
 git clone https://github.com/stancsz/spot-advisor.git
 cd spot-advisor
-python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "配置测试期望得到 False，却读到了默认值。代码用了 overrides.get(name) or defaults[name]。该怎么改、怎么验证？"
-```
+python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "配置测试期望得到 False，却读到了默认值。代码使用 overrides.get(name) or defaults[name]。该怎么改，怎么验证？"
+~~~
 
-输出里的 `packet` 字段会显示待决问题、约束和验证目标。预览在本地运行，无需调用模型，也不需要账号或 API 密钥。
+输出里的 <code>packet</code> 字段会显示问题、约束和验证目标。预览在本地运行，不会调用模型，也不需要账号或 API 密钥。
 
-### 💬 一次咨询会返回什么
+## 一次咨询会返回什么
 
-配置明确设成了 `False`，代码却返回了默认值。下面是一次实际咨询的回复摘要。
+配置明确设成了 <code>False</code>，代码却返回默认值。下面是一次真实咨询的回复摘要。
 
 | 回复字段 | 给编程智能体的建议 |
 | --- | --- |
 | **Verdict（判断）** | 检查键是否存在。假值也可能是明确设置的覆盖值。 |
-| **Do（行动）** | 使用 `overrides[name] if name in overrides else defaults[name]`。 |
-| **Verify（验证）** | 确认 `False`、`0` 和 `""` 都能保留，缺少键时才取默认值。 |
-| **Risk（风险）** | 显式传入的 `None` 也会保留。检查调用方如何使用它。 |
+| **Do（行动）** | 使用 <code>overrides[name] if name in overrides else defaults[name]</code>。 |
+| **Verify（验证）** | 确认 <code>False</code>、<code>0</code> 和 <code>""</code> 都能保留，缺少键时才取默认值。 |
+| **Risk（风险）** | 显式传入的 <code>None</code> 也会保留。检查调用方如何使用它。 |
 
-### ⚡ 发起第一次咨询
+执行者拿到的是明确的改法和针对性检查，也能看到关于 <code>None</code> 契约的风险提示。
 
-在 Codex、Claude Code 或兼容的智能体环境里[安装技能](docs/install.md)，再给智能体一个具体问题。
+## 发起第一次真实咨询
 
-> 用 Spot Advisor 看一下这个失败的测试。先确认目标断言确实执行了。如果还有两个都说得通的修法，就整理失败信息和两种方案，预览准备发送的内容。只问一个会影响下一次修改的问题，然后在本地验证建议。
+在 Codex、Claude Code 或其他兼容环境中[安装技能](docs/install.md)，再给编程智能体一个具体的决策点：
 
-文本咨询可以使用已登录的 Codex 或 Claude CLI。配置支持视觉输入的模型后，也可以通过兼容网关发起图片咨询。详见[连接方式与配置要求](docs/install.md#3-transport-setup---transport)。
+> 用 Spot Advisor 看一下这个失败的测试。先确认目标断言确实执行、相关依赖可用。如果本地检查后仍有两个不同的合理下一步，预览包含失败信息和两种方案的精简材料。只问一个会影响下一次修改的问题，然后在本地验证建议。
 
-## 📊 成本与 Token 用量
+- **Codex** 可以使用现有的 Codex 登录发起文本咨询。
+- **Claude Code** 可以通过已登录的本地 CLI 发起文本咨询。
+- **兼容网关**可以处理文本；如果路由支持视觉输入，也可以咨询图片。
 
-在 48 个公开修复任务中，仅统计可计价的请求，**Astra 独立执行折合 82.82 美元，Luna Max 搭配 Spot Advisor 折合 4.22 美元**。咨询方案记录到的 Astra Token 少得多，Token 总量却更高。只要大部分 Token 来自费率更低的模型，总用量更高也可能更省钱。
+配置详情见[连接方式与凭据要求](docs/install.md#3-transport-setup---transport)。修改代码和验证仍由执行者负责。
 
-![三张条形图比较按 API 费率估算的美元成本、前沿模型用量和总用量。Token 用量以百万为单位，具体数值见下表。](docs/assets/token-comparison.zh-CN.png)
+## 研究：Token、价格估算与验证结果
 
-| 公开修复任务 | Astra 独立执行 | Luna Max + Spot Advisor |
+公开修复研究在 48 个任务上比较 Astra 独立执行与 Luna Max 搭配 Spot Advisor。两组都通过了 39 / 48 个独立评测。15 分钟内，Astra 通过 39 个，Spot Advisor 方案通过 31 个。研究尚未证实两组修复质量差异落在预先设定的范围内。
+
+只看用量回执足以估算价格的请求，Astra 独立执行折合 **82.82 美元**，Luna Max 搭配 Spot Advisor 折合 **4.22 美元**。Spot Advisor 方案记录到的前沿模型 Token 少得多，但总 Token 更多，因为大部分执行用量来自 Luna Max。
+
+![图表比较两个公开修复流程的 API 等效价格估算、前沿模型 Token 和总 Token。](docs/assets/token-comparison.zh-CN.png)
+
+| 公开修复研究 | Astra 独立执行 | Luna Max + Spot Advisor |
 | --- | ---: | ---: |
 | 可计价请求折合的 API 成本（美元） | $82.82 | $4.22 |
 | 已记录的前沿模型用量（百万 Token） | 11.81 | 0.0095 |
@@ -80,16 +90,14 @@ python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "
 | 15 分钟内通过评测 | 39 / 48 | 31 / 48 |
 | 用量回执完整的任务 | 44 / 48 | 40 / 48 |
 
-实验通过订阅运行。表中的美元金额按研究记录的 2026 年 11 月 20 日 API 费率折算，分别计入了输入、缓存读取、缓存写入和输出。Astra 独立执行有 4 个请求无法计价，Spot Advisor 方案有 8 个，因此还无法确定整轮实验的成本和实际节省金额。[研究费率表](eval/pricing.json) · [请求回执](eval/results/2026-11-20/formal-collection/evidence.jsonl)
+价格估算采用研究记录的 2026 年 11 月 20 日 API 费率，分别计算普通输入、缓存读取、缓存写入和输出。Astra 独立执行有 4 个请求无法计价，Spot Advisor 方案有 8 个，因此这些数字只代表可计价请求，无法确定整轮成本或净节省，也还没有证实两组修复质量相当。[研究费率表](eval/pricing.json) · [请求回执](eval/results/2026-11-20/formal-collection/evidence.jsonl)
 
-两组都通过的 36 个任务中，Astra 独立执行均更早完成评测。研究尚未证实两组的修复质量差异落在预先设定的允许范围内。[记录指标](eval/results/2026-11-20/formal-collection/metrics.json) · [运行清单](eval/results/2026-11-20/formal-collection/manifest.json) · [用时核查](eval/results/2026-11-20/formal-collection/delivery.json) · [图表生成脚本](eval/render_readme_charts.py)
+两组都通过的 36 个任务中，Astra 均更早完成评测。详细结果见[记录指标](eval/results/2026-11-20/formal-collection/metrics.json)、[运行清单](eval/results/2026-11-20/formal-collection/manifest.json)和[用时核查](eval/results/2026-11-20/formal-collection/delivery.json)。[图表生成脚本](eval/render_readme_charts.py)可以重新生成对比图。
 
-## 📄 论文与复现
+## 研究与论文
 
 **Stan Chen** · *Frontier Advice or Frontier Execution? Time to verification and patch changes in paired software repairs*
 
-[阅读 arXiv 草稿（仓库内 PDF）](paper/spot-advisor-preprint.pdf) · [研究与复现](paper/README.md) · [实验方案](docs/research-protocol.md) · [引用软件](CITATION.cff)
+[阅读 arXiv 论文草稿（PDF）](paper/spot-advisor-preprint.pdf) · [研究与复现](paper/README.md) · [实验方案](docs/research-protocol.md) · [引用软件](CITATION.cff)
 
-这份 PDF 是为 arXiv 准备的工作稿。[路线图](ROADMAP.md)记录了后续要研究的问题：什么时候值得问、怎么问，以及每项通过验证的修复实际花费多少。
-
-[技能源码](skills/advisor/SKILL.md) · [MIT 许可证](LICENSE)
+仓库里的 PDF 是当前论文草稿。[路线图](ROADMAP.md)记录了后续关于咨询时机、提问方式，以及每项独立验证通过的修复所需成本的研究。[技能源码](skills/advisor/SKILL.md)使用 MIT 许可证。
