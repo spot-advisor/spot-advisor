@@ -1,0 +1,213 @@
+{
+  "all_usage_observed": false,
+  "completed_arms": 144,
+  "completed_pairs": 72,
+  "deployment": {
+    "acceptance": {
+      "difference": 0.0,
+      "difference_ci95": [
+        -0.17052732470646118,
+        0.17052732470646118
+      ],
+      "exact_mcnemar_p": 1.0,
+      "losses": 3,
+      "wins": 3
+    },
+    "pairs": 48,
+    "received": {
+      "astra_only": {
+        "astra_tokens": 11806840,
+        "luna_tokens": 0,
+        "unattributed_requests": 4
+      },
+      "spot_advisor": {
+        "astra_tokens": 9457,
+        "luna_tokens": 58128068,
+        "unattributed_requests": 8
+      }
+    },
+    "relative_luna_weight": 0.1,
+    "target": 0.8,
+    "windows": [
+      {
+        "bootstrap_defined": 0,
+        "crossover": null,
+        "crossover_ci95": null,
+        "deadline_seconds": 300,
+        "frontier_per_timely_baseline": null,
+        "frontier_per_timely_spot": null,
+        "luna_per_timely_spot": null,
+        "meets_observed_target": {
+          "astra_only": false,
+          "spot_advisor": false
+        },
+        "timely_passes": {
+          "astra_only": 32,
+          "spot_advisor": 5
+        },
+        "unknown_balance_at_equality": -3977445.0500000007,
+        "weighted_spot_per_timely": null
+      },
+      {
+        "bootstrap_defined": 0,
+        "crossover": null,
+        "crossover_ci95": null,
+        "deadline_seconds": 900,
+        "frontier_per_timely_baseline": null,
+        "frontier_per_timely_spot": null,
+        "luna_per_timely_spot": null,
+        "meets_observed_target": {
+          "astra_only": true,
+          "spot_advisor": false
+        },
+        "timely_passes": {
+          "astra_only": 39,
+          "spot_advisor": 31
+        },
+        "unknown_balance_at_equality": 3562660.3025641013,
+        "weighted_spot_per_timely": null
+      },
+      {
+        "bootstrap_defined": 0,
+        "crossover": null,
+        "crossover_ci95": null,
+        "deadline_seconds": null,
+        "frontier_per_timely_baseline": null,
+        "frontier_per_timely_spot": null,
+        "luna_per_timely_spot": null,
+        "meets_observed_target": {
+          "astra_only": true,
+          "spot_advisor": true
+        },
+        "timely_passes": {
+          "astra_only": 39,
+          "spot_advisor": 39
+        },
+        "unknown_balance_at_equality": 5984576.199999999,
+        "weighted_spot_per_timely": null
+      }
+    ]
+  },
+  "disposition_complete": true,
+  "evidence_sha256": "4bf7b1a4da0bc19e712f96b84e70121e44fb61bfd68f609829117fb8baff835d",
+  "excluded_before_dispatch": [
+    "instance_gravitational__teleport-eda668c30d9d3b56d9c69197b120b01013611186",
+    "instance_navidrome__navidrome-874b17b8f614056df0ef021b5d4f977341084185"
+  ],
+  "formal_complete": false,
+  "grader_source_sha256": "1ee199d9470a6f2c74a6c15b63c30d3c75f081b9458e385311dfd283dd549038",
+  "primary_effect": null,
+  "requested_pairs": 74,
+  "source_sha256": "1ee199d9470a6f2c74a6c15b63c30d3c75f081b9458e385311dfd283dd549038",
+  "stage": "formal",
+  "suites": {
+    "chromium": {
+      "astra_only": {
+        "accepted": 8,
+        "advice_applied": 0,
+        "advice_applied_and_next_check_passed": 0,
+        "api_equivalent_usd_per_accepted": 0.1340994,
+        "astra_tokens_per_accepted": 16621.625,
+        "consultation_triggers": 0,
+        "consultations": 0,
+        "median_agent_seconds": 35.400999999999996,
+        "n": 8,
+        "p95_agent_seconds": 53.497600000000006,
+        "tasks_with_consultation": 0,
+        "total_tokens_per_accepted": 16621.625,
+        "triggers_without_dispatch": 0,
+        "usable_advice": 0,
+        "usage_complete": 8
+      },
+      "spot_advisor": {
+        "accepted": 8,
+        "advice_applied": 0,
+        "advice_applied_and_next_check_passed": 0,
+        "api_equivalent_usd_per_accepted": 0.0023886825,
+        "astra_tokens_per_accepted": 0.0,
+        "consultation_triggers": 0,
+        "consultations": 0,
+        "median_agent_seconds": 43.54900000000001,
+        "n": 8,
+        "p95_agent_seconds": 56.6465,
+        "tasks_with_consultation": 0,
+        "total_tokens_per_accepted": 22905.125,
+        "triggers_without_dispatch": 0,
+        "usable_advice": 0,
+        "usage_complete": 8
+      }
+    },
+    "diagnostic": {
+      "astra_only": {
+        "accepted": 16,
+        "advice_applied": 0,
+        "advice_applied_and_next_check_passed": 0,
+        "api_equivalent_usd_per_accepted": 0.034446,
+        "astra_tokens_per_accepted": 3239.0,
+        "consultation_triggers": 0,
+        "consultations": 0,
+        "median_agent_seconds": 14.3215,
+        "n": 16,
+        "p95_agent_seconds": 20.5185,
+        "tasks_with_consultation": 0,
+        "total_tokens_per_accepted": 3239.0,
+        "triggers_without_dispatch": 0,
+        "usable_advice": 0,
+        "usage_complete": 16
+      },
+      "spot_advisor": {
+        "accepted": 16,
+        "advice_applied": 0,
+        "advice_applied_and_next_check_passed": 0,
+        "api_equivalent_usd_per_accepted": 0.0010433575,
+        "astra_tokens_per_accepted": 0.0,
+        "consultation_triggers": 0,
+        "consultations": 0,
+        "median_agent_seconds": 24.5355,
+        "n": 16,
+        "p95_agent_seconds": 38.514,
+        "tasks_with_consultation": 0,
+        "total_tokens_per_accepted": 6607.375,
+        "triggers_without_dispatch": 0,
+        "usable_advice": 0,
+        "usage_complete": 16
+      }
+    },
+    "swe-bench-pro-v2": {
+      "astra_only": {
+        "accepted": 39,
+        "advice_applied": 0,
+        "advice_applied_and_next_check_passed": 0,
+        "api_equivalent_usd_per_accepted": null,
+        "astra_tokens_per_accepted": null,
+        "consultation_triggers": 0,
+        "consultations": 0,
+        "median_agent_seconds": 109.7595,
+        "n": 48,
+        "p95_agent_seconds": 340.00804999999997,
+        "tasks_with_consultation": 0,
+        "total_tokens_per_accepted": null,
+        "triggers_without_dispatch": 0,
+        "usable_advice": 0,
+        "usage_complete": 44
+      },
+      "spot_advisor": {
+        "accepted": 39,
+        "advice_applied": 16,
+        "advice_applied_and_next_check_passed": 8,
+        "api_equivalent_usd_per_accepted": null,
+        "astra_tokens_per_accepted": null,
+        "consultation_triggers": 21,
+        "consultations": 17,
+        "median_agent_seconds": 352.799,
+        "n": 48,
+        "p95_agent_seconds": 1164.3170499999997,
+        "tasks_with_consultation": 17,
+        "total_tokens_per_accepted": null,
+        "triggers_without_dispatch": 4,
+        "usable_advice": 17,
+        "usage_complete": 40
+      }
+    }
+  }
+}
