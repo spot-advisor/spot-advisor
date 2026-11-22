@@ -1,0 +1,21 @@
+{
+  "public_planned": 50,
+  "public_pairs": 48,
+  "scope_excluded": 2,
+  "both_accepted": 36,
+  "astra_faster_on_joint_pass": 36,
+  "wall_difference_median_seconds": 269.34450000000004,
+  "full_sample_difference_bounds": [
+    -0.04,
+    0.04
+  ],
+  "usable_replies": 17,
+  "same_patch_at_call_and_grade": 5,
+  "same_patch_accepted": 3,
+  "accepted_advised_tasks": 14,
+  "accepted_advised_with_matching_patch": 3,
+  "independent_replay_passes_on_matching_patches": 3,
+  "matched_unmodified_bases_failing": 3,
+  "astra_faster_on_joint_pass_agent_clock": 35,
+  "median_agent_difference_seconds": 294.4255
+}
