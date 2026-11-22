@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="title desc">
+  <title id="title">Spot Advisor — Judgment on demand</title>
+  <desc id="desc">A compact evidence packet becomes one frontier judgment and returns as an actionable recommendation with a verification check.</desc>
+  <rect width="1200" height="350" rx="24" fill="#f5f3ee"/>
+  <circle cx="1030" cy="36" r="175" fill="#e8e9f4" opacity=".7"/>
+  <circle cx="1090" cy="310" r="105" fill="#f1e3d5" opacity=".65"/>
+  <path d="M60 42h1080" stroke="#dedbd2" stroke-width="1"/>
+  <rect x="703" y="84" width="405" height="176" rx="18" fill="#fffefa" stroke="#ddd9cf" stroke-width="1.5"/>
+  <rect x="725" y="108" width="96" height="124" rx="12" fill="#e8edfb"/>
+  <rect x="739" y="125" width="66" height="7" rx="3.5" fill="#385bca"/>
+  <rect x="739" y="143" width="53" height="5" rx="2.5" fill="#9aa8cc"/>
+  <rect x="739" y="157" width="66" height="5" rx="2.5" fill="#9aa8cc"/>
+  <path d="M740 190h46" stroke="#df9a52" stroke-width="5" stroke-linecap="round"/>
+  <rect x="838" y="110" width="246" height="59" rx="10" fill="#f4f2ec"/>
+  <circle cx="858" cy="130" r="5" fill="#dc914a"/>
+  <text x="872" y="135" fill="#293247" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">ONE FRONTIER JUDGMENT</text>
+  <text x="854" y="156" fill="#6e7785" font-family="Segoe UI, Arial, sans-serif" font-size="13">A focused question at the decision point</text>
+  <path d="M831 200h42" stroke="#385bca" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="m867 194 7 6-7 6" fill="none" stroke="#385bca" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="884" y="184" width="200" height="52" rx="10" fill="#e8f1e9"/>
+  <path d="m902 209 5 5 10-12" fill="none" stroke="#35815f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="926" y="207" fill="#274c3b" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">NEXT ACTION + CHECK</text>
+  <text x="926" y="224" fill="#66806f" font-family="Segoe UI, Arial, sans-serif" font-size="11">Executor verifies locally</text>
+  <text x="78" y="99" fill="#385bca" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2.6">FRONTIER JUDGMENT, ON DEMAND</text>
+  <text x="76" y="169" fill="#20283a" font-family="Segoe UI, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="-1.4">Spot Advisor</text>
+  <text x="80" y="213" fill="#555f70" font-family="Segoe UI, Arial, sans-serif" font-size="21">One focused turn, then back to the work.</text>
+  <text x="80" y="278" fill="#7f8690" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.4">COMPACT CONTEXT</text>
+  <text x="277" y="278" fill="#b0aaa0" font-family="Segoe UI, Arial, sans-serif" font-size="16">→</text>
+  <text x="302" y="278" fill="#7f8690" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.4">CLEAR JUDGMENT</text>
+  <text x="494" y="278" fill="#b0aaa0" font-family="Segoe UI, Arial, sans-serif" font-size="16">→</text>
+  <text x="520" y="278" fill="#7f8690" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.4">LOCAL VERIFICATION</text>
+</svg>
