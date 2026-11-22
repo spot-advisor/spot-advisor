@@ -22,6 +22,7 @@ EXPECTED_FORMAL = {"swe-bench-pro-v2": 50, "diagnostic": 16, "chromium": 8}
 SUITE_LABELS = {"swe-bench-pro-v2": "SWE-bench Pro V2", "diagnostic": "Diagnostic", "chromium": "Chromium"}
 BILLING = json.loads((HERE / "pricing.json").read_text(encoding="utf-8"))
 SCHEMA = Draft202012Validator(json.loads((HERE / "telemetry_schema.json").read_text(encoding="utf-8")))
+REQUEST_TIMING_FIELDS = ("remaining_budget_seconds", "request_timeout_seconds", "deadline_reached_at_timeout")
 
 
 def read_json(path: Path) -> dict:
@@ -69,16 +70,16 @@ def clean(row: dict) -> dict:
     copy.update(quota_before=None, quota_after=None,
                 turn={k: v for k, v in row["turn"].items() if k == "status"})
     receipt_fields = {"attempt_id", "consultation_id", "requested_model", "model", "reasoning_effort", "status", "usage",
-                      "elapsed_seconds", "dispatch_possible", "estimated_input_tokens", "transport"}
+                      "elapsed_seconds", "dispatch_possible", "estimated_input_tokens", "transport", *REQUEST_TIMING_FIELDS}
     def public_attempt(attempt: dict) -> dict:
         return {k: v for k, v in attempt.items() if k in receipt_fields}
     copy["executor_attempts"] = [public_attempt(a) for a in row["executor_attempts"]]
     copy["consultations"] = [{**c, "attempts": [public_attempt(a) for a in c["attempts"]]}
                              for c in row["consultations"]]
-    copy["tool_events"] = [
-        {key: event[key] for key in ("tool", "elapsed_seconds", "browser_action", "ok") if key in event}
-        for event in row["tool_events"]
-    ]
+    event_fields = {"tool", "elapsed_seconds", "browser_action", "ok",
+                    "consultation_gate", "checkpoint_index", "checkpoint_revision"}
+    copy["tool_events"] = [{key: value for key, value in event.items() if key in event_fields}
+                           for event in row["tool_events"]]
     return copy
 
 

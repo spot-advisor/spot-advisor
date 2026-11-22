@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "If you use spot-advisor in your research or engineering workflows, please cite it using this metadata."
-title: "spot-advisor: Decoupling Local Execution from Compressed, One-Turn Frontier Judgment for Coding Agents"
+title: "Spot Advisor"
 type: software
 authors:
-  - family-names: Chan
+  - family-names: Chen
     given-names: Stan
 repository-code: "https://github.com/stancsz/spot-advisor"
 url: "https://github.com/stancsz/spot-advisor"

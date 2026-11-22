@@ -29,6 +29,18 @@ ADVISOR = ROOT / "skills/advisor/scripts/ask_expert.py"
 LUNA = "gpt-6-luna"
 ASTRA = "gpt-6.2-astra"
 ARMS = {"spot_advisor": (LUNA, "max"), "astra_only": (ASTRA, "medium")}
+STUDY_ARMS = {**ARMS, "luna_only": (LUNA, "max"), "spot_advisor_22": (LUNA, "max")}
+DECISION_TOOL = {
+    "name": "ask_at_checkpoint",
+    "description": "Request one advisory decision after a verified local failure.",
+    "inputSchema": {"type": "object", "properties": {
+        "check_ran": {"type": "boolean"}, "dependencies_ready": {"type": "boolean"},
+        "local_probe_available": {"type": "boolean"}, "option_a": {"type": "string"},
+        "option_b": {"type": "string"}, "unresolved_evidence": {"type": "string"},
+        "question": {"type": "string"},
+    }, "required": ["check_ran", "dependencies_ready", "local_probe_available", "option_a",
+                    "option_b", "unresolved_evidence", "question"], "additionalProperties": False},
+}
 DEFAULT_SEED = 20261120
 TOOLS = [
     {
@@ -105,6 +117,7 @@ class TaskExecution:
         self.tool_limit = tool_limit
         self.last_failure = None
         self.last_outcome = ""
+        self.last_check_output = ""
         self.consultations: list[dict] = []
         self.checkpoints: list[dict] = []
         self.events: list[dict] = []
@@ -128,7 +141,8 @@ class TaskExecution:
             checked(result)
         return result.stdout
 
-    def consult(self, reason: str, evidence: str, revision: str) -> str:
+    def consult(self, reason: str, evidence: str, revision: str, *, question: str =
+                "Given these observed results, what one change and verification should the executor try?") -> str:
         number = len(self.consultations) + 1
         state = {
             "task_id": self.task.id, "revision": revision, "phase": "Public verification failed.",
@@ -138,13 +152,17 @@ class TaskExecution:
         }
         state_path = self.folder / f"consultation-{number}.json"
         dump(state_path, state)
+        frozen = self.folder.parent.parent / "advisor-frozen.py"
+        baseline = frozen.with_name("advisor-21-frozen.py")
+        if self.arm == "spot_advisor" and baseline.is_file():
+            frozen = baseline
         args = [
-            sys.executable, "-B", str(self.folder.parent.parent / "advisor-frozen.py"),
+            sys.executable, "-B", str(frozen),
             "--transport", "codex", "--model", ASTRA,
             "--protocol", "v2", "--effort", "medium", "--state-file", str(state_path),
             "--session-file", str(self.folder / "advisor-session.json"),
             "--trigger", reason, "--timeout-seconds", str(max(1, self.remaining(55) - 1)),
-            "--question", "Given these observed results, what one change and verification should the executor try?",
+            "--question", question,
         ]
         started = time.monotonic()
         result = {}
@@ -204,11 +222,56 @@ class TaskExecution:
         self.checkpoints.append({"revision": revision, "passed": passed, "exit_code": code,
                                  "trigger": reason, "output_sha256": hashlib.sha256(text.encode()).hexdigest()})
         rendered = f"Public check exit {code}\n{text}"
+        self.last_check_output = rendered
         if (self.arm == "spot_advisor" and reason and len(self.consultations) < 3
                 and all(call["revision"] != revision for call in self.consultations)):
             rendered += self.consult(reason, rendered, revision)
             self.last_failure = None
         return rendered, passed
+
+    def _consultation_blocker(self, arguments: dict, checkpoint: dict | None) -> tuple[str, str] | None:
+        requires_current_check = "Advice requires a current failed check, one unused consultation and time to verify."
+        requires_evidence = "Run the available local checks and identify two distinct actions and the unresolved evidence."
+        if self.consultations:
+            return "consultation_used", requires_current_check
+        if not checkpoint or checkpoint["passed"]:
+            return "no_failed_check", requires_current_check
+        if checkpoint["revision"] != self.revision():
+            return "stale_revision", requires_current_check
+        if self.tools >= self.tool_limit:
+            return "tool_budget", requires_current_check
+        if arguments.get("local_probe_available") is True:
+            return "local_probe_available", requires_evidence
+        fields = ("option_a", "option_b", "unresolved_evidence", "question")
+        values = [arguments.get(field) for field in fields]
+        if (arguments.get("check_ran") is not True or arguments.get("dependencies_ready") is not True
+                or arguments.get("local_probe_available") is not False
+                or any(not isinstance(value, str) or not 1 <= len(value.strip()) <= 180 for value in values)
+                or " ".join(values[0].casefold().split()) == " ".join(values[1].casefold().split())):
+            return "incomplete_evidence", requires_evidence
+        if self.deadline - time.monotonic() < 75:
+            return "verification_time", "Use the remaining time for local verification."
+        return None
+
+    def ask_at_checkpoint(self, arguments: dict, *, event: dict | None = None) -> dict:
+        if event is None:
+            event = {}
+        checkpoint = self.checkpoints[-1] if self.checkpoints else None
+        event["checkpoint_index"] = len(self.checkpoints) - 1 if checkpoint else None
+        event["checkpoint_revision"] = checkpoint["revision"] if checkpoint else None
+        event["consultation_gate"] = "evaluation_interrupted"
+        blocker = self._consultation_blocker(arguments, checkpoint)
+        if blocker:
+            event["consultation_gate"], message = blocker
+            return response(message, False)
+        event["consultation_gate"] = "admitted"
+        option_a = arguments["option_a"]
+        option_b = arguments["option_b"]
+        evidence = arguments["unresolved_evidence"]
+        packet = f"{self.last_check_output[-260:]}\nA: {option_a[:125]}\nB: {option_b[:125]}\nUnresolved: {evidence}"
+        checkpoint["consultation_decision"] = "requested"
+        reply = self.consult("manual", packet, checkpoint["revision"], question=arguments["question"])
+        return response(reply or "Advice unavailable. Continue locally.", bool(reply))
 
     def handle(self, call: dict) -> dict:
         self.tools += 1
@@ -217,7 +280,10 @@ class TaskExecution:
         tool = call.get("tool")
         arguments = call.get("arguments") or {}
         started = time.monotonic()
+        event = {"tool": tool}
         try:
+            if tool == "ask_at_checkpoint" and self.arm == "spot_advisor_22":
+                return self.ask_at_checkpoint(arguments, event=event)
             if tool == "run_command" and self.task.browser is None:
                 command = arguments.get("command")
                 if not isinstance(command, str) or not command.strip() or len(command) > 16_000:
@@ -253,7 +319,8 @@ class TaskExecution:
         except subprocess.TimeoutExpired:
             return response("The isolated command reached its time limit.", False)
         finally:
-            self.events.append({"tool": tool, "elapsed_seconds": round(time.monotonic() - started, 3)})
+            event["elapsed_seconds"] = round(time.monotonic() - started, 3)
+            self.events.append(event)
 
 
 def prepare_inputs(folder: Path, task: Task) -> Path:
@@ -325,7 +392,7 @@ def run_arm(task: Task, arm: str, folder: Path, stage: str, seed: int, commit: s
     folder.mkdir(parents=True, exist_ok=False)
     work = prepare_inputs(folder, task)
     started = time.monotonic()
-    model, effort = ARMS[arm]
+    model, effort = STUDY_ARMS[arm]
     stamp = utc_now()
     error = None
     turn = {}
@@ -353,6 +420,13 @@ def run_arm(task: Task, arm: str, folder: Path, stage: str, seed: int, commit: s
                     "and provide the test command. Use the same command when retrying a test. "
                     "Leave the finished patch in the workspace."
                 )
+                if arm == "spot_advisor_22":
+                    directions += (
+                        " Consider advice only when an intended check actually ran, dependencies and fixtures "
+                        "were ready, and two distinct next actions remain plausible. Run any cheap local probe "
+                        "first. If no probe remains, submit the two actions, evidence and one decision question "
+                        "to ask_at_checkpoint. Keep enough time to verify the response."
+                    )
                 prompt = (
                     "Complete this benchmark task using the supplied tools. "
                     + directions + " The final grader runs independently.\n\n"
@@ -361,6 +435,8 @@ def run_arm(task: Task, arm: str, folder: Path, stage: str, seed: int, commit: s
                     f"\nAcceptance: {task.acceptance}\n\nThe initial check reported:\n{initial}"
                 )
                 tools = [BROWSER_TOOL, TOOLS[1]] if task.browser else TOOLS
+                if arm == "spot_advisor_22":
+                    tools = [*tools, DECISION_TOOL]
                 turn = executor.run(model, effort, prompt, tools, execution.handle, execution.remaining(task.timeout))
             except (TimeoutError, ExecutorError, subprocess.TimeoutExpired) as exc:
                 error = str(exc)[:500]
@@ -391,7 +467,8 @@ def run_arm(task: Task, arm: str, folder: Path, stage: str, seed: int, commit: s
         "schema_version": 2, "run_id": folder.parent.parent.name, "task_id": task.id, "suite": task.suite,
         "stage": stage, "arm": arm, "seed": seed, "git_commit": commit, "source_sha256": code,
         "timestamp_utc": stamp, "subscription": subscription, "executor_model": model,
-        "executor_effort": effort, "executor_usage": usage, "advisor_model": ASTRA if arm == "spot_advisor" else None,
+        "executor_effort": effort, "executor_usage": usage,
+        "advisor_model": ASTRA if arm in {"spot_advisor", "spot_advisor_22"} else None,
         "quota_before": quota_before, "quota_after": quota_after, "turn": turn, "reroutes": executor.reroutes,
         "executor_transport": "codex_subscription_responses", "executor_attempts": executor.attempts,
         "error": error, "wall_seconds": round(time.monotonic() - started, 3),

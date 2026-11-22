@@ -55,13 +55,15 @@ class DirectSession:
         }
         request = Request(transport.CODEX_API_BASE_URL + "/responses", headers=self.headers,
                           data=json.dumps(payload, ensure_ascii=False).encode("utf-8"), method="POST")
-        receipt = {"attempt_id": uuid4().hex, "requested_model": model, "reasoning_effort": effort}
+        request_timeout = min(90, remaining)
+        receipt = {"attempt_id": uuid4().hex, "requested_model": model, "reasoning_effort": effort,
+                   "remaining_budget_seconds": remaining, "request_timeout_seconds": request_timeout}
         self.record("dispatched", receipt)
         terminal = None
         status = "unavailable"
         started = time.monotonic()
         try:
-            with transport.urlopen(request, timeout=min(90, remaining)) as stream:
+            with transport.urlopen(request, timeout=request_timeout) as stream:
                 for event in transport.codex_stream_events(stream):
                     if event.get("type") in {"response.completed", "response.incomplete", "response.failed", "error"}:
                         terminal = event.get("response") or {}
@@ -73,6 +75,9 @@ class DirectSession:
             status = "rate_limited" if exc.code == 429 else "http_error"
             raise ExecutorError(f"Direct Codex executor returned HTTP {exc.code}.") from exc
         except (URLError, OSError) as exc:
+            cause = exc.reason if isinstance(exc, URLError) else exc
+            if isinstance(cause, TimeoutError):
+                receipt["deadline_reached_at_timeout"] = time.monotonic() >= deadline
             raise ExecutorError(f"Direct Codex executor transport failed ({type(exc).__name__}).") from exc
         finally:
             terminal = terminal or {}

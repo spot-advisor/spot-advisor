@@ -62,7 +62,9 @@
     "arm": {
       "enum": [
         "spot_advisor",
-        "astra_only"
+        "astra_only",
+        "luna_only",
+        "spot_advisor_22"
       ]
     },
     "seed": {
@@ -186,7 +188,21 @@
     "tool_events": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "consultation_gate": {
+            "enum": ["admitted", "consultation_used", "no_failed_check", "stale_revision", "tool_budget",
+                     "local_probe_available", "incomplete_evidence", "verification_time", "evaluation_interrupted"]
+          },
+          "checkpoint_index": {
+            "type": ["integer", "null"],
+            "minimum": 0
+          },
+          "checkpoint_revision": {
+            "type": ["string", "null"],
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
       }
     },
     "artifact_sha256": {
@@ -285,6 +301,18 @@
         "elapsed_seconds": {
           "type": "number",
           "minimum": 0
+        },
+        "remaining_budget_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "request_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 90
+        },
+        "deadline_reached_at_timeout": {
+          "type": "boolean"
         }
       },
       "required": [
