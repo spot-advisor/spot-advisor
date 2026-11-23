@@ -4,6 +4,14 @@
 
 ---
 
+## Quick install with the Skills CLI
+
+From the repository root, use the Skills CLI to choose an agent and install the advisor skill:
+
+<code>npx skills add stancsz/spot-advisor --skill advisor</code>
+
+Use <code>--list</code> to inspect the repository's available skills first. The command installs the skill named <code>advisor</code>; the manual host-specific methods below remain available if you prefer to copy the files yourself.
+
 ## 1. Install the Skill
 
 ### Codex and other hosts that discover `.agents/skills`

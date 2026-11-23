@@ -9,11 +9,16 @@
 <p align="center">
   <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a><br>
   <a href="#try-it-offline">Try the offline preview</a> ·
+  <a href="demo/README.md">Run the terminal demo</a> ·
   <a href="docs/install.md">Install</a> ·
   <a href="#research-and-paper">Research and paper</a>
 </p>
 
 Spot Advisor is a skill for coding agents. It guides your coding agent to prepare a compact, reviewable question for a frontier model when a real decision remains. The advisor returns a recommendation and a way to check it; your coding agent keeps control of the edits and local verification.
+
+**Install:** <code>npx skills add stancsz/spot-advisor --skill advisor</code> · **Try first:** [offline preview](#try-it-offline) · **Walk through the full example:** [terminal demo](demo/README.md)
+
+![A visual replay of the recorded Spot Advisor demo: reproduce a bug, preview a packet, ask once, apply a small fix, and verify it. This is not a live screen recording.](demo/spot-advisor-demo.gif)
 
 ## When to use it
 
