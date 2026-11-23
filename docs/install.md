@@ -2,13 +2,15 @@
 
 **Spot Advisor** (`spot-advisor`) is a host-agnostic, token-efficient skill ([`skills/advisor/SKILL.md`](../skills/advisor/SKILL.md)) that lets a fast, low-cost coding agent consult a frontier advisor in 1 tool-free turn.
 
+Official release repository: [spot-advisor/spot-advisor](https://github.com/spot-advisor/spot-advisor) · Website: [spot-advisor.github.io](https://spot-advisor.github.io/).
+
 ---
 
 ## Quick install with the Skills CLI
 
 From the repository root, use the Skills CLI to choose an agent and install the advisor skill:
 
-<code>npx skills add stancsz/spot-advisor --skill advisor</code>
+<code>npx skills add spot-advisor/spot-advisor --skill advisor</code>
 
 Use <code>--list</code> to inspect the repository's available skills first. The command installs the skill named <code>advisor</code>; the manual host-specific methods below remain available if you prefer to copy the files yourself.
 

@@ -8,6 +8,7 @@
 
 <p align="center">
   <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a><br>
+  <a href="https://spot-advisor.github.io/">Official site</a> ·
   <a href="#try-it-offline">Try the offline preview</a> ·
   <a href="demo/README.md">Run the terminal demo</a> ·
   <a href="docs/install.md">Install</a> ·
@@ -16,7 +17,7 @@
 
 Spot Advisor is a skill for coding agents. It guides your coding agent to prepare a compact, reviewable question for a frontier model when a real decision remains. The advisor returns a recommendation and a way to check it; your coding agent keeps control of the edits and local verification.
 
-**Install:** <code>npx skills add stancsz/spot-advisor --skill advisor</code> · **Try first:** [offline preview](#try-it-offline) · **Walk through the full example:** [terminal demo](demo/README.md)
+**Install:** <code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **Try first:** [offline preview](#try-it-offline) · **Walk through the full example:** [terminal demo](demo/README.md)
 
 ![A visual replay of the recorded Spot Advisor demo: reproduce a bug, preview a packet, ask once, apply a small fix, and verify it. This is not a live screen recording.](demo/spot-advisor-demo.gif)
 
@@ -46,7 +47,7 @@ The skill does not inspect your repository on its own. Your coding agent selects
 With Git and Python installed, clone the repository and run the preview. If you already have the checkout, run the last line from its root.
 
 ~~~sh
-git clone https://github.com/stancsz/spot-advisor.git
+git clone https://github.com/spot-advisor/spot-advisor.git
 cd spot-advisor
 python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "A config test expects False but gets the default. The code uses overrides.get(name) or defaults[name]. What should I change and how should I check it?"
 ~~~

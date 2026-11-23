@@ -5,8 +5,8 @@ type: software
 authors:
   - family-names: Chen
     given-names: Stan
-repository-code: "https://github.com/stancsz/spot-advisor"
-url: "https://github.com/stancsz/spot-advisor"
+repository-code: "https://github.com/spot-advisor/spot-advisor"
+url: "https://spot-advisor.github.io/"
 license: MIT
 keywords:
   - small-language-models
