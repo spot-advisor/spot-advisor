@@ -1,0 +1,68 @@
+{
+  "title": "Spot Advisor | One focused turn, then back to the work",
+  "footer": "Visual replay of one recorded local run; not a live product recording.",
+  "frames": [
+    {
+      "label": "01 / REPRODUCE",
+      "title": "Confirm the decision is real",
+      "subtitle": "The same focused check fails twice before asking for help.",
+      "terminal": "python -m unittest -v  ·  run 1 + run 2",
+      "lines": [
+        ["FAIL", "test_false_is_a_valid_override"],
+        ["FAIL", "test_zero_is_a_valid_override"],
+        ["FAIL", "test_empty_string_is_a_valid_override"],
+        ["PASS", "test_missing_key_uses_default"],
+        ["NOTE", "3 failures reproduced on the second run" ]
+      ]
+    },
+    {
+      "label": "02 / PREVIEW",
+      "title": "Inspect the packet before sending",
+      "subtitle": "A local v2 preview builds a compact, reviewable question.",
+      "terminal": "ask_expert.py --protocol v2 --preview",
+      "lines": [
+        ["GOAL", "Preserve explicit falsey overrides"],
+        ["EVIDENCE", "get(name) or default masks False, 0, and empty text"],
+        ["DECISION", "How should lookup distinguish absence from falsey values?"],
+        ["VERIFY", "Keep False, 0, empty text; default only when missing"],
+        ["RESULT", "922-character packet · 0 model calls" ]
+      ]
+    },
+    {
+      "label": "03 / CONSULT",
+      "title": "Ask once at the decision point",
+      "subtitle": "One live Codex advisor call; the executor still owns the change.",
+      "terminal": "RECORDED REPLY SUMMARY  ·  gpt-6.2-astra",
+      "lines": [
+        ["VERDICT", "Use key membership: fallback depends on absence, not truthiness."],
+        ["DO", "return overrides[name] if name in overrides else defaults[name]"],
+        ["VERIFY", "Check types and values for False, 0, empty text, and missing key."],
+        ["RISK", "Avoid eager default evaluation that can raise KeyError." ]
+      ]
+    },
+    {
+      "label": "04 / APPLY",
+      "title": "Keep the edit small and local",
+      "subtitle": "Apply the recommendation in the temporary demo copy.",
+      "terminal": "settings.py  ·  one-line change",
+      "lines": [
+        ["-", "return overrides.get(name) or defaults[name]"],
+        ["+", "return overrides[name] if name in overrides else defaults[name]"],
+        ["SCOPE", "Function signature unchanged; missing-key fallback preserved" ]
+      ]
+    },
+    {
+      "label": "05 / VERIFY",
+      "title": "Return to the same acceptance check",
+      "subtitle": "The targeted suite passes after the executor applies the fix.",
+      "terminal": "python -m unittest -v",
+      "lines": [
+        ["PASS", "test_false_is_a_valid_override"],
+        ["PASS", "test_zero_is_a_valid_override"],
+        ["PASS", "test_empty_string_is_a_valid_override"],
+        ["PASS", "test_missing_key_uses_default"],
+        ["DONE", "4 tests passed · advisor suggested, executor verified" ]
+      ]
+    }
+  ]
+}

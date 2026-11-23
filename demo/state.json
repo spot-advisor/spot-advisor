@@ -1,0 +1,19 @@
+{
+  "task_id": "falsey-config-override-demo",
+  "revision": "1",
+  "goal": "Preserve explicit falsey configuration overrides and use defaults only when a key is missing.",
+  "phase": "The focused unittest has failed twice on an explicit False override.",
+  "constraints": [
+    "Keep the function interface unchanged.",
+    "Preserve fallback behavior for missing keys."
+  ],
+  "acceptance": [
+    "False, 0, and an empty string remain valid overrides.",
+    "A missing key uses the default."
+  ],
+  "evidence": [
+    "The expression overrides.get(name) or defaults[name] replaces False with the default.",
+    "The focused test was run twice and dependencies were available."
+  ],
+  "last_advice_outcome": ""
+}

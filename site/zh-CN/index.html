@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Spot Advisor 帮助编程智能体在真实决策点整理证据、向前沿模型问一个具体问题，然后继续执行并在本地验证。">
+  <title>Spot Advisor — 问一个关键问题，然后继续做事</title>
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="#top" aria-label="Spot Advisor 首页">
+      <span class="wordmark-mark" aria-hidden="true">S</span>
+      <span>SPOT <b>/</b> ADVISOR</span>
+    </a>
+    <nav aria-label="主导航">
+      <a href="#workflow">工作方式</a>
+      <a href="#evidence">研究证据</a>
+      <a href="https://github.com/stancsz/spot-advisor">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="language-link" href="../" lang="en">English</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> 面向编程智能体的技能 · 2.2 版</p>
+        <h1>下一步不明确时，<em>问一次就好。</em></h1>
+        <p class="hero-lede">把证据和眼前的决策交给前沿模型，得到一个建议和一种验证方法。真正的代码工作仍由你的编程智能体负责。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#try-it">先试离线预览 <span aria-hidden="true">↓</span></a>
+          <a class="button button-quiet" href="#install">安装技能 <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="hero-note"><span aria-hidden="true">◎</span> 预览不需要账号、API Key，也不会调用模型。</p>
+      </div>
+      <div class="hero-visual" aria-label="工作流程概览">
+        <div class="hero-card-top"><span>决策轨迹</span><span>01 / 04</span></div>
+        <div class="trace-row">
+          <span class="trace-index">01</span>
+          <div><strong>先核对证据</strong><small>目标测试是否真的运行？</small></div>
+          <span class="trace-state">本地</span>
+        </div>
+        <div class="trace-row trace-focus">
+          <span class="trace-index">02</span>
+          <div><strong>找出决策分岔</strong><small>仍有两种合理的下一步</small></div>
+          <span class="trace-state">判断</span>
+        </div>
+        <div class="trace-row">
+          <span class="trace-index">03</span>
+          <div><strong>只问一个问题</strong><small>发送前可预览精简材料</small></div>
+          <span class="trace-state">顾问</span>
+        </div>
+        <div class="trace-row trace-done">
+          <span class="trace-index">04</span>
+          <div><strong>继续执行并验证</strong><small>执行者负责修改和检查</small></div>
+          <span class="trace-state">验证</span>
+        </div>
+        <div class="hero-card-bottom"><span>精简上下文</span><i aria-hidden="true"></i><span>可检查的下一步</span></div>
+      </div>
+    </section>
+
+    <section class="brand-strip wrap" aria-label="流程图">
+      <img src="../assets/spot-advisor-hero.zh-CN.webp" alt="Spot Advisor：精简的证据材料转化为一次前沿判断和本地验证步骤。" width="1200" height="350">
+    </section>
+
+    <section class="section wrap" id="workflow">
+      <div class="section-heading">
+        <p class="eyebrow">01 — 什么时候有用</p>
+        <h2>不是每次失败都该找更强的模型。</h2>
+        <p>先运行相关的本地检查。如果证据仍然留下了会改变后续操作的分岔，Spot Advisor 会帮助当前智能体针对这个分岔提问，而不是把整个任务交出去。</p>
+      </div>
+      <div class="three-steps">
+        <article class="step-card">
+          <span class="step-number">01</span>
+          <h3>先在本地查清楚</h3>
+          <p>编程智能体检查测试、依赖、fixture 和当前版本，并决定哪些证据应该放进咨询材料。</p>
+        </article>
+        <article class="step-card step-card-feature">
+          <span class="step-number">02</span>
+          <h3>在决策点提问</h3>
+          <p>预览包含目标、约束、观察结果和验收方式的精简问题。只有答案可能改变下一步时才发送。</p>
+        </article>
+        <article class="step-card">
+          <span class="step-number">03</span>
+          <h3>回到执行者手中</h3>
+          <p>顾问返回结论、具体行动、验证步骤和风险。执行者负责修改代码并在本地复查。</p>
+        </article>
+      </div>
+      <div class="ownership-note">
+        <span class="ownership-symbol" aria-hidden="true">↳</span>
+        <p><strong>边界小，责任清楚。</strong>Spot Advisor 不会自行读取仓库或修改文件。证据由执行者选择，建议由执行者落实，最终结果也由执行者验证。</p>
+      </div>
+    </section>
+
+    <section class="try-section" id="try-it">
+      <div class="wrap try-grid">
+        <div class="section-heading">
+          <p class="eyebrow">02 — 安装前先试试看</p>
+          <h2>先看清楚会发送什么。</h2>
+          <p>在仓库副本中运行预览，它会在本地打印 v2 咨询材料，不会调用模型，也不需要账号或凭据。</p>
+          <a class="text-link" href="https://github.com/stancsz/spot-advisor/blob/main/README.zh-CN.md#离线试一试">查看 README 演示 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><span>spot-advisor / preview</span><span class="terminal-mode">离线</span></div>
+          <pre><code>python skills/advisor/scripts/ask_expert.py \
+  --preview --protocol v2 \
+  --question "测试期望 False 却得到了默认值。
+  应该改什么，又该怎么验证？"</code></pre>
+          <div class="terminal-result">
+            <div class="result-label"><span class="result-dot" aria-hidden="true"></span> 预览材料 · 0 次模型调用</div>
+            <p><b>目标</b><span>保留明确设置的 False 覆盖值。</span></p>
+            <p><b>证据</b><span>回退逻辑使用了 <code>value or default</code>。</span></p>
+            <p><b>决策</b><span>哪种修改能安全区分缺少的键？</span></p>
+            <p><b>验证</b><span>False 仍是 False；缺少的键使用默认值。</span></p>
+          </div>
+        </div>
+      </div>
+      <figure class="demo-replay wrap">
+        <img src="../assets/spot-advisor-demo.zh-CN.gif" alt="一次已记录演示的视觉回放：三个假值覆盖测试失败，Spot Advisor 预览并返回键存在性判断，然后四项测试全部通过。" width="1280" height="720">
+        <figcaption>一个本地实测流程的设计版回放，并非实时屏幕录像。<a href="https://github.com/stancsz/spot-advisor/blob/main/demo/transcript.md">查看脱敏文字记录</a>。</figcaption>
+      </figure>
+    </section>
+
+    <section class="section wrap install-section" id="install">
+      <div class="install-copy">
+        <p class="eyebrow">03 — 接入现有工作流</p>
+        <h2>一项技能，继续用你的编程智能体。</h2>
+        <p>可搭配 Codex、Claude Code 或兼容网关使用。顾问路由和凭据取决于你的环境；在配置这些之前，可以先运行离线预览。</p>
+        <div class="install-links">
+          <a href="https://github.com/stancsz/spot-advisor/blob/main/docs/install.md">路由和配置指南 <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/stancsz/spot-advisor/tree/main/skills/advisor">查看技能源码 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="install-box">
+        <div class="install-box-label">使用 Skills CLI 安装</div>
+        <code>npx skills add stancsz/spot-advisor --skill advisor</code>
+        <p>按提示选择要安装的智能体。手动安装方式见配置指南。</p>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="evidence">
+      <div class="wrap">
+        <div class="section-heading evidence-heading">
+          <p class="eyebrow">04 — 证据和边界都说清楚</p>
+          <h2>值得参考的结果，也应该经得起核对。</h2>
+          <p>这项公开修复比较在 48 个任务上测试了两种不同工作流。它只能说明本轮观察到的结果，不能证明 Spot Advisor 节省总 Token 或保持了相同的修复质量。</p>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-title"><span>记录在案的研究</span><span>48 个任务</span></div>
+          <div class="evidence-grid">
+            <div class="evidence-cell"><small>独立评测通过</small><strong>各 39 / 48</strong><span>两种流程最终都通过 39 个任务。</span></div>
+            <div class="evidence-cell"><small>15 分钟内通过</small><strong>39 vs 31</strong><span>Astra 独立执行在截止时间前通过更多任务。</span></div>
+            <div class="evidence-cell"><small>记录到的前沿模型 Token</small><strong>11.81M vs 0.0095M</strong><span>Spot Advisor 流程的回执记录到更少前沿模型 Token。</span></div>
+            <div class="evidence-cell"><small>记录到的总 Token</small><strong>11.81M vs 58.14M</strong><span>Spot Advisor 流程使用了更多总 Token。</span></div>
+          </div>
+          <div class="price-note">
+            <span class="price-mark" aria-hidden="true">≈</span>
+            <p><strong>价格估算并不完整。</strong>只有能够计价的请求才可估算 API 等效价格：82.82 美元 vs 4.22 美元。Astra 有 4 个请求、Spot Advisor 有 8 个请求无法计价，因此整轮成本和净节省仍然未知。研究也没有证实修复质量相当。</p>
+          </div>
+          <div class="evidence-links">
+            <a href="https://github.com/stancsz/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/metrics.json">指标</a>
+            <a href="https://github.com/stancsz/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/manifest.json">运行清单</a>
+            <a href="https://github.com/stancsz/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/evidence.jsonl">脱敏回执</a>
+            <a href="https://github.com/stancsz/spot-advisor/blob/main/eval/pricing.json">费率表</a>
+          </div>
+        </div>
+        <div class="paper-row">
+          <div><p class="eyebrow">研究与复现</p><h3>读论文，也核对数据。</h3></div>
+          <p>公开 PDF 记录的是更早的配对研究。2.2 论文草稿及尚未完成的对照仍在审阅中，当前不会将其描述为已发表结果。</p>
+          <a class="button button-outline" href="https://github.com/stancsz/spot-advisor/tree/main/paper">研究资料 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing wrap">
+      <p class="eyebrow">问题更小，验证更明确</p>
+      <h2>让执行者继续推进。<br><em>在下一步可能改变时再调用强判断。</em></h2>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#try-it">试试离线预览 <span aria-hidden="true">↑</span></a>
+        <a class="button button-quiet" href="https://github.com/stancsz/spot-advisor">查看代码仓库 <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer wrap">
+    <a class="wordmark" href="#top"><span class="wordmark-mark" aria-hidden="true">S</span><span>SPOT <b>/</b> ADVISOR</span></a>
+    <p>开源 · MIT · 为可验证的工作而做</p>
+    <a href="../" lang="en">English</a>
+  </footer>
+</body>
+</html>

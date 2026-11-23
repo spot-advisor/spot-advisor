@@ -1,0 +1,67 @@
+{
+  "footer": "一次本地实测的设计版回放；并非实时屏幕录像。",
+  "frames": [
+    {
+      "label": "01 / 复现",
+      "title": "先确认这个决策真的存在",
+      "subtitle": "同一组针对性检查连续两次失败，然后再考虑咨询。",
+      "terminal": "python -m unittest -v  ·  第 1 次 + 第 2 次",
+      "lines": [
+        ["失败", "test_false_is_a_valid_override"],
+        ["失败", "test_zero_is_a_valid_override"],
+        ["失败", "test_empty_string_is_a_valid_override"],
+        ["通过", "test_missing_key_uses_default"],
+        ["说明", "第二次运行复现了相同的 3 项失败"]
+      ]
+    },
+    {
+      "label": "02 / 预览",
+      "title": "发送之前先检查咨询材料",
+      "subtitle": "本地生成精简的 v2 材料，先看清楚问题怎么问。",
+      "terminal": "ask_expert.py --protocol v2 --preview",
+      "lines": [
+        ["目标", "保留明确设置的假值覆盖项"],
+        ["证据", "get(name) or default 会覆盖 False、0 和空字符串"],
+        ["决策", "怎样区分键不存在和键值为假？"],
+        ["验证", "False、0、空字符串都保留；缺少键时才使用默认值"],
+        ["结果", "922 字符的材料 · 0 次模型调用"]
+      ]
+    },
+    {
+      "label": "03 / 咨询",
+      "title": "在决策点问一次",
+      "subtitle": "一次真实 Codex 顾问调用；修改仍由执行者负责。",
+      "terminal": "真实回复摘要 · 英文原答的中文翻译",
+      "lines": [
+        ["判断", "用键存在性检查：回退条件是键缺失，不是值为假。"],
+        ["行动", "return overrides[name] if name in overrides else defaults[name]"],
+        ["验证", "检查 False、0、空字符串的类型和值，以及缺少键的情况。"],
+        ["风险", "避免提前求值默认项，否则可能不必要地触发 KeyError。"]
+      ]
+    },
+    {
+      "label": "04 / 修改",
+      "title": "修改保持小而明确",
+      "subtitle": "只在临时演示副本中应用建议。",
+      "terminal": "settings.py  ·  只改一行",
+      "lines": [
+        ["-", "return overrides.get(name) or defaults[name]"],
+        ["+", "return overrides[name] if name in overrides else defaults[name]"],
+        ["范围", "函数签名不变；缺少键时仍然使用默认值"]
+      ]
+    },
+    {
+      "label": "05 / 验证",
+      "title": "用同一组验收检查复查",
+      "subtitle": "执行者应用小改动后，原本的针对性测试全部通过。",
+      "terminal": "python -m unittest -v",
+      "lines": [
+        ["通过", "test_false_is_a_valid_override"],
+        ["通过", "test_zero_is_a_valid_override"],
+        ["通过", "test_empty_string_is_a_valid_override"],
+        ["通过", "test_missing_key_uses_default"],
+        ["完成", "4 项测试通过 · 顾问建议，执行者验证"]
+      ]
+    }
+  ]
+}

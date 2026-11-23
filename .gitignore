@@ -31,6 +31,9 @@ Thumbs.db
 # Evaluation scratch runs (keep eval/tasks/ and eval/results/ tracked)
 /eval/runs/
 
+# Generated GitHub Pages bundle
+/site/dist/
+
 # LaTeX build artifacts (keep paper/*.tex and paper/*.bib tracked)
 paper/*.aux
 paper/*.log
