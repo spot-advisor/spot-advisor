@@ -1,6 +1,6 @@
 # Spot Advisor 2.2 promotion kit
 
-Prepared for an in-repository launch. Nothing in this file has been posted or submitted.
+Prepared for launch from the official organization repository and Pages site. Nothing in this file has been posted or submitted.
 
 ## Position
 
@@ -22,9 +22,9 @@ Primary evidence: [README results](../README.md#research-tokens-price-estimates-
 
 | Order | Channel | Use | Readiness |
 | --- | --- | --- | --- |
-| 1 | GitHub README and Pages site | Show the decision moment, run the no-call preview, install the skill, then inspect the evidence. | Source is in-repo. Enable Pages only after review. |
+| 1 | GitHub README and Pages site | Show the decision moment, run the no-call preview, install the skill, then inspect the evidence. | Live at [spot-advisor.github.io](https://spot-advisor.github.io/); source of truth is [spot-advisor/spot-advisor](https://github.com/spot-advisor/spot-advisor). |
 | 2 | Skills CLI / skills.sh | Offer a direct install command. Verify the skill is discoverable before adding a directory badge; install counts are discovery signals, not endorsements. | Install command is prepared; indexing is not claimed. |
-| 3 | OpenAI Developer Showcase | Submit the public repo and Pages URL after the site is live. Its form requests a public project URL or hosted try link and setup steps. | Draft below; wait for a live URL. |
+| 3 | OpenAI Developer Showcase | Submit the public repo and Pages URL. Its form requests a public project URL or hosted try link and setup steps. | Draft below; links are live. |
 | 4 | Codex Show-and-Tell | Share the runnable example and ask for feedback on when the agent should consult. | Draft below; post only after demo acceptance. |
 | 5 | LinkedIn | Share the builder's concrete problem and the honest study trade-off. | Draft below; do not cross-post identical copy everywhere. |
 | 6 | r/AgentsOfAI weekly project showcase | A targeted community post with the demo and one technical question. | Recheck the current weekly-thread rules on posting day. |
@@ -44,7 +44,7 @@ The OpenAI Developer Showcase accepts demos and open-source projects ([submissio
 
 **Setup:** Clone the public repository, run the offline preview command in the README, and inspect the packet. For live use, install the skill with the Skills CLI and configure one supported advisor route using the setup guide.
 
-**Project URL:** GitHub repository. Add the GitHub Pages URL after the site is reviewed and enabled.
+**Project URL:** https://github.com/spot-advisor/spot-advisor · **Try it:** https://spot-advisor.github.io/
 
 ### Codex Show-and-Tell
 
@@ -56,7 +56,7 @@ The offline preview is in the repo and makes no model call. The public study is 
 
 I’d like feedback on one thing: what evidence should make an agent ask for advice instead of continuing locally?
 
-Links: [repository](https://github.com/stancsz/spot-advisor) · Pages URL: add after the site is reviewed and enabled · [demo](https://github.com/stancsz/spot-advisor/tree/main/demo)
+Links: [repository](https://github.com/spot-advisor/spot-advisor) · [official site](https://spot-advisor.github.io/) · [demo](https://github.com/spot-advisor/spot-advisor/tree/main/demo)
 
 ### LinkedIn
 
@@ -66,7 +66,7 @@ It gives the agent a way to ask one focused question, see what would be sent, an
 
 The preview is free to try and makes no model call. The research is still mixed: equal final passes in one 48-task study, fewer recorded frontier tokens, more recorded total tokens, and missing receipts. I can’t call that proven net savings or equal quality.
 
-Repo and demo: https://github.com/stancsz/spot-advisor
+Repo: https://github.com/spot-advisor/spot-advisor · Demo: https://spot-advisor.github.io/
 
 If you use coding agents, what would make you decide it’s time to ask for a second opinion?
 

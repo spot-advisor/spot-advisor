@@ -1,4 +1,4 @@
-# Spot Advisor Pages source
+# Spot Advisor official Pages source
 
 The static bilingual landing page lives here:
 
@@ -11,6 +11,6 @@ The static bilingual landing page lives here:
 
 From the repository root, run <code>python site/build.py</code>, then <code>python -m http.server 8000 --directory site/dist</code> and open <code>http://localhost:8000/</code>. The build step creates a clean, self-contained bundle containing only the HTML pages, shared CSS, hero art, and demo replays; it uses only the Python standard library.
 
-## Publishing
+## Official publishing
 
-<code>.github/workflows/pages.yml</code> packages <code>site/dist</code> for GitHub Pages and can only run through **Actions → Deploy GitHub Pages → Run workflow**. The workflow and site source are prepared in-repo; this repository's Pages settings have not been changed and the workflow has not been run.
+The official site is [https://spot-advisor.github.io/](https://spot-advisor.github.io/), served by the organization repository [spot-advisor/spot-advisor.github.io](https://github.com/spot-advisor/spot-advisor.github.io). Its workflow clones this public release repository's <code>main</code> branch, runs <code>python site/build.py</code>, and deploys only <code>site/dist</code>. It refreshes daily and can also be run manually from the Pages repository's **Actions → Publish official site → Run workflow** page.

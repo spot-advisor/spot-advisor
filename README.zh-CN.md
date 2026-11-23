@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="README.md">English</a> · <strong>简体中文</strong><br>
+  <a href="https://spot-advisor.github.io/">官方网站</a> ·
   <a href="#离线试一试">离线预览</a> ·
   <a href="demo/README.md">终端演示</a> ·
   <a href="docs/install.md">安装</a> ·
@@ -16,7 +17,7 @@
 
 Spot Advisor 是面向编程智能体的技能。它会引导当前智能体整理一份精简、可检查的问题材料，在确有判断分岔时向前沿模型咨询。顾问根据材料给出建议和验证方法；修改代码、运行本地检查仍由当前智能体负责。
 
-**安装：**<code>npx skills add stancsz/spot-advisor --skill advisor</code> · **先试用：**[离线预览](#离线试一试) · **完整走一遍：**[终端演示](demo/README.md)
+**安装：**<code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **先试用：**[离线预览](#离线试一试) · **完整走一遍：**[终端演示](demo/README.md)
 
 ![Spot Advisor 一次已记录演示的视觉回放：复现问题、预览材料、咨询一次、应用小改动并验证。此图不是实时屏幕录像。](demo/spot-advisor-demo.zh-CN.gif)
 
@@ -46,7 +47,7 @@ flowchart TB
 装好 Git 和 Python 后，克隆仓库并运行预览。如果已经克隆过，在仓库根目录运行最后一行即可。
 
 ~~~sh
-git clone https://github.com/stancsz/spot-advisor.git
+git clone https://github.com/spot-advisor/spot-advisor.git
 cd spot-advisor
 python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "配置测试期望得到 False，却读到了默认值。代码使用 overrides.get(name) or defaults[name]。该怎么改，怎么验证？"
 ~~~
