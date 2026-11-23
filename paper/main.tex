@@ -6,6 +6,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{tabularx}
 \usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{hyperref}
@@ -69,7 +70,7 @@ Each consultation begins with a local preflight check requiring a bounded four-s
 Because small models often fail to recognize when they are stuck, Spot Advisor pairs optional pre-flight planning on multi-file tasks with deterministic host rules (escalating after two consecutive test failures or repeated edits to the same symbol) enforced via host instruction files (\texttt{AGENTS.md} / \texttt{CLAUDE.md}).
 
 \subsection{Atomic Output Contract and Reasoning Effort Calibration}
-The advisor executes in a single tool-free turn and returns four structured lines: \texttt{Verdict}, \texttt{Do} ($\le 3$ concrete actions), \texttt{Verify} (one exact command or assertion), and \texttt{Risk} (stop condition or \texttt{none}). Crucially, API providers charge hidden chain-of-thought tokens against \texttt{max\_output\_tokens}; capping API limits near the visible target ($250$ tokens) induces reasoning-budget truncation (\texttt{finish\_reason: length}). Spot Advisor therefore defaults to \texttt{--effort medium} (with \texttt{high} for stubborn Round~2+ deadlocks and \texttt{low} for baseline sweeps) paired with scaled API ceilings (\texttt{2048} / \texttt{4096} / \texttt{8192}), enforcing visible conciseness ($150\text{--}400$ words) via system instructions and structured output parsing.
+The advisor executes in a single tool-free turn and returns four structured lines: \texttt{Verdict}, \texttt{Do} ($\le 3$ concrete actions), \texttt{Verify} (one exact command or assertion), and \texttt{Risk} (stop condition or \texttt{none}). API providers charge hidden chain-of-thought tokens against the output-token limit; capping that limit near the visible target ($250$ tokens) can induce reasoning-budget truncation (\texttt{finish\_reason: length}). Spot Advisor therefore defaults to \texttt{--effort medium} (with \texttt{high} for stubborn Round~2+ deadlocks and \texttt{low} for baseline sweeps) paired with scaled API ceilings (\texttt{2048} / \texttt{4096} / \texttt{8192}), enforcing visible conciseness ($150\text{--}400$ words) via system instructions and structured output parsing.
 
 \section{Experimental Setup}
 \label{sec:setup}
@@ -93,17 +94,18 @@ Table~\ref{tab:main-results} summarizes placeholder columns for our Phase~2 benc
 \centering
 \caption{Main benchmark comparison across experimental arms (\textbf{placeholder schema} --- values generated from \texttt{eval/results/} in Phase~2).}
 \label{tab:main-results}
-\begin{tabular}{@{}lcccccc@{}}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrrrrr@{}}
 \toprule
-Arm & \texttt{pass@1} (\%) & Consults & Adv.\ In Tok & Adv.\ Out / Think & $\mathbb{E}[\text{Cost}]$ (\$) & Speedup \\
+Arm & \shortstack{Pass@1\\(\%)} & Consults & \shortstack{Advisor\\input tok.} & \shortstack{Advisor output /\\think tok.} & \shortstack{Expected cost\\(\$)} & Speedup \\
 \midrule
 A1: Small Solo                  & TBD & 0.0 & 0   & 0 / 0     & TBD & $1.0\times$ \\
-A2: Compute-Matched Best-of-N   & TBD & 0.0 & 0   & 0 / 0     & TBD & TBD \\
+A2: Matched B-of-N              & TBD & 0.0 & 0   & 0 / 0     & TBD & TBD \\
 A3: Frontier Solo               & TBD & --- & TBD & TBD / TBD & TBD & TBD \\
-A4: Full-Transcript Advisor     & TBD & TBD & TBD & TBD / TBD & TBD & TBD \\
+A4: Full transcript             & TBD & TBD & TBD & TBD / TBD & TBD & TBD \\
 \textbf{T1: Spot Advisor}       & \textbf{TBD} & \textbf{TBD} & \textbf{TBD} & \textbf{TBD / TBD} & \textbf{TBD} & \textbf{TBD} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \section{Ablation Study, Effort Sweep, and Failure Taxonomy}
@@ -115,9 +117,10 @@ To isolate which design elements drive small-executor gains and quantify the Eff
 \centering
 \caption{Component ablations and Effort $\times$ Visible-Budget sweep (\textbf{placeholder schema} --- populated in Phase~2).}
 \label{tab:ablations}
-\begin{tabular}{@{}lccccc@{}}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrrrr@{}}
 \toprule
-Variant / Setting & \texttt{pass@1} (\%) & Visible Tok & Think Tok & Truncated (\%) & $\mathbb{E}[\text{Cost}]$ (\$) \\
+Variant / Setting & \shortstack{Pass@1\\(\%)} & \shortstack{Visible\\tok.} & \shortstack{Think\\tok.} & \shortstack{Truncated\\(\%)} & \shortstack{Expected cost\\(\$)} \\
 \midrule
 T1 Default (\texttt{medium}, evidence, schema) & TBD & TBD & TBD & TBD & TBD \\
 \quad $-$ Deterministic evidence (prose only)      & TBD & TBD & TBD & TBD & TBD \\
@@ -126,7 +129,7 @@ T1 Default (\texttt{medium}, evidence, schema) & TBD & TBD & TBD & TBD & TBD \\
 \quad Effort = \texttt{low}                      & TBD & TBD & TBD & TBD & TBD \\
 \quad Effort = \texttt{high}                     & TBD & TBD & TBD & TBD & TBD \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \section{Threats to Validity and Limitations}

@@ -4,7 +4,7 @@
 
 The 2.2 study compares four workflows on the same repair assignments. The evaluation records executor and advisor usage, including cached inputs, and grades final patches with the same upstream tests. A separate study design compares question formats from a common saved decision point. The [roadmap](../ROADMAP.md) describes the peer comparisons and visual pilot.
 
-The 2.2 manuscript and replication data are in private review. The public repository includes a LaTeX scaffold, run commands, and the task manifest.
+The 2.2 manuscript and replication data are in private review. The public repository includes a LaTeX scaffold, run commands, and the task manifest. The PDF generated from `paper/main.tex` is a scaffold preview with `TBD` result tables; it is not the public paired-study preprint or an arXiv submission. The public preprint is linked separately below.
 
 [Research protocol](../docs/research-protocol.md) · [Task assignments](../eval/study22-tasks.json) · [Evaluation guide](../eval/README.md)
 
