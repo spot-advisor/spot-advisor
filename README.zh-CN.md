@@ -9,6 +9,7 @@
 <p align="center">
   <a href="README.md">English</a> · <strong>简体中文</strong><br>
   <a href="https://spot-advisor.github.io/">官方网站</a> ·
+  <a href="docs/market-position.md">市场定位与成熟度</a> ·
   <a href="#离线试一试">离线预览</a> ·
   <a href="demo/README.md">终端演示</a> ·
   <a href="docs/install.md">安装</a> ·
@@ -16,6 +17,8 @@
 </p>
 
 Spot Advisor 是面向编程智能体的技能。它会引导当前智能体整理一份精简、可检查的问题材料，在确有判断分岔时向前沿模型咨询。顾问根据材料给出建议和验证方法；修改代码、运行本地检查仍由当前智能体负责。
+
+**成熟度：**公开研究原型。技能和离线预览可以使用；48 个任务的研究尚未证明修复质量相当、整轮节省或外部用户采用。详见[市场定位与下一项实验](docs/market-position.md)。
 
 **安装：**<code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **先试用：**[离线预览](#离线试一试) · **完整走一遍：**[终端演示](demo/README.md)
 
@@ -99,6 +102,16 @@ python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "
 价格估算采用研究记录的 2026 年 11 月 20 日 API 费率，分别计算普通输入、缓存读取、缓存写入和输出。Astra 独立执行有 4 个请求无法计价，Spot Advisor 方案有 8 个，因此这些数字只代表可计价请求，无法确定整轮成本或净节省，也还没有证实两组修复质量相当。[研究费率表](eval/pricing.json) · [请求回执](eval/results/2026-11-20/formal-collection/evidence.jsonl)
 
 两组都通过的 36 个任务中，Astra 均更早完成评测。详细结果见[记录指标](eval/results/2026-11-20/formal-collection/metrics.json)、[运行清单](eval/results/2026-11-20/formal-collection/manifest.json)和[用时核查](eval/results/2026-11-20/formal-collection/delivery.json)。[图表生成脚本](eval/render_readme_charts.py)可以重新生成对比图。
+
+## 产品与研究价值
+
+- **用户掌控：**执行者选择证据、决定是否咨询、应用建议并验证工作。
+- **聚焦干预：**只有本地检查仍留下实际决策分岔时才咨询。
+- **结果可检查：**先预览问题材料，并要求建议附有可执行的验证方法。
+- **证据可复现：**每个量化说法都对应仓库内的评测资料。
+- **限制说清楚：**分别报告任务质量、耗时、前沿模型 Token、总 Token 和可计价成本，并保留缺失回执。
+
+[市场定位与成熟度](docs/market-position.md) · [官方网站](https://spot-advisor.github.io/)
 
 ## 研究与论文
 

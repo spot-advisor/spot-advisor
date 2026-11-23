@@ -9,6 +9,7 @@
 <p align="center">
   <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a><br>
   <a href="https://spot-advisor.github.io/">Official site</a> ·
+  <a href="docs/market-position.md">Market position and maturity</a> ·
   <a href="#try-it-offline">Try the offline preview</a> ·
   <a href="demo/README.md">Run the terminal demo</a> ·
   <a href="docs/install.md">Install</a> ·
@@ -17,7 +18,11 @@
 
 Spot Advisor is a skill for coding agents. It guides your coding agent to prepare a compact, reviewable question for a frontier model when a real decision remains. The advisor returns a recommendation and a way to check it; your coding agent keeps control of the edits and local verification.
 
+**Maturity:** public research prototype. The skill and offline preview are usable; the 48-assignment study did not establish comparable repair quality, full-run savings, or external adoption. See the [market position and next experiment](docs/market-position.md).
+
 **Install:** <code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **Try first:** [offline preview](#try-it-offline) · **Walk through the full example:** [terminal demo](demo/README.md)
+
+**Maturity:** public research prototype. The skill and offline preview are usable; the 48-assignment study did not establish comparable repair quality, full-run savings, or external adoption. See the [market position and next experiment](docs/market-position.md).
 
 ![A visual replay of the recorded Spot Advisor demo: reproduce a bug, preview a packet, ask once, apply a small fix, and verify it. This is not a live screen recording.](demo/spot-advisor-demo.gif)
 
@@ -99,6 +104,16 @@ For requests with priceable usage receipts, the estimated API-equivalent cost wa
 The estimates apply the study’s November 20, 2026 API rates to recorded input, cache reads, cache writes, and output. Four Astra-only requests and eight Spot Advisor requests could not be priced. These results describe priceable requests; full-run cost, net savings, and equivalent repair quality remain unresolved. [Study rate card](eval/pricing.json) · [Request receipts](eval/results/2026-11-20/formal-collection/evidence.jsonl)
 
 Astra completed grading sooner on all 36 issues both workflows passed. The study results and limitations are in the [recorded metrics](eval/results/2026-11-20/formal-collection/metrics.json), [run manifest](eval/results/2026-11-20/formal-collection/manifest.json), and [timing audit](eval/results/2026-11-20/formal-collection/delivery.json). The [chart generator](eval/render_readme_charts.py) rebuilds the comparison graphic.
+
+## Product and research values
+
+- **User control:** the executor selects evidence, chooses whether to ask, applies advice, and verifies the work.
+- **Focused intervention:** consult only when local checks leave a meaningful decision fork.
+- **Inspectability:** preview the packet and require a checkable next action.
+- **Reproducible evidence:** connect every quantitative claim to committed evaluation artifacts.
+- **Honest limits:** separate task quality, time, frontier tokens, total tokens, and priceable cost; keep missing receipts visible.
+
+[Market position and maturity](docs/market-position.md) · [Official site](https://spot-advisor.github.io/)
 
 ## Research and paper
 

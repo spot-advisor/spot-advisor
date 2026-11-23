@@ -290,3 +290,11 @@ h1 em, .closing h2 em { color: var(--blue); font-weight: 500; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
+
+.market-section { display: grid; grid-template-columns: .8fr 1.2fr; gap: 54px; align-items: center; padding-top: 54px; padding-bottom: 67px; border-top: 1px solid var(--line); }
+.market-heading h2 { margin: 10px 0 0; font-size: clamp(2.4rem, 4.5vw, 3.7rem); line-height: 1; letter-spacing: -.06em; }
+.market-heading h2 em { color: var(--green); font-family: var(--serif); font-weight: 400; }
+.market-copy p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+.market-copy strong { color: var(--ink); }
+.market-copy a { display: inline-block; margin-top: 4px; color: var(--blue); font-size: 11px; font-weight: 700; text-underline-offset: 4px; }
+@media (max-width: 700px) { .market-section { grid-template-columns: 1fr; gap: 20px; padding-top: 45px; padding-bottom: 50px; } }
