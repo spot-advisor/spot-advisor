@@ -1,0 +1,121 @@
+\documentclass[10pt]{article}
+\usepackage[hmargin=1in,vmargin=0.85in]{geometry}
+\usepackage{booktabs,graphicx}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\setlength{\emergencystretch}{1em}
+\input{frontmatter}
+\input{details}
+\date{November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\section{Introduction}
+A coding agent inspecting a chart has a choice about what to send a second model. It can forward its inspection record, write a summary, or quote the task and identify the exact file it inspected. The chart itself can travel with all three requests. The second model supplies advice; the first decides what to save. A useful comparison must therefore track both the information at the handoff and the quality of the file that eventually reaches the user.
+
+A structured packet can preserve a requirement that an informal summary omits. It can also spend more characters identifying a file than it saves by omitting an inspection log. To separate these effects, we hold the decision point, media, final executor, advisor route, and time budget fixed within each task. We compare the complete shareable checkpoint (Full), a free-text summary produced by the executor (Summary), and a packet built by the Spot Advisor 2.4 caller (Scoped). Here a checkpoint is a bounded task record assembled after a local inspection. It does not contain an entire developer session.
+
+Our primary question is how much verified delivery quality could be lost by using the structured packet. A separate question is whether the entire workflow costs less per verified delivery. The summary condition provides a descriptive comparison under the same maximum text length. These questions are conditional on asking for advice. Every arm can consult once, so this experiment cannot estimate the value of initiating a consultation.
+
+\section{Related work}
+LLMLingua uses a budget controller and token-level selection to shorten prompts for inference \cite{llmlingua}. Kummer et al.\ measure the cost of compression itself and show that end-to-end latency depends on the hardware and length regime \cite{kummer}. Our unit of intervention is a handoff between two model roles. A summary adds an executor request, whereas a structured packet incurs local preparation and carries explicit provenance. Comparing advisor tokens alone would omit one of those costs.
+
+Liu et al.\ vary the position of relevant information in long contexts and find that access to the same evidence does not guarantee the same answer \cite{middle}. Here the contexts are short, and the format can change which inspection details the advisor sees. FrugalGPT studies how a cascade can route queries among models with different prices and capabilities \cite{frugal}. We keep the same models within a task and vary the record sent between them. This isolates a question that a model-routing comparison would otherwise combine with the effects of model choice.
+
+\section{Methods}
+\paragraph{Sampling.}
+We used seeded, modality-specific shuffles of the sanitized MBPP test split \cite{mbpp}, ChartQA test split \cite{chartqa}, and US English FLEURS test split \cite{fleurs}. Eligible programming tasks had a recognizable Python function signature, at least three supplied assertions and no test imports. A task exposed the signature and first assertion. Chart items required a labeled PNG of at most 300,000 bytes. Speech items were three to thirteen seconds long with at least five reference words. The sampler deduplicated task keys and normalized prompts or transcripts, retaining at most one question for any chart image and one recording for any sentence ID. We converted audio to 16-bit PCM WAV. Gold answers, reference transcripts and held-out assertions stayed outside model prompts.
+
+\paragraph{Assignment and calibration.}
+Each sampled source item defines a matched triple. The first \PilotN{} items across strata were reserved for calibration. During calibration, the parser rejected outputs containing a provider completion marker. The candidate was amended before confirmation and the same calibration tasks were run again with fresh responses. Both pilot cohorts remain archived and contribute no outcomes to the primary comparison. The amended pilot had \PilotDiscordant{} discordant Full--Scoped pairs. We used the upper one-sided 80\% exact binomial bound on discordance in a normal-approximation sample-size calculation with 80\% target power under equal success rates. This gave \DesignTarget{} tasks before the registered cap of \StudyN{}. The cap limited the precision available to distinguish small effects. For confirmation, each modality contributed equally. All six arm orders occurred equally often within each modality. Dispatches could overlap in wall time. The locally versioned protocol and analysis were published with the release after collection.
+
+\paragraph{What the models received.}
+Full sends the checkpoint as formatted text: the brief, delivery requirement, file identity, applicable inspection measurements, observation and decision question. Summary asks the executor to describe decisive evidence in its own words. The host appends the common decision question and checks the total text length. Scoped uses the production handoff builder to serialize the quoted brief, revision, observations, file and log digests, checks and question. Summary and Scoped each have a 4,000-character ceiling. The cap applies to the outgoing text. The same source PNG or PCM WAV bytes were attached separately to the advisor request in every applicable arm.
+
+For example, in archived task \texttt{text-009} the public assertion admitted strings whose length equaled the threshold. Full included that assertion in the inspection record. Summary interpreted it as an inclusive threshold and suggested an implementation. Scoped quoted the inspection and bound it to the revision and log digest. These are different transformations of the same checkpoint: one can introduce an interpretation, while another can repeat literal evidence alongside additional identifiers. Ground-truth hidden assertions did not travel in any packet.
+
+The executor was requested under the recorded identifier \texttt{gpt-6-luna} at maximum reasoning effort. Text and charts used the Codex subscription route for \texttt{gpt-6.2-astra} at medium effort. Audio used the configured \texttt{gemini-subscription-argon} gateway route. The advisor received a common four-field reply instruction within a modality. A valid action or request for evidence could be passed back. If a reply failed parsing or the route was unavailable, the executor could still submit. The final executor received its textual checkpoint and usable advice. It had no direct media attachment in the submission step. For chart and speech tasks, the advisor was therefore the model with direct access to the original pixels or samples.
+
+\paragraph{Endpoint and costs.}
+A grader with no arm input scored each submitted file. MBPP submissions ran against the original assertions in a fresh network-isolated Python container. Chart answers passed on a case-insensitive reference match or a finite numerical value within 5\% relative error; a zero reference required numerical equality. For speech, we case-folded the text, replaced punctuation with spaces, normalized whitespace, and accepted a word edit distance at most 15\% of the reference word count. An assignment counted as verified only if grading succeeded within \Deadline{} seconds of starting that assignment. Preparation, consultations, submission and grading were inside this deadline.
+
+For the primary contrast let $W$ count tasks verified only under Scoped in the Full--Scoped pair, and $L$ count those verified only under Full. The observed rate difference is $(W-L)/n$. We inverted the paired score test using the constrained multinomial model of Tango \cite{tango}. Noninferiority required a one-sided 95\% lower bound strictly above $-5$ percentage points on the equal-strata workload. The margin is a design tolerance. Other contrasts and stratum-specific bounds are descriptive.
+
+We estimated API-equivalent dollars from the frozen rate card and the executor and advisor receipts, including the summary-generation request and failed attempts when usage was available. For an arm, cost per success is the total estimated request cost divided by the number of verified deliveries in the \emph{same} priceable task set. The prespecified cost criterion required a one-sided 95\% upper bound of at most 0.90 on the Scoped/Full ratio. The analysis resampled complete task pairs within modality 10,000 times. An unpriced route leaves the corresponding full-workload estimand unidentified. Elapsed time includes local and service delays. The estimates describe request-equivalent prices rather than charges on a subscription bill.
+
+\section{Results}
+\begin{table}[ht]
+\centering\input{delivery}
+\caption{Files verified by deadline and paired Scoped--Full differences. $W$ and $L$ count discordant tasks. Differences and one-sided 95\% lower bounds are in percentage points.}
+\label{tab:quality}
+\end{table}
+
+All \Assignments{} assignments produced files and \LateCount{} exceeded the deadline. Table~\ref{tab:quality} shows why the paired result differs from a comparison of independent success rates. Scoped uniquely passed \ScopedOnly{} tasks and Full uniquely passed \FullOnly{}. The aggregate lower bound cleared the registered margin and still allowed a small loss. The two formats had identical marginal pass counts for programming and chart reading. On charts that equality masks changes in which tasks passed. Speech contributed the observed net gain. The per-modality intervals are wider and do not support extending the aggregate conclusion to every input type (Figure~\ref{fig:bounds}).
+
+\begin{figure}[ht]
+\centering\includegraphics[width=.87\linewidth]{paired-quality.png}
+\caption{Observed paired differences (dots) and their one-sided lower bounds (left ends). The dashed line marks the registered margin for the overall comparison.}
+\label{fig:bounds}
+\end{figure}
+
+Summary and Scoped verified the same total number of files. The two arms nevertheless disagreed on \SummaryDisagreement{} tasks. Summary passed more chart tasks and fewer speech tasks. Replacing one format with another can therefore change the delivered file even when the marginal success rate is unchanged.
+
+\begin{table}[ht]
+\centering\input{packets}
+\caption{Median transmitted text length in characters, excluding attachments, and the number of matched tasks where Scoped was strictly shorter than Full. Descriptive analysis of archived packets.}
+\label{tab:packets}
+\end{table}
+
+Table~\ref{tab:packets} tests an assumption implicit in calling the handoff ``compressed.'' Scoped tended to shorten the richer audio inspection record, which included a sequence of amplitude measurements. On the programming tasks the complete checkpoint was already short, and the structured envelope never shortened it. The data identify the effect of assigning these formats on this workload. They cannot isolate a causal effect of reducing length while holding information content constant.
+
+\begin{table}[ht]
+\centering\small\input{usage}
+\caption{Recorded executor and advisor input/output tokens, assignments with known advisor input, and median elapsed seconds per assignment. Executor input coverage was \ExecUsageCoverage{} in every arm. Unknown usage is excluded from totals.}
+\label{tab:usage}
+\end{table}
+
+Summary moved work upstream: the executor generated the summary and then the submission. It had the greatest recorded executor input and output and the longest median completion time (Table~\ref{tab:usage}). Scoped used more recorded advisor input than Full. Cache and reasoning-token coverage vary by route. Full, Summary and Scoped had respectively \UnusableFull{}, \UnusableSummary{} and \UnusableScoped{} consultations without a usable reply, all on the audio route. For example, in the exploratory inspection of \texttt{audio-011}, Full's returned advice failed parsing and its submitted transcript failed the word-error test. Scoped received a parseable reply and delivered the reference words. This pair illustrates a path from response format to final delivery. A single realization does not show why the model produced either reply.
+
+\begin{table}[ht]
+\centering\input{prices}
+\caption{API-equivalent US cents per verified file on completely priceable strata. Ratios compare Scoped with Full. Upper denotes the one-sided 95\% paired bootstrap upper bound.}
+\label{tab:prices}
+\end{table}
+
+All programming and chart assignments were priceable, covering \PriceCoverage{} tasks per arm. The observed unit costs and the stratum-specific bounds appear in Table~\ref{tab:prices}. Neither priceable stratum cleared the prespecified savings threshold. The speech advisor had no usable rate in the frozen card. Combining the known charges with successes from all modalities would put different task sets in the numerator and denominator. We therefore leave the overall ratio open.
+
+\section{Discussion}
+A handoff has at least two jobs: carry observations forward and make it possible to check which file those observations describe. On a short programming checkpoint, adding an artifact digest and a separately named log digest can increase the text budget even when both identifiers serve a valid purpose. An interface that promises compression should measure the transmitted packet against the actual baseline for that task. A character ceiling describes a maximum, while the paired measurements describe what the system sent.
+
+The structured workflow met the registered quality tolerance on the target mixture. The comparison offers little reason to prefer its aggregate success rate over a free summary here. Choosing between the two also requires knowing where computation occurs, whether a user needs traceable evidence, and which failures matter. In particular, an application using the executor for its own media inspection would have a recovery path the present executor lacked.
+
+\paragraph{Limits to inference.}
+The three benchmarks contain short public tasks that may have appeared in training. Sampling removed duplicate source items, but repeated speakers, task templates and shared chart conventions can induce residual dependence. A code module passing the supplied assertions may still fail another specification-consistent input. The speech threshold can accept small transcription errors. Thresholds, equal modality weights and the deadline characterize this workload; changing them defines a different estimand. One realization per task and arm samples hosted-model and service variability without separately estimating it. The paired bound uses a pooled matched-task model and does not estimate variation across provider revisions or deployments.
+
+Advisor identity varies with modality. Cross-modality differences can reflect the input, the route, or its response parser. The study uses a constructed inspection checkpoint and mandatory consultation. It supplies no comparison with local-only execution, spontaneous escalation, real longitudinal repository work, or a developer choosing what to send. The separate native-host walkthroughs used automated testers and do not measure human adoption. Local hardware and subscription charges also limit the financial interpretation. A follow-up could sample longer naturally occurring checkpoints and cross media access at submission with handoff format, measuring both packet length and final verification under a complete rate card.
+
+\paragraph{Artifacts and reproducibility.}
+The \href{https://github.com/spot-advisor/spot-advisor/tree/v2.4.0/eval/results/spot24-release}{versioned archive} includes assignments, submissions, timing, recorded model identifiers, and input and output digests. The \href{https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/compression-confirmation-24.md}{frozen protocol} records the amendment and decision thresholds. A separate checkout and Python environment on the same machine reconstructed the public inputs and reproduced all \Submitted{} submitted-file grades, including all \TotalPass{} passing outcomes. Regrading needs the pinned data and grading image. Rebuilding the manuscript needs only the public archive and plotting dependencies. The \href{https://github.com/spot-advisor/spot-advisor/tree/paper-2.4-v1/paper/manuscript24}{source package} provides these instructions. AI tools assisted with software implementation, experiment execution and drafting.
+
+\begin{thebibliography}{9}
+\bibitem{llmlingua} H. Jiang, Q. Wu, C.-Y. Lin, Y. Yang, and L. Qiu.
+\href{https://aclanthology.org/2023.emnlp-main.825/}{LLMLingua: Compressing Prompts for Accelerated Inference of Large Language Models}. EMNLP, 2023.
+\bibitem{kummer} C. Kummer, L. Jurkschat, M. F\"arber, and S. Vahdati.
+\href{https://arxiv.org/abs/2604.02985}{Prompt Compression in the Wild: Measuring Latency, Rate Adherence, and Quality for Faster LLM Inference}. arXiv:2604.02985, 2026.
+\bibitem{middle} N. F. Liu et al.
+\href{https://aclanthology.org/2024.tacl-1.9/}{Lost in the Middle: How Language Models Use Long Contexts}. TACL, 12, 157--173, 2024.
+\bibitem{frugal} L. Chen, M. Zaharia, and J. Zou.
+\href{https://arxiv.org/abs/2305.05176}{FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance}. arXiv:2305.05176, 2023.
+\bibitem{mbpp} J. Austin et al.
+\href{https://arxiv.org/abs/2108.07732}{Program Synthesis with Large Language Models}. arXiv:2108.07732, 2021.
+\bibitem{chartqa} A. Masry et al.
+\href{https://aclanthology.org/2022.findings-acl.177/}{ChartQA: A Benchmark for Question Answering about Charts with Visual and Logical Reasoning}. Findings of ACL, 2022.
+\bibitem{fleurs} A. Conneau et al.
+\href{https://arxiv.org/abs/2205.12446}{FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech}. arXiv:2205.12446, 2022.
+\bibitem{tango} T. Tango.
+\href{https://pubmed.ncbi.nlm.nih.gov/9595618/}{Equivalence test and confidence interval for the difference in proportions for the paired-sample design}. Statistics in Medicine, 17, 891--908, 1998.
+\end{thebibliography}
+\end{document}

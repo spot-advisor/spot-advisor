@@ -4,7 +4,7 @@
 
 The [release record](docs/release-2.4.md) covers installation, upgrade, rollback, native host consultations and independent artifact checks. The [diagnostic findings](docs/spot-advisor-2.4-findings.md) motivated the changes to acceptance conditions, evidence identity and bilingual questions. The [original candidate plan](docs/spot-advisor-2.4-plan.md) preserves the design history.
 
-After 2.4, prioritize the [multimodal manuscript](paper/compression24/README.md). Develop the related work and discussion, review the frozen tables against their source records, and prepare the final arXiv text. Preserve the registered confirmation comparison when adding any exploratory analyses.
+The [approved release and manuscript plan](docs/spot-advisor-2.4-release-and-paper-plan.md) records the transition to writing. The [full research manuscript](paper/manuscript24/README.md) is versioned separately from the stable software and includes its reproducible sources and arXiv metadata.
 
 ## Spot Advisor 2.2 research and planning
 

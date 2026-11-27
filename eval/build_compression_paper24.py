@@ -103,6 +103,10 @@ def build(archive, output):
             f" the registered cap of {design['tasks']} was applied."
         )
     (output / "finding.tex").write_bytes((results + "\n").encode())
+    draw_quality(contrasts, output / "paired-quality.png")
+
+
+def draw_quality(contrasts, path):
     fig, ax = plt.subplots(figsize=(6.3, 2.4), layout="constrained")
     for y, key in enumerate(("audio", "image", "text", "all")):
         c = contrasts[key]
@@ -119,7 +123,7 @@ def build(archive, output):
     ax.set_ylim(-0.6, 3.65)
     ax.spines[["top", "right", "left"]].set_visible(False)
     ax.legend(loc="upper left", fontsize=8, frameon=False)
-    fig.savefig(output / "paired-quality.png", dpi=220)
+    fig.savefig(path, dpi=220)
     plt.close(fig)
 
 

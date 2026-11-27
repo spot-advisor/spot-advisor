@@ -1,5 +1,7 @@
 # Spot Advisor research
 
+The [full 2.4 manuscript](manuscript24/README.md) reports the frozen paired handoff study, with downloadable PDF, TeX source, metadata and offline reproduction instructions.
+
 The [2.4 evidence draft and reproduction guide](compression24/README.md) covers matched text, image and speech tasks. Its LaTeX entry point and generated tables are separate from the earlier repair manuscript below.
 
 *When Is Frontier Advice Worth Asking For?* is a working manuscript by **Stan Chen**. It examines when a coding agent should ask for one frontier-model judgment and how the resulting workflow changes independent verification, elapsed time, token use, and estimated cost.
