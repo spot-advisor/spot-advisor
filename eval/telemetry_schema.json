@@ -1,6 +1,27 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Spot Advisor paired evaluation receipt",
+  "if": {"required": ["schema_version"], "properties": {"schema_version": {"const": 3}}},
+  "then": {
+    "type": "object",
+    "required": ["schema_version", "id", "case", "phase", "arm", "modality", "verified_by_deadline", "correct", "submitted", "executor_attempts", "executor_usage", "checkpoint_sha256", "seconds"],
+    "properties": {
+      "schema_version": {"const": 3},
+      "phase": {"enum": ["pilot", "formal"]},
+      "arm": {"enum": ["full", "summary", "scoped"]},
+      "modality": {"enum": ["text", "image", "audio"]},
+      "id": {"type":"string","minLength":1},
+      "case": {"type":"string","minLength":1},
+      "verified_by_deadline": {"type":"boolean"},
+      "correct": {"type":"boolean"},
+      "submitted": {"type":"boolean"},
+      "seconds": {"type":["number","null"],"minimum":0},
+      "executor_attempts": {"type":"array"},
+      "executor_usage": {"$ref":"#/$defs/usage"},
+      "checkpoint_sha256": {"type":"string","pattern":"^[a-f0-9]{64}$"}
+    }
+  },
+  "else": {
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -209,6 +230,7 @@
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
     }
+  }
   },
   "$defs": {
     "usage": {

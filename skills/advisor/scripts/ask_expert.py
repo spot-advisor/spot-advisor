@@ -550,13 +550,19 @@ def parse_v2_advice(advice: str) -> dict | None:
     return fields
 
 
+def decision_label(verdict: str) -> str:
+    match = re.match(r"^(ACTION|NEEDS_EVIDENCE|ACCEPT|REWORK)(?=$|[\s:,.—–-])", verdict)
+    return match.group(1) if match else ""
+
+
 def normalize_audio_advice(advice: str) -> str:
     """Remove only a known finish envelope surrounding identical complete answers."""
     finish = re.compile(
         r'(?P<response>\{\s*"toolAction"\s*:\s*"Finishing the response"\s*,\s*'
         r'"toolSummary"\s*:\s*"Finish task"\s*\})|'
         r'\{\s*"toolAction"\s*:\s*"(?P<verb>Finishing|Completing) (?:the )?'
-        r'(?P<task>(?:audio )?(?:(?:review|evaluation|comparison|consultation) )?task)"\s*,\s*'
+        r'(?P<task>(?:audio )?(?:(?:review|evaluation|comparison|consultation|transcription) )?task'
+        r'|interaction|transcription decision)"\s*,\s*'
         r'"toolSummary"\s*:\s*"(?:(?P<summary>Finish|Complete) (?:the )?(?P=task)|Task completion)"\s*\}'
     )
     matches = list(finish.finditer(advice))
@@ -684,7 +690,7 @@ class Consultation:
                 fields = parse_v2_advice(receipt["advice"])
                 if fields is not None and self.handoff is not None:
                     phase = self.handoff["phase"]
-                    verdict = fields["verdict"].split()[0].rstrip(":")
+                    verdict = decision_label(fields["verdict"])
                     allowed = {"NEEDS_EVIDENCE", "ACTION"} if phase == "decision" else {
                         "NEEDS_EVIDENCE", "ACCEPT", "REWORK",
                     }

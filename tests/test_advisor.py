@@ -852,6 +852,10 @@ def test_audio_finish_article_only_normalized_for_matching_answers():
     assert ask_expert.normalize_audio_advice(prefix+"\n"+answer) == answer
     mismatched = answer+envelope+answer.replace("rising","falling")
     assert ask_expert.normalize_audio_advice(mismatched) == mismatched
+    marker = '{"toolAction":"Finishing the interaction","toolSummary":"Finish interaction"}'
+    assert ask_expert.normalize_audio_advice(answer+marker+answer) == answer
+    assert ask_expert.decision_label("ACTION, save the selected clip.") == "ACTION"
+    assert ask_expert.decision_label("ACCEPTED by mistake") == ""
 
 
 @pytest.mark.parametrize(("known_tokens", "unknown_rounds"), [(101, 0), (20, 1)])

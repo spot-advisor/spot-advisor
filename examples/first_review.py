@@ -6,6 +6,8 @@ from hashlib import sha256
 import json
 import math
 from pathlib import Path
+import re
+import shutil
 import wave
 
 
@@ -23,7 +25,11 @@ def prepare(folder, modality):
         asset = folder / "expiry.py"
         asset.write_bytes(b"def expired(now, deadline):\n    return now > deadline\n")
         brief = "Repair the deadline comparison in expiry.py.\nAt the exact deadline an entry is expired."
-        observation = "Independent boundary probe: expired(19,20)=False, expired(20,20)=False, expired(21,20)=True."
+        import runpy
+
+        expired = runpy.run_path(str(asset))["expired"]
+        line = asset.read_text(encoding="utf-8").splitlines()[1].strip()
+        observation = f"expiry.py:2 contains {line!r}. Actual expired(now,20) for now=19,20,21: {[expired(n, 20) for n in (19, 20, 21)]}. The deadline case expects True."
         question = "Which comparison should change to satisfy the deadline rule?"
     elif modality == "image":
         from PIL import Image, ImageDraw
@@ -39,6 +45,18 @@ def prepare(folder, modality):
         observation = "Image decoded; there are three labeled bars. The local check measured file identity only."
         handoff["image_sha256"] = [sha256(asset.read_bytes()).hexdigest()]
         question = "Which visible label should the executor save?"
+    elif modality == "audio":
+        asset = folder / "sound.wav"
+        shutil.copyfile(Path(__file__).parent / "media/dispatch.wav", asset)
+        brief = (
+            "Listen to the dispatch message and write the exact spoken words on the first line of answer.txt.\n"
+            "On the second line write approximately when speech begins, in seconds as a number."
+        )
+        observation = (
+            "The original mono PCM WAV decodes at 16 kHz. There is no local transcript."
+        )
+        handoff["audio_sha256"] = [sha256(asset.read_bytes()).hexdigest()]
+        question = "Which words are spoken, and when does the first word begin?"
     else:
         asset = folder / "sound.wav"
         samples = array("h")
@@ -109,6 +127,13 @@ def verify(folder):
     )
     if task == "first-image":
         return answer == ["M"]
+    if task == "first-audio":
+        return (
+            len(answer) == 2
+            and re.findall(r"[a-z]+", answer[0].lower())
+            == "the cedar gate opens at noon".split()
+            and abs(float(answer[1]) - 1.2) <= 0.35
+        )
     return (
         len(answer) == 2
         and answer[0].strip().lower() == "rising"
@@ -118,7 +143,7 @@ def verify(folder):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["text", "image", "audio", "verify"])
+    parser.add_argument("action", choices=["text", "image", "audio", "tone", "verify"])
     parser.add_argument("directory", type=Path)
     args = parser.parse_args()
     if args.action == "verify":

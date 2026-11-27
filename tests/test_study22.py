@@ -89,7 +89,7 @@ def test_candidate_gates_on_live_revision_and_local_checks(monkeypatch, tmp_path
     ask("evaluation_interrupted")
     archived = clean({"turn": {}, "executor_attempts": [], "consultations": [], "tool_events": state.events})
     assert archived["tool_events"] == state.events
-    SCHEMA.evolve(schema=SCHEMA.schema["properties"]["tool_events"]).validate(archived["tool_events"])
+    SCHEMA.evolve(schema=SCHEMA.schema["else"]["properties"]["tool_events"]).validate(archived["tool_events"])
 
 
 def test_balanced_orders_and_missing_usage_gate(monkeypatch):

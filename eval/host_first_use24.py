@@ -160,6 +160,7 @@ def run(out, host, audio_url):
     package = project / "candidate"
     for name in (
         "examples/first_review.py",
+        "examples/media/dispatch.wav",
         "scripts/install_skill.py",
         "docs/first-consultation-24.md",
     ):

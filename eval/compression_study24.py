@@ -36,6 +36,8 @@ FREEZE_FILES = [
     ROOT / "skills/advisor/scripts/ask_expert.py",
     ROOT / "skills/advisor/SKILL.md",
     ROOT / "eval/direct_session.py",
+    ROOT / "eval/compression_report24.py",
+    ROOT / "eval/telemetry_schema.json",
 ]
 DEADLINE = 180
 
@@ -193,7 +195,7 @@ def ask(case, job, packet, audio_url, deadline, folder):
         if audio_parts:
             advice = transport.normalize_audio_advice(advice)
         fields = transport.parse_v2_advice(advice)
-        verdict = fields["verdict"].split()[0].rstrip(":") if fields else ""
+        verdict = transport.decision_label(fields["verdict"]) if fields else ""
         valid = raw.get("model") == requested and verdict in (
             "ACTION",
             "NEEDS_EVIDENCE",
