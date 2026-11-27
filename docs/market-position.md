@@ -1,7 +1,7 @@
 # Spot Advisor: market position and maturity
 
-**Reviewed:** 2026-11-23<br>
-**Product readiness:** public research prototype. The skill and offline preview are usable, with a formal 48-assignment study and reproducible receipts. Cross-host task success and commercial support readiness are not established.<br>
+**Reviewed on November 27, 2026**<br>
+**Product readiness.** Version 2.4 is a public software release. Automated first-use testers installed the skill in Codex and Claude Code, consulted on text, a chart and a WAV recording, and verified each resulting file. See the [host and backend qualifications](release-2.4.md) for the exact routes and their limits.<br>
 **Market validation:** hypothesis. The repository has no measured external repeat-use cohort, customer demand, paid usage, or willingness-to-pay result.
 
 ## Audience and job
