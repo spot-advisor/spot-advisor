@@ -2,6 +2,8 @@
 
 The [LaTeX entry point](main.tex) and its generated inputs are a writing handoff. The software tag identifies the tested release; the [preregistration](../../docs/compression-confirmation-24.md) describes the matched task design, two calibration cohorts and confirmation gate. The earlier paired-repair PDF in the parent directory covers a different experiment.
 
+Download the compiled [evidence draft (PDF)](https://github.com/spot-advisor/spot-advisor/releases/download/v2.4.0/spot-advisor-2.4-evidence.pdf) or the [self-contained TeX source (ZIP)](https://github.com/spot-advisor/spot-advisor/releases/download/v2.4.0/spot-advisor-2.4-tex.zip) to read or edit this version.
+
 ## Rebuild without model access
 
 Use a clean checkout of the tag, Python 3.12 or newer and the [research dependencies](requirements.txt). The tables and plot read the archived final submissions and receipt counts. The full reproduction also needs the pinned public dataset downloads and the Docker image recorded in the run manifest.

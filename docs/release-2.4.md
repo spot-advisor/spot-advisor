@@ -18,6 +18,8 @@ The additional direct Claude CLI transport completed an ordinary v2 text consult
 
 ## Reproduce the study
 
+Run `python -B -m pytest -q -p no:cacheprovider` from the checkout for the software regression suite. The terminal demo has its own intentionally broken starting fixture and runs through the [demo instructions](../demo/README.md).
+
 The [registered comparison](compression-confirmation-24.md) and [paper reproduction guide](../paper/compression24/README.md) define the experiment and its claims. The [initial calibration](../eval/results/spot24-release/pilot-initial/manifest.json) documented the first candidate's failures. The [amended calibration](../eval/results/spot24-release/pilot/manifest.json) used independent responses on the same 18 tasks. The [formal assignment manifest](../eval/results/spot24-release/formal/manifest.json) contains the untouched confirmation set and the pilot-based sample calculation.
 
 From the release checkout, provision the pinned Docker image and public research dependencies. To repeat live collection, choose fresh output directories and provide an accessible audio gateway URL with the corresponding configuration. The Codex subscription and Claude Code credentials are local to the tester.
