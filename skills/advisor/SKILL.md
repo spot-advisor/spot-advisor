@@ -1,5 +1,7 @@
 ---
 name: advisor
+metadata:
+  version: "2.4.0"
 description: Ask a frontier advisor for a checkable next action at a design fork, a repeated failed check, or a conflict in observed evidence.
 ---
 
@@ -30,4 +32,6 @@ A state file selects v2 automatically. Plain questions and gateway images defaul
 
 To preview a sample v2 packet without a task or session file, use `--preview --protocol v2 --question "Which check should I run next?"`. The preview prints locally without sending a request or spending a round.
 
-For a scoped 2.3 decision or delivery review, keep original instructions and later corrections in host-owned source files. Use `--handoff-file` with v2 state and session files. Select one subtask, cite its source lines and material corrections, record local checks, and attach only the evidence needed for the decision. The host reports unquoted correction IDs. For screenshots, pass `--image` and list their SHA-256 hashes in `image_sha256`. Preview locally before dispatch. Treat `NEEDS_EVIDENCE` as a request to collect the named evidence locally. Use `ACCEPT` only for the reviewed revision.
+For a scoped decision or delivery use `--handoff-file` with v2 state and session files. Keep the state's acceptance conditions and constraints current for this subtask. Cite original instructions and corrections. Register checks against the revision actually inspected. For a file check, record its `artifact_path` and `artifact_sha256` alongside the check log's `path` and `sha256`. A local rejection calls for a retry only while the latest request still leaves a decision open. English and Chinese questions can end in `?` or `？`.
+
+Preview the question, evidence and attachment list before sending. For screenshots use `--image` and `image_sha256`; for original PCM WAVs use `--transport gateway --audio` and `audio_sha256`. Use a model that accepts the selected media. Resolve `NEEDS_EVIDENCE` locally and apply `ACCEPT` only to the reviewed revision. Run the caller with `--doctor` to identify the invoked copy and configuration.

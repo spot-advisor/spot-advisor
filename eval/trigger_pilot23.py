@@ -128,7 +128,7 @@ def grade(trace, eligible, valid, final_value):
 
 def question_rejected_locally(payload):
     return (payload.get("status") == "unavailable"
-            and payload.get("error") == "Ask one specific decision question."
+            and payload.get("error", "").startswith("Ask one specific decision question.")
             and not payload.get("attempts") and not payload.get("consultation_id"))
 
 

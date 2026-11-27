@@ -4,6 +4,8 @@
 
 Official release repository: [spot-advisor/spot-advisor](https://github.com/spot-advisor/spot-advisor) · Website: [spot-advisor.github.io](https://spot-advisor.github.io/).
 
+For the 2.4 candidate, use the [install, rollback and first consultation walkthrough](first-consultation-24.md). It covers scoped text, images and original audio from Codex and Claude Code.
+
 ---
 
 ## Quick install with the Skills CLI

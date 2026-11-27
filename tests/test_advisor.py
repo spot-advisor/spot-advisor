@@ -793,12 +793,65 @@ def test_scoped_text_evidence_rejects_replaced_artifacts_and_old_revisions(tmp_p
     state = {"revision": "r2", "evidence_sources": {"browser": record}}
     refs = [{"source": "browser", "first": 2, "last": 2}]
     excerpts = ask_expert.scoped_evidence(tmp_path / "state.json", state, refs)
-    assert excerpts == [f"browser:2-2 [{record['sha256'][:12]}] Guest confirmation visible."]
+    assert excerpts == [{"source": "browser:2-2", "log_sha256": record["sha256"],
+                         "registered_for_revision": "r2", "observed": "Guest confirmation visible."}]
     with pytest.raises(ValueError, match="current registered source"):
         ask_expert.scoped_evidence(tmp_path / "state.json", {**state, "revision": "r3"}, refs)
     artifact.write_bytes(b"Internal line\nDifferent confirmation.\n")
     with pytest.raises(ValueError, match="registered hash"):
         ask_expert.scoped_evidence(tmp_path / "state.json", state, refs)
+
+
+@pytest.mark.parametrize("question", ["Ship now?", "可以交付吗？", "Does the link /a?x=1 resolve?"])
+def test_delivery_packet_keeps_material_criteria_and_binds_the_actual_file(tmp_path, question):
+    from hashlib import sha256
+
+    (tmp_path / "brief").write_text("Prepare the invitation.\nInternal backlog.", encoding="utf-8")
+    (tmp_path / "check").write_bytes(b"Label is Info")
+    (tmp_path / "invitation").write_bytes(b"Info")
+    record = {"path": "check", "revision": "r2", "sha256": sha256(b"Label is Info").hexdigest(),
+              "artifact_path": "invitation", "artifact_sha256": sha256(b"Info").hexdigest()}
+    state = {"revision": "r2", "acceptance": ["Use the approved label Agenda."], "constraints": ["Keep the URL."],
+             "last_advice_outcome": "The label was not changed.", "intent_sources": {"brief": "brief"},
+             "evidence_sources": {"check": record}}
+    path = tmp_path / "handoff.json"
+    path.write_text(json.dumps({"revision": "r2", "phase": "delivery", "checks": ["Read saved label."],
+                               "quotes": [{"source": "brief", "first": 1, "last": 1}],
+                               "evidence_refs": [{"source": "check", "first": 1, "last": 1}]}))
+    packet = json.loads(ask_expert.scoped_handoff(path, tmp_path/"state.json", state, question))
+    assert packet["acceptance"] == state["acceptance"] and packet["constraints"] == state["constraints"]
+    assert packet["last_advice_outcome"] == state["last_advice_outcome"]
+    assert packet["evidence"][0]["checked_artifact_sha256"] == record["artifact_sha256"]
+    assert "Internal backlog" not in packet["scope"]
+    for invalid in ("?", "Ready? It passed.", "Ship now? Why?", "好了吗？可以吗？"):
+        with pytest.raises(ValueError, match="question field"):
+            ask_expert.scoped_handoff(path, tmp_path/"state.json", state, invalid)
+    (tmp_path/"invitation").write_bytes(b"Replaced")
+    with pytest.raises(ValueError, match="checked artifact"):
+        ask_expert.scoped_handoff(path, tmp_path/"state.json", state, question)
+
+
+def test_doctor_is_offline_and_redacts_credentials(monkeypatch, capsys):
+    monkeypatch.setenv("EXPERTS_API_KEY", "private-test-value")
+    monkeypatch.setenv("EXPERTS_BASE_URL", "https://invalid.example/private-route")
+    monkeypatch.setattr(ask_expert, "urlopen", lambda *a, **kw: pytest.fail("doctor attempted a request"))
+    monkeypatch.setattr(sys, "argv", ["ask_expert.py", "--doctor"])
+    assert ask_expert.main() == 0
+    output = capsys.readouterr().out
+    report = json.loads(output)
+    assert report["version"] == ask_expert.SKILL_VERSION and report["live_requests"] == 0
+    assert [i["caller_matches"] for i in report["installations"] if i["invoked"]] == [True]
+    assert "private-test-value" not in output and "private-route" not in output
+
+
+def test_audio_finish_article_only_normalized_for_matching_answers():
+    answer = "Verdict: ACTION\nDo: Save rising.\nVerify: Listen.\nRisk: None."
+    envelope = '{"toolAction":"Finishing the task","toolSummary":"Finish the task"}'
+    assert ask_expert.normalize_audio_advice(answer+envelope+answer) == answer
+    prefix = '{"toolAction":"Finishing the response","toolSummary":"Finish task"}'
+    assert ask_expert.normalize_audio_advice(prefix+"\n"+answer) == answer
+    mismatched = answer+envelope+answer.replace("rising","falling")
+    assert ask_expert.normalize_audio_advice(mismatched) == mismatched
 
 
 @pytest.mark.parametrize(("known_tokens", "unknown_rounds"), [(101, 0), (20, 1)])

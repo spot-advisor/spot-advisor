@@ -6,7 +6,6 @@ import json
 from pathlib import Path
 import tempfile
 
-from direct_session import transport
 from gap_study24 import ROOT, digest, review_files
 
 
@@ -15,15 +14,11 @@ def read(path):
 
 
 def admits(folder, args, normalize):
+    """Replay the question admission rule frozen at 14eacdc on the valid roster fixture."""
     question = args.get("question", "").strip()
     if normalize and question.endswith("？"):
         question = question[:-1] + "?"
-    state = folder / "state.json"
-    try:
-        transport.scoped_handoff(folder / "handoff.json", state, read(state), question)
-    except ValueError:
-        return False
-    return bool(args.get("evidence", "").strip())
+    return len(question) >= 16 and question.endswith("?") and bool(args.get("evidence", "").strip())
 
 
 def export(runs, output):
