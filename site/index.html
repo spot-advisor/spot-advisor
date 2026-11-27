@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Spot Advisor helps a coding agent ask one focused frontier-model question at a real decision point, then continue and verify locally.">
+  <meta name="description" content="Spot Advisor 2.4 lets coding agents ask one focused question about text, charts or WAV speech. Install the skill and inspect the formal benchmark.">
   <title>Spot Advisor — One focused turn, then back to the work</title>
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -17,7 +17,7 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="#workflow">How it works</a>
-      <a href="#evidence">Evidence</a>
+      <a href="#evidence">Metrics</a>
       <a href="#market">Release</a>
       <a href="https://github.com/spot-advisor/spot-advisor">GitHub <span aria-hidden="true">↗</span></a>
       <a class="language-link" href="zh-CN/" lang="zh-CN">简体中文</a>
@@ -27,14 +27,14 @@
   <main id="main">
     <section class="hero wrap" id="top">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> A coding-agent skill · Release 2.2</p>
+        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> <a href="https://github.com/spot-advisor/spot-advisor/releases/tag/v2.4.0">Spot Advisor v2.4.0</a></p>
         <h1>When the next move isn’t obvious, <em>ask once.</em></h1>
-        <p class="hero-lede">Give a frontier model the evidence and the decision in front of you. Get one recommendation and a way to check it. Your coding agent keeps control of the work.</p>
+        <p class="hero-lede">Share the decision and its evidence in one request, with support for text, chart images and PCM WAV speech. Your coding agent gets one recommendation and verifies it locally.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#try-it">Try the offline preview <span aria-hidden="true">↓</span></a>
           <a class="button button-quiet" href="#install">Install the skill <span aria-hidden="true">↗</span></a>
         </div>
-        <p class="hero-note"><span aria-hidden="true">◎</span> Preview needs no account, API key, or model call.</p>
+        <a class="text-link" href="#evidence">View benchmark results <span aria-hidden="true">↓</span></a>
       </div>
       <div class="hero-visual" aria-label="Workflow summary">
         <div class="hero-card-top"><span>DECISION TRACE</span><span>01 / 04</span></div>
@@ -101,7 +101,7 @@
           <p class="eyebrow">02 — TRY IT BEFORE YOU INSTALL</p>
           <h2>See exactly what would be sent.</h2>
           <p>Run the preview from a checkout. It prints a sample v2 packet locally and makes zero model calls. No account or credentials are needed.</p>
-          <a class="text-link" href="https://github.com/spot-advisor/spot-advisor/blob/main/README.md#try-it-offline">Read the README walkthrough <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/README.md#try-it-offline">Read the README walkthrough <span aria-hidden="true">↗</span></a>
         </div>
         <div class="terminal">
           <div class="terminal-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><span>spot-advisor / preview</span><span class="terminal-mode">OFFLINE</span></div>
@@ -131,54 +131,73 @@
         <h2>One skill. Keep your coding agent.</h2>
         <p>Use it with Codex, Claude Code, or a compatible gateway. The advisor route and credentials depend on your setup; the offline preview works before any of that.</p>
         <div class="install-links">
-          <a href="https://github.com/spot-advisor/spot-advisor/blob/main/docs/install.md">Transport and setup guide <span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/spot-advisor/spot-advisor/tree/main/skills/advisor">Read the skill source <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/first-consultation-24.md">Install v2.4.0 and run a first consultation <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/install.md">Transport and setup guide <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <div class="install-box">
         <div class="install-box-label">INSTALL WITH THE SKILLS CLI</div>
         <code>npx skills add spot-advisor/spot-advisor --skill advisor</code>
-        <p>Choose your agent when prompted. For manual installation, see the setup guide.</p>
+        <p>Choose your agent when prompted. Run the installed caller with <code>--doctor</code> to check its version and configuration.</p>
       </div>
     </section>
 
-    <section class="evidence-section" id="evidence">
+    <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="wrap">
         <div class="section-heading evidence-heading">
-          <p class="eyebrow">04 — THE EVIDENCE, WITH LIMITS</p>
-          <h2>A useful result is one you can inspect.</h2>
-          <p>The public repair comparison is a 48-assignment study of two different workflows. It is evidence about this run, not proof that Spot Advisor saves total tokens or preserves equivalent repair quality.</p>
+          <p class="eyebrow">Spot Advisor 2.4 · Formal benchmark</p>
+          <h2 id="evidence-title">Three ways to hand off the same task</h2>
+          <p>Each of {tasks} held-out tasks ran with a full checkpoint, a free-text summary, and a structured Spot Advisor packet. An independent grader checked the delivered files against the same criteria within a {deadline}-second deadline per run.</p>
         </div>
         <div class="evidence-card">
-          <div class="evidence-title"><span>RECORDED STUDY</span><span>48 ASSIGNMENTS</span></div>
-          <div class="evidence-grid">
-            <div class="evidence-cell"><small>INDEPENDENT PASSES</small><strong>39 / 48 <i>each</i></strong><span>Both workflows had 39 final passes.</span></div>
-            <div class="evidence-cell"><small>WITHIN 15 MINUTES</small><strong>39 vs 31</strong><span>Astra alone passed more tasks by the cutoff.</span></div>
-            <div class="evidence-cell"><small>RECORDED FRONTIER TOKENS</small><strong>11.81M vs 0.0095M</strong><span>The Spot Advisor workflow used fewer frontier tokens in recorded receipts.</span></div>
-            <div class="evidence-cell"><small>RECORDED TOTAL TOKENS</small><strong>11.81M vs 58.14M</strong><span>The Spot Advisor workflow used more total tokens.</span></div>
-          </div>
-          <div class="price-note">
-            <span class="price-mark" aria-hidden="true">≈</span>
-            <p><strong>Price estimates are incomplete.</strong> The API-equivalent estimate is $82.82 vs $4.22 for requests with priceable receipts only. Four Astra requests and eight Spot Advisor requests could not be priced, so full-run cost and net savings remain unknown. Repair-quality equivalence was not established.</p>
+          <table class="scorecard">
+            <caption>Verified deliveries, elapsed time and recorded usage</caption>
+            <thead>
+              <tr><th scope="col">Metric</th><th scope="col">Full record</th><th scope="col">Free summary</th><th scope="col">Scoped packet</th></tr>
+            </thead>
+            <tbody>
+              <tr class="score-total"><th scope="row">All tasks passed</th><td>{scores[all][full][verified]} / {tasks}</td><td>{scores[all][summary][verified]} / {tasks}</td><td>{scores[all][scoped][verified]} / {tasks}</td></tr>
+              <tr><th scope="row">Text passed</th><td>{scores[text][full][verified]} / {scores[text][full][n]}</td><td>{scores[text][summary][verified]} / {scores[text][full][n]}</td><td>{scores[text][scoped][verified]} / {scores[text][full][n]}</td></tr>
+              <tr><th scope="row">Image passed</th><td>{scores[image][full][verified]} / {scores[image][full][n]}</td><td>{scores[image][summary][verified]} / {scores[image][full][n]}</td><td>{scores[image][scoped][verified]} / {scores[image][full][n]}</td></tr>
+              <tr><th scope="row">Audio passed</th><td>{scores[audio][full][verified]} / {scores[audio][full][n]}</td><td>{scores[audio][summary][verified]} / {scores[audio][full][n]}</td><td>{scores[audio][scoped][verified]} / {scores[audio][full][n]}</td></tr>
+              <tr><th scope="row">Median elapsed</th><td>{scores[all][full][median_seconds]:.1f} s</td><td>{scores[all][summary][median_seconds]:.1f} s</td><td>{scores[all][scoped][median_seconds]:.1f} s</td></tr>
+              <tr><th scope="row">Advisor input tokens</th><td>{scores[all][full][advisor][input_tokens][known_total]:,}</td><td>{scores[all][summary][advisor][input_tokens][known_total]:,}</td><td>{scores[all][scoped][advisor][input_tokens][known_total]:,}</td></tr>
+              <tr><th scope="row">Estimated cost (USD)</th><td>{scores[all][full][known_dollars]:.2f}</td><td>{scores[all][summary][known_dollars]:.2f}</td><td>{scores[all][scoped][known_dollars]:.2f}</td></tr>
+            </tbody>
+          </table>
+          <div class="study-notes">
+            <p><strong>Delivery quality.</strong> Scoped was {paired_difference:+.1f} percentage points versus full. The one-sided 95% lower bound of {paired_lower:.1f} points cleared the registered −5-point noninferiority margin for this workload.</p>
+            <p><strong>Packet size and cost.</strong> Scoped used fewer text characters on {shorter} of {tasks} tasks and recorded more advisor input tokens than full. Free-summary advisor input receipts cover {scores[all][summary][advisor][input_tokens][known_rows]} of {tasks} tasks. Cost estimates cover {scores[all][full][cost_known]} of {tasks} tasks per format and use API-equivalent prices. The speech route lacks a price, leaving overall cost savings unknown.</p>
           </div>
           <div class="evidence-links">
-            <a href="https://github.com/spot-advisor/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/metrics.json">Metrics</a>
-            <a href="https://github.com/spot-advisor/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/manifest.json">Run manifest</a>
-            <a href="https://github.com/spot-advisor/spot-advisor/blob/main/eval/results/2026-11-20/formal-collection/evidence.jsonl">Sanitized receipts</a>
-            <a href="https://github.com/spot-advisor/spot-advisor/blob/main/eval/pricing.json">Rate card</a>
+            <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/spot24-release/formal/metrics.json">Metrics JSON</a>
+            <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/spot24-release/formal/manifest.json">Run manifest</a>
+            <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/spot24-release/formal/observations.jsonl">Per-task records</a>
+            <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/compression-confirmation-24.md">Registered protocol</a>
+            <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/spot24-release/reproduction.json">Reproduction record</a>
           </div>
         </div>
         <div class="paper-row">
-          <div><p class="eyebrow">RESEARCH & REPRODUCTION</p><h3>Read the study. Check the artifacts.</h3></div>
-          <p>The public PDF covers the earlier paired study. The 2.2 manuscript and its remaining comparisons are still in review; they are not presented as published results.</p>
-          <a class="button button-outline" href="https://github.com/spot-advisor/spot-advisor/tree/main/paper">Research package <span aria-hidden="true">↗</span></a>
+          <div><p class="eyebrow">Research manuscript · v1</p><h3 lang="en">What Survives a Structured Handoff?</h3></div>
+          <div class="paper-details">
+            <p>The paper reports paired uncertainty, packet lengths, and cost per verified delivery for the tasks with complete pricing.</p>
+            <a href="https://github.com/spot-advisor/spot-advisor/releases/tag/paper-2.4-v1">Manuscript release and TeX source</a>
+          </div>
+          <a class="button button-outline" href="https://github.com/spot-advisor/spot-advisor/releases/download/paper-2.4-v1/spot-advisor-2.4-manuscript.pdf">Download paper (PDF) <span aria-hidden="true">↗</span></a>
         </div>
+        <a class="study-archive" href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/metrics.json">Earlier 48-task repair benchmark <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
     <section class="market-section wrap" id="market" aria-labelledby="market-title">
-      <div class="market-heading"><p class="eyebrow">05 — RELEASE &amp; RESEARCH</p><h2 id="market-title">Spot Advisor <em>2.4</em></h2></div>
-      <div class="market-copy"><p>Automated testers installed the skill in Codex and Claude Code, requested advice on text, a chart and a WAV recording, and checked each delivered file.</p><p>The release includes the three-way handoff study, its task assignments and the tools to regrade the saved outputs.</p><a href="https://github.com/spot-advisor/spot-advisor/releases/tag/v2.4.0">Get the release, evidence draft and TeX sources <span aria-hidden="true">↗</span></a></div>
+      <div class="market-heading"><p class="eyebrow"><time datetime="2026-11-27">November 27, 2026</time></p><h2 id="market-title">Spot Advisor <em>2.4.0</em></h2></div>
+      <div class="market-copy">
+        <p>Scoped consultations carry the current acceptance criteria and digests of checked artifacts. Automated testers verified six installed-skill walkthroughs across Codex and Claude Code using the qualified text, vision and audio routes.</p>
+        <div class="install-links">
+          <a href="https://github.com/spot-advisor/spot-advisor/releases/tag/v2.4.0">Software release <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/release-2.4.md">Release qualification <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
     </section>
 
     <section class="closing wrap">

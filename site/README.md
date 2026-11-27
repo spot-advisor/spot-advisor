@@ -9,7 +9,7 @@ The static bilingual landing page lives here:
 
 ## Local preview
 
-From the repository root, run <code>python site/build.py</code>, then <code>python -m http.server 8000 --directory site/dist</code> and open <code>http://localhost:8000/</code>. The build step creates a clean, self-contained bundle containing only the HTML pages, shared CSS, hero art, and demo replays; it uses only the Python standard library.
+From the repository root, run <code>python site/build.py</code>, then <code>python -m http.server 8000 --directory site/dist</code> and open <code>http://localhost:8000/</code>. The standard-library build renders both pages using the [formal metrics, manifest, and per-task records](../eval/results/spot24-release/formal). It also copies the shared CSS, hero art, and demo replays.
 
 ## Official publishing
 
