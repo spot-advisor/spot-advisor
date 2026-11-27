@@ -14,12 +14,12 @@ A coding agent can send a shorter record to a stronger advisor while retaining r
 \section{Question and design}
 We test whether the lower confidence bound for verified delivery with a scoped packet exceeds a prespecified margin of minus five percentage points relative to the complete checkpoint. A secondary comparison asks how much the packet format contributes under a common character limit. The full record contains the actual public brief and recorded local observations. The same original media are available in all three conditions. The final executor sees its checkpoint and usable advice and produces a file. Failed consultations, timeouts, and missing submissions remain in their assignment denominators.
 
-The programming tasks come from the sanitized MBPP test set \cite{mbpp}, the images from ChartQA \cite{chartqa}, and the English recordings from FLEURS \cite{fleurs}. One independent source item contributes a single task. Three adjacent task conditions share an executor, advisor route, and deadline. Blind grading uses the original coding assertions, reference chart answers and reference transcripts. We normalize punctuation and case before scoring transcription. Pilot runs and product acceptance runs are retained separately.
+The programming tasks come from the sanitized MBPP test set \cite{mbpp}, the images from ChartQA \cite{chartqa}, and the English recordings from FLEURS \cite{fleurs}. Each task contributes one matched triple. We balanced the six arm orders within each modality. All arms share an executor, an advisor route within modality, and a 180-second deadline. A grader blind to arm runs the programming assertions in an isolated container. Chart answers pass on a reference match or within 5\% relative error for nonzero numerical targets. Speech passes at a word error rate of at most 15\% after punctuation and case normalization. Both calibration cohorts and the host acceptance runs are retained separately.
 
 \section{Verified delivery}
 \input{finding}
 \begin{center}\input{results-table}\end{center}
-Entries are counts of delivered files passing the independent checks before the deadline. Equal modality strata define the target workload.
+Entries count files passing the independent checks before the deadline. Equal modality strata define the target workload. We inverted the paired score test for the primary lower confidence bound. The comparison with the free summary and the modality-specific estimates are descriptive.
 
 \begin{figure}[ht]
 \centering\includegraphics[width=.88\linewidth]{paired-quality.png}

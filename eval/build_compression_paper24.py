@@ -11,7 +11,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from compression_report24 import summarize
-from compression_study24 import ARMS
+from compression_study24 import ARMS, read
 from gap_study24 import ROOT
 
 
@@ -92,6 +92,16 @@ def build(archive, output):
         results += "The all-modality cost ratio is unidentifiable from these receipts and rate cards."
     else:
         results += f"The one-sided 95\\% upper bound on the cost ratio was {contrast['cost_ratio_upper_95']:.3f}."
+    if formal:
+        scoped = groups["all"]["scoped"]["verified"]
+        summary = groups["all"]["summary"]["verified"]
+        secondary = 100 * (scoped - summary) / contrast["n"]
+        design = read(archive / "manifest.json")["sample_size"]
+        results += (
+            f" The descriptive scoped-minus-summary difference was {secondary:+.1f} points."
+            f" The pilot-based design called for {design['uncapped_tasks']} tasks before"
+            f" the registered cap of {design['tasks']} was applied."
+        )
     (output / "finding.tex").write_bytes((results + "\n").encode())
     fig, ax = plt.subplots(figsize=(6.3, 2.4), layout="constrained")
     for y, key in enumerate(("audio", "image", "text", "all")):
