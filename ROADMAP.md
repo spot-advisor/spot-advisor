@@ -1,8 +1,10 @@
 # Spot Advisor roadmap
 
-## Spot Advisor 2.4 research and planning
+## Spot Advisor 2.4 release and paper handoff
 
-The [diagnostic findings](docs/spot-advisor-2.4-findings.md) trace failures through question admission, evidence selection and final artifact review. The [2.4 plan](docs/spot-advisor-2.4-plan.md) prioritizes acceptance-condition coverage and evidence provenance, followed by bilingual recovery, installation diagnostics and a held-out test of consultation timing.
+The [release record](docs/release-2.4.md) covers installation, upgrade, rollback, native host consultations and independent artifact checks. The [diagnostic findings](docs/spot-advisor-2.4-findings.md) motivated the changes to acceptance conditions, evidence identity and bilingual questions. The [original candidate plan](docs/spot-advisor-2.4-plan.md) preserves the design history.
+
+After 2.4, prioritize the [multimodal manuscript](paper/compression24/README.md). Develop the related work and discussion, review the frozen tables against their source records, and prepare the final arXiv text. Preserve the registered confirmation comparison when adding any exploratory analyses.
 
 ## Spot Advisor 2.2 research and planning
 

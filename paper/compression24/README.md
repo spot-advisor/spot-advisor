@@ -13,7 +13,7 @@ python -B eval/build_compression_paper24.py eval/results/spot24-release/formal e
 tectonic eval/runs/rebuilt-paper/main.tex
 ```
 
-The last command compiles a fresh PDF. The source folder contains the main TeX file, two generated tables, one generated results paragraph and one PNG figure. References are in the TeX file. These files can also be compiled together with PDFLaTeX. For subsequent editing, copy the six files together. [arXiv's TeX instructions](https://info.arxiv.org/help/submit_tex.html)
+The last command compiles a fresh PDF. The source folder contains the main TeX file, two generated tables, one generated results paragraph and one PNG figure. References are in the TeX file. These files can also be compiled together with PDFLaTeX. Add `--source-zip PATH` to the builder command to package the five files for transfer or subsequent editing. [arXiv's TeX instructions](https://info.arxiv.org/help/submit_tex.html)
 
 ```sh
 python -B eval/compression_inputs24.py eval/runs/source-cache eval/runs/replayed-inputs

@@ -3,6 +3,7 @@
 import argparse
 from pathlib import Path
 import shutil
+import zipfile
 
 import matplotlib
 
@@ -116,5 +117,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("archive", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--source-zip", type=Path, help="Write a self-contained TeX submission bundle.")
     args = parser.parse_args()
     build(args.archive, args.output)
+    if args.source_zip:
+        args.source_zip.parent.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(args.source_zip, "w") as bundle:
+            for name in ("main.tex", "results-table.tex", "cost-table.tex", "finding.tex", "paired-quality.png"):
+                path = args.output / name
+                data = path.read_bytes() if path.suffix == ".png" else path.read_text(encoding="utf-8").encode()
+                info = zipfile.ZipInfo(name, date_time=(2026, 11, 27, 0, 0, 0))
+                bundle.writestr(info, data, compress_type=zipfile.ZIP_DEFLATED)
