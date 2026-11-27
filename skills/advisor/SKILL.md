@@ -7,7 +7,11 @@ description: Ask a frontier advisor for a checkable next action at a design fork
 
 You own the files, tools, edits, and validation. Use `scripts/ask_expert.py` for a standalone advisory turn.
 
-1. Ask when local checks leave two materially different next actions, or the same targeted check fails twice. If the failure names an unavailable local dependency, probe it first. Rerun the check on the same patch and confirm the intended assertion executed. Bring a remaining failure or decision to the advisor.
+1. Continue locally while an available check can resolve the decision. Probe missing dependencies and verify that a failed check ran the intended assertion before counting it. Consult only when the answer could change the next action or delivery, and at least one of these conditions holds:
+   - Local checks leave two materially different actions, or leave a material conflict in the evidence.
+   - The same targeted assertion fails twice after a relevant local check or repair. Record both results and their revisions.
+   - An acceptance criterion requires a judgment you cannot make with available tools, such as listening to an exact WAV when only waveform measurements are available.
+   If local evidence resolves the decision or verifies the requested outcome, finish locally. When you consult, name the trigger and give the observed evidence for it in the handoff.
 2. Keep a local task state with `task_id`, `revision`, `goal`, `phase`, arrays for `constraints`, `acceptance` and `evidence`, and optional `last_advice_outcome`. Preserve constraints and use current evidence. Set a new revision after a material workspace or task-state change.
 3. Ask one question and give the advisor a reason to reject your preferred action. Target 2,000 characters on round one (limit 4,000). A follow-up has 1,000 characters. Give it the latest check, its outcome and the decision that changed.
 4. Read `Verdict / Do / Verify / Risk`. Confirm that the revision and evidence still apply. Execute and verify the action locally, then record the outcome in the next state. A stale, unusable, or rate-limited reply ends that consultation.
@@ -25,3 +29,5 @@ After an interruption, inspect the local session with `--status --session-file P
 A state file selects v2 automatically. Plain questions and gateway images default to the original `Verdict / Next / Prompt / Risk` format.
 
 To preview a sample v2 packet without a task or session file, use `--preview --protocol v2 --question "Which check should I run next?"`. The preview prints locally without sending a request or spending a round.
+
+For a scoped 2.3 decision or delivery review, keep original instructions and later corrections in host-owned source files. Use `--handoff-file` with v2 state and session files. Select one subtask, cite its source lines and material corrections, record local checks, and attach only the evidence needed for the decision. The host reports unquoted correction IDs. For screenshots, pass `--image` and list their SHA-256 hashes in `image_sha256`. Preview locally before dispatch. Treat `NEEDS_EVIDENCE` as a request to collect the named evidence locally. Use `ACCEPT` only for the reviewed revision.

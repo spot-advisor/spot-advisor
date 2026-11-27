@@ -632,3 +632,210 @@ def test_cli_reopen_after_process_death_does_not_send_again(monkeypatch, tmp_pat
             release.set()
             server.shutdown()
             worker.join()
+
+
+def test_scoped_handoff_preserves_omission_signal_without_sending_full_intent(tmp_path):
+    source = tmp_path / "request.txt"
+    source.write_text("Fix mobile checkout.\nUnrelated private backlog.\n", encoding="utf-8")
+    correction = tmp_path / "correction.txt"
+    correction.write_text("Checkout follow-up.\nKeep checkout available to guests.\n", encoding="utf-8")
+    state = {
+        "revision": "r2",
+        "intent_sources": {"request": source.name, "update-2": correction.name},
+        "intent_updates": ["update-2"],
+        "intent_update_lines": {"update-2": 2},
+    }
+    handoff = {
+        "revision": "r2", "phase": "delivery",
+        "quotes": [{"source": "request", "first": 1, "last": 1}],
+        "checks": ["Checked mobile layout at 390 px."],
+        "evidence": ["r2: checkout viewport screenshot recorded by executor."],
+    }
+    handoff_path = tmp_path / "handoff.json"
+    handoff_path.write_text(json.dumps(handoff), encoding="utf-8")
+    question = "Does mobile checkout meet the delivery requirements?"
+    packet = ask_expert.scoped_handoff(handoff_path, tmp_path / "state.json", state, question)
+    assert json.loads(packet)["unquoted_updates"] == ["update-2"]
+    assert json.loads(packet)["unquoted_update_lines"] == {"update-2": 2}
+    assert "Unrelated private backlog" not in packet
+    assert "available to guests" not in packet
+
+    handoff["quotes"].append({"source": "update-2", "first": 1, "last": 1})
+    handoff_path.write_text(json.dumps(handoff), encoding="utf-8")
+    packet = json.loads(ask_expert.scoped_handoff(handoff_path, tmp_path / "state.json", state, question))
+    assert packet["unquoted_updates"] == ["update-2"]
+    handoff["quotes"][-1] = {"source": "update-2", "first": 2, "last": 2}
+    handoff_path.write_text(json.dumps(handoff), encoding="utf-8")
+    packet = json.loads(ask_expert.scoped_handoff(handoff_path, tmp_path / "state.json", state, question))
+    assert packet["constraints_or_corrections"] == ["update-2:2-2 Keep checkout available to guests."]
+    assert packet["unquoted_updates"] == []
+
+    state["revision"] = "r3"
+    with pytest.raises(ValueError, match="current task revision"):
+        ask_expert.scoped_handoff(handoff_path, tmp_path / "state.json", state, question)
+
+
+@pytest.mark.parametrize("replace_image", [False, True])
+def test_scoped_screenshot_preserves_protocol_and_checks_image_bytes(
+        monkeypatch, capsys, tmp_path, replace_image):
+    from hashlib import sha256
+    from PIL import Image
+
+    image_path = tmp_path / "mobile.png"
+    Image.new("RGB", (12, 16), "white").save(image_path)
+    image_hash = sha256(image_path.read_bytes()).hexdigest()
+    (tmp_path / "request.txt").write_text("Keep the primary action visible.", encoding="utf-8")
+    state_path = tmp_path / "state.json"
+    state_path.write_text(json.dumps({
+        "task_id": "mobile", "revision": "r1", "goal": "Fix layout", "phase": "delivery",
+        "constraints": [], "acceptance": ["Primary action visible"], "evidence": [],
+        "intent_sources": {"request": "request.txt"},
+    }), encoding="utf-8")
+    handoff_path = tmp_path / "handoff.json"
+    handoff_path.write_text(json.dumps({
+        "revision": "r1", "phase": "delivery", "image_sha256": [image_hash],
+        "quotes": [{"source": "request", "first": 1, "last": 1}],
+        "checks": ["Captured the mobile viewport"], "evidence": ["Current viewport screenshot"],
+    }), encoding="utf-8")
+
+    def gateway(args, model, messages):
+        assert "Luna alone executes" in messages[0]["content"]
+        assert json.loads(messages[1]["content"])["attached_image_sha256"] == [image_hash]
+        assert args.image_parts[1]["type"] == "image_url"
+        if replace_image:
+            Image.new("RGB", (12, 16), "black").save(image_path)
+        return {"status": "ok", "advice": (
+            "Verdict: ACCEPT action is visible.\nDo: none\nVerify: Check viewport.\nRisk: none"
+        )}
+
+    monkeypatch.setattr(ask_expert, "call_gateway", gateway)
+    monkeypatch.setattr(sys, "argv", [
+        "ask_expert.py", "--transport", "gateway", "--state-file", str(state_path),
+        "--session-file", str(tmp_path / "session.json"), "--handoff-file", str(handoff_path),
+        "--question", "Is the primary action visible on mobile?", "--image", str(image_path),
+    ])
+    assert ask_expert.main() == int(replace_image)
+    result = json.loads(capsys.readouterr().out)
+    assert result["status"] == ("stale" if replace_image else "ok")
+    assert result["images"][0]["sha256"] == image_hash
+    if replace_image:
+        assert result["advice_fields"] is None
+        assert "advice" not in result
+    else:
+        assert result["advice_fields"]["decision"] == "ACCEPT"
+
+
+def test_scoped_audio_preserves_original_bytes_and_review_identity(tmp_path):
+    import base64
+    import wave
+
+    clip = tmp_path / "original.wav"
+    with wave.open(str(clip), "wb") as stream:
+        stream.setparams((1, 2, 8000, 0, "NONE", "not compressed"))
+        stream.writeframes(b"\x01\x00" * 800)
+    parts, audio = ask_expert.prepare_audio([clip])
+    assert base64.b64decode(parts[1]["input_audio"]["data"]) == clip.read_bytes()
+    assert audio[0]["duration_seconds"] == 0.1
+
+    (tmp_path / "request.txt").write_text("Check the original for clipping.", encoding="utf-8")
+    state = {"revision": "raw1", "intent_sources": {"request": "request.txt"}}
+    path = tmp_path / "handoff.json"
+    handoff = {
+        "revision": "raw1", "phase": "delivery",
+        "quotes": [{"source": "request", "first": 1, "last": 1}],
+        "checks": ["Measured peak"], "evidence": ["Original clip attached"],
+        "audio_sha256": [audio[0]["sha256"]],
+    }
+    path.write_text(json.dumps(handoff), encoding="utf-8")
+    question = "What do you hear in the original clip?"
+    packet = ask_expert.scoped_handoff(path, tmp_path / "state.json", state, question, audio=audio)
+    assert json.loads(packet)["attached_audio_sha256"] == handoff["audio_sha256"]
+
+    with wave.open(str(clip), "wb") as stream:
+        stream.setparams((1, 2, 8000, 0, "NONE", "not compressed"))
+        stream.writeframes(b"\x02\x00" * 800)
+    _, changed = ask_expert.prepare_audio([clip])
+    with pytest.raises(ValueError, match="Audio bytes do not match"):
+        ask_expert.scoped_handoff(path, tmp_path / "state.json", state, question, audio=changed)
+
+
+def test_audio_normalization_only_removes_identical_finish_repetition():
+    reply = "Verdict: ACTION identify phrase.\nDo: Check clip 1.\nVerify: Listen.\nRisk: none."
+    finish = '{"toolAction":"Finishing the task","toolSummary":"Finish task"}'
+    assert ask_expert.normalize_audio_advice(reply + finish + "\n" + reply) == reply
+    assert ask_expert.normalize_audio_advice(finish + "\n" + reply) == reply
+    finish_variant = '{"toolAction": "Finishing audio comparison task", "toolSummary": "Finish audio comparison task"}'
+    assert ask_expert.normalize_audio_advice(reply + finish_variant + "\n" + reply) == reply
+    consultation = '{"toolAction":"Finishing the consultation task","toolSummary":"Finish consultation task"}'
+    assert ask_expert.normalize_audio_advice(reply + consultation + "\n" + reply) == reply
+    changed = reply + consultation + "\n" + reply.replace("clip 1", "clip 2")
+    assert ask_expert.normalize_audio_advice(changed) == changed
+    mismatched = finish_variant.replace("Finish audio comparison", "Finish audio evaluation")
+    assert ask_expert.normalize_audio_advice(reply + mismatched) == reply + mismatched
+    conflicting = reply + finish + "\n" + reply.replace("clip 1", "clip 2")
+    assert ask_expert.normalize_audio_advice(conflicting) == conflicting
+    unexpected = reply + '{"toolAction":"Read other file","toolSummary":"Inspect"}'
+    assert ask_expert.normalize_audio_advice(unexpected) == unexpected
+
+
+def test_explicit_audio_timestamps_must_fit_the_measured_span():
+    assert ask_expert.audio_timestamps_fit("Speech at 0:01-0:03.99; bed through 4s.", 3.994)
+    assert not ask_expert.audio_timestamps_fit("Bed audible from 0:00 to 0:06.", 3.994)
+    assert not ask_expert.audio_timestamps_fit("Speech ends at 5.2 seconds.", 3.994)
+
+
+def test_scoped_text_evidence_rejects_replaced_artifacts_and_old_revisions(tmp_path):
+    from hashlib import sha256
+
+    artifact = tmp_path / "browser.log"
+    artifact.write_bytes(b"Internal line\nGuest confirmation visible.\n")
+    record = {"path": artifact.name, "revision": "r2", "sha256": sha256(artifact.read_bytes()).hexdigest()}
+    state = {"revision": "r2", "evidence_sources": {"browser": record}}
+    refs = [{"source": "browser", "first": 2, "last": 2}]
+    excerpts = ask_expert.scoped_evidence(tmp_path / "state.json", state, refs)
+    assert excerpts == [f"browser:2-2 [{record['sha256'][:12]}] Guest confirmation visible."]
+    with pytest.raises(ValueError, match="current registered source"):
+        ask_expert.scoped_evidence(tmp_path / "state.json", {**state, "revision": "r3"}, refs)
+    artifact.write_bytes(b"Internal line\nDifferent confirmation.\n")
+    with pytest.raises(ValueError, match="registered hash"):
+        ask_expert.scoped_evidence(tmp_path / "state.json", state, refs)
+
+
+@pytest.mark.parametrize(("known_tokens", "unknown_rounds"), [(101, 0), (20, 1)])
+def test_frontier_usage_threshold_blocks_additional_dispatch(tmp_path, known_tokens, unknown_rounds):
+    path = tmp_path / "session.json"
+    path.write_text(json.dumps({
+        "round": 1, "max_rounds": 3, "total_input_tokens": known_tokens,
+        "total_output_tokens": 0, "unknown_usage_rounds": unknown_rounds,
+    }), encoding="utf-8")
+    args = SimpleNamespace(session_file=path, max_rounds=None, stop_after_tokens=100,
+                           protocol="v2", preview=False)
+    result = ask_expert.run_consultation(args, "What is the next verification step?")
+    assert result["status"] == "budget_exhausted"
+    assert result["attempts"] == []
+    args.stop_after_tokens = None
+    result = ask_expert.run_consultation(args, "What is the next verification step?")
+    assert result["status"] == "budget_exhausted"
+    assert result["stop_after_tokens"] == 100
+
+
+@pytest.mark.parametrize(("returned_model", "extra", "error"), [
+    ("different-audio-model", {}, "did not confirm the requested model alias"),
+    ("audio-model", {"tool_calls": [{"id": "not-authorized"}]}, "attempted an execution tool call"),
+])
+def test_audio_gateway_rejects_unattributed_models_and_tool_calls(monkeypatch, returned_model, extra, error):
+    def send(req, timeout):
+        payload = json.loads(req.data)
+        assert req.full_url.endswith("/chat/completions")
+        assert "tools" not in payload
+        assert payload["messages"][0]["content"][-1]["type"] == "input_audio"
+        return _fake_response({"model": returned_model,
+            "choices": [{"message": {"content": "Advice", **extra}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 11, "completion_tokens": 7}})
+
+    monkeypatch.setattr(ask_expert, "urlopen", send)
+    args = SimpleNamespace(base_url="http://localhost:4444/v1", timeout_seconds=10, image_parts=[],
+                           audio_parts=[{"type": "input_audio", "input_audio": {"format": "wav", "data": "AA=="}}])
+    with pytest.raises(ask_expert.GenerationError, match=error) as exc:
+        ask_expert.call_gateway(args, "audio-model", [{"role": "user", "content": "Review"}])
+    assert exc.value.receipt["usage"]["prompt_tokens"] == 11

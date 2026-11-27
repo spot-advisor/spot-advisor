@@ -1,0 +1,18 @@
+[
+  ["01","local","Publish the export with LF endings. The saved artifact has CRLF. A local conversion and byte verifier are available.","apply"],
+  ["02","local","Two test invocations exited with import error before collecting any tests. The dependency probe has yet to run. Restore the build.","inspect"],
+  ["03","fork","Choose a heading for a sign. Both approved headings passed legibility and comprehension checks. A preference judgment decides which better conveys reassurance. All available local checks have completed.","consult"],
+  ["04","fork","Two compression modes both pass integrity. The brief requires the faster decoder. Comparable decoder timings can be obtained locally; they have yet to be measured.","inspect"],
+  ["05","repeated","The packaging count assertion failed on r1 and after a cache repair on r2. The count still differs. Two feasible recovery modes have different operational consequences. The available local evidence is exhausted. Choose the next recovery action.","consult"],
+  ["06","repeated","The same count assertion failed twice. Since then a trace identified the wrong delimiter, and a local check confirmed the required delimiter against the specification. Apply the correction and deliver.","apply"],
+  ["07","perception","Select the narration take whose ending sounds less abrupt. Both exact files are attached, their measurements tie and the local host cannot play them. The remote audio reviewer can listen.","consult"],
+  ["08","perception","Choose the recording under the contracted peak limit. Both peaks were measured on the exact exports. Only Take B meets the limit. The requirement is numeric.","apply"],
+  ["09","validation","The review service returned a local question-format error before transmission. The decision still requires a reviewer. Both candidate icons passed contrast checks, and the unresolved criterion is warmth. The first request put a sentence after its question. The full review budget is available.","consult"],
+  ["10","validation","A listening decision remains open. The WAV hash was checked for the old render, and a newer render replaced it. The local validator flagged the mismatch before dispatch. The new file is on disk.","inspect"],
+  ["11","followup","A reviewer requested the peak reading from the final take. There are no new measurements yet. The original file and a local peak meter are available.","inspect"],
+  ["12","followup","A reviewer needs the original signed print proof to judge the ink color. The proof was destroyed. The owner confirms no equivalent evidence exists and no substitute can meet this mandatory criterion. All local options have been checked.","report"],
+  ["13","followup","A reviewer asked for the corrected render to decide which visual treatment is clearer. The new render has since been captured and its hash verified. Local accessibility checks tie. One additional review round is available and review is needed to choose.","consult"],
+  ["14","followup","The reviewer asked for an unrounded counter. The counter was retrieved and resolves the threshold comparison exactly. Only the compact record passes. Apply the passing record.","apply"],
+  ["15","verification","A reviewer selected the concise caption. You applied it to the current revision and the preview opened. The required final assertion about its visible text has not run and is available locally.","verify"],
+  ["16","verification","The submitted revision passed all specified checks. The deliverable then changed materially and no check has run on the changed revision. A local acceptance check can settle delivery.","verify"]
+]
