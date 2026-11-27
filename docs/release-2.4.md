@@ -24,6 +24,8 @@ The [registered comparison](compression-confirmation-24.md) and [paper reproduct
 
 On the 180 held-out tasks, 136 complete-record, 139 free-summary and 139 scoped-packet deliveries passed by the deadline. The paired scoped-minus-full difference was +1.7 percentage points. Its one-sided 95% lower bound of −2.2 points cleared the registered −5-point margin. The observed advantage is compatible with a small loss as well as a gain. Recorded advisor input was 510,202 tokens for the scoped arm and 500,964 for the full arm. The available pricing covers 120 of 180 tasks in each arm and leaves the overall cost ratio unknown. [Metrics by modality and arm](../eval/results/spot24-release/formal/metrics.json)
 
+A second checkout on the same machine reconstructed the inputs in a fresh Python environment and reproduced the grades of all 540 submitted files. An independent paper build yielded a byte-identical TeX source archive and identical text and rendered pages for the PDF. [Reproduction record and file hashes](../eval/results/spot24-release/reproduction.json)
+
 From the release checkout, provision the pinned Docker image and public research dependencies. To repeat live collection, choose fresh output directories and provide an accessible audio gateway URL with the corresponding configuration. The Codex subscription and Claude Code credentials are local to the tester.
 
 ```sh

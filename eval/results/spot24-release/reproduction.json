@@ -1,0 +1,44 @@
+{
+  "checked_commit": "28aa2ebc51cbfbf2a5f6557dd4182f635e2c17cc",
+  "checked_utc": "2026-11-27T06:58:29+00:00",
+  "scope": "Separate Git clone, fresh Python environment, same machine. Pinned source files reconstructed, with provider responses replayed offline from the public archive. Programming submissions were executed in fresh network-isolated Docker containers.",
+  "python": "Python 3.14.0",
+  "grading": {
+    "phase": "formal",
+    "assignments": 540,
+    "submitted_files_regraded": 540,
+    "correct": 414,
+    "archive_sha256": "69512d6203d51c2c2749e798b076bf68ef4f3f141b7cf218fee7053a12853a7b"
+  },
+  "design_checks": {
+    "held_out_source_items": 180,
+    "pilot_source_items": 18,
+    "pilot_overlap": 0,
+    "occurrences_of_each_arm_order_per_modality": 10
+  },
+  "score_inversion_checks": [
+    "all",
+    "text",
+    "image",
+    "audio"
+  ],
+  "score_check_method": "Independent numerical maximization of the constrained trinomial likelihood at each reported lower endpoint.",
+  "paper": {
+    "tex_source_sha256": "432285a2d7575550ba67441df513448aab8af26a60ee5a34612b4e9fcf54b0f7",
+    "pdf_sha256": "9bf444d36ad328ca688ba9bca1c952fbe65e5ad8601fd7aefaed3f4a78b6e1e6",
+    "entries_compared": [
+      "main.tex",
+      "results-table.tex",
+      "cost-table.tex",
+      "finding.tex",
+      "paired-quality.png"
+    ],
+    "identical_source_bundles": true,
+    "identical_pdf_text_and_rendered_pages": 2
+  },
+  "regression_suite": {
+    "command": "python -B -m pytest -q -p no:cacheprovider",
+    "passed": 75,
+    "advisor_suite_passed": 43
+  }
+}
