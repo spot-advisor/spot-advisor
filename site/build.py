@@ -12,6 +12,7 @@ FORMAL = ROOT / "eval/results/spot24-release/formal"
 PAGES = ("index.html", "zh-CN/index.html")
 
 SOURCES = {
+    SITE / "assets/commands.js": DIST / "assets/commands.js",
     SITE / "assets/site.css": DIST / "assets/site.css",
     ROOT / "docs/assets/spot-advisor-hero.webp": DIST / "assets/spot-advisor-hero.webp",
     ROOT / "docs/assets/spot-advisor-hero.zh-CN.webp": DIST / "assets/spot-advisor-hero.zh-CN.webp",
