@@ -1,5 +1,9 @@
 # Spot Advisor roadmap
 
+## Spot Advisor 2.4 research and planning
+
+The [diagnostic findings](docs/spot-advisor-2.4-findings.md) trace failures through question admission, evidence selection and final artifact review. The [2.4 plan](docs/spot-advisor-2.4-plan.md) prioritizes acceptance-condition coverage and evidence provenance, followed by bilingual recovery, installation diagnostics and a held-out test of consultation timing.
+
 ## Spot Advisor 2.2 research and planning
 
 The [2.1 pilot](docs/spot-advisor-2.1-roadmap.md) established that the consultation and evaluation workflows can run. The question for 2.2 is when a developer gets a better outcome by asking for one checkable next step.

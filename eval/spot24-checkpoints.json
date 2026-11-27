@@ -1,0 +1,32 @@
+[
+  {
+    "id":"pending-relevant","gold":"inspect",
+    "en":"Restore the index. The row-count assertion failed once. A rebuild is running. Its count will determine whether the read-only fallback is needed. The local inspection tool can read the rebuild's result now. Choose the next action before selecting a recovery mode.",
+    "zh":"恢复索引。行数断言第一次失败。重建任务正在运行，重建后的行数决定是否需要只读回退。本地检查工具现在可以读取重建结果。请选择决定恢复方式之前的下一步。"
+  },
+  {
+    "id":"pending-irrelevant","gold":"consult",
+    "en":"Choose a narration take using the director's audible pacing criterion. Both exact WAVs are ready for the reviewer. A cover-art thumbnail job is still running and cannot change the audio decision. Local checks are finished; local playback is unavailable.",
+    "zh":"按导演要求的听感节奏选择一条旁白。两个准确的 WAV 均已可供顾问试听。封面缩略图任务还在运行，它不会影响音频选择。本地检查已完成，本地无法播放。"
+  },
+  {
+    "id":"settled-local","gold":"apply",
+    "en":"A rebuild has finished. Its verified result meets the count and preserves the source. The brief requires enabling the rebuilt index when both conditions hold. The current setting is still off.",
+    "zh":"重建已完成。经核验，记录数正确，源文件也得以保留。任务要求两个条件满足后启用重建索引。当前设置仍为关闭。"
+  },
+  {
+    "id":"settled-fork","gold":"consult",
+    "en":"Choose a poster for a quiet reading event. A previously pending contrast report is now final. Both posters pass all mandatory local checks and fit the print specification. Deciding which visual mood is calmer requires a visual reviewer with the attached images.",
+    "zh":"为安静阅读活动选择海报。此前等待的对比度报告已完成。两张海报都通过全部本地必检项，也符合印刷规格。判断哪张视觉氛围更平静，需要能看到附件的顾问。"
+  },
+  {
+    "id":"repair-question","gold":"consult","feedback":true,
+    "en":"Two complete packaging designs passed the measured constraints. The unresolved visual preference matters to delivery. Your first question put a supporting sentence after the question mark and was rejected locally. No dispatch occurred. The evidence, images and review budget are available.",
+    "zh":"两种完整包装设计均满足量化约束，尚待判断的视觉偏好影响交付。第一次提问把补充说明写在了问号后，本地校验拒绝了它，尚未发出请求。证据、图片和咨询预算都已就绪。"
+  },
+  {
+    "id":"repair-obsolete","gold":"apply","feedback":true,
+    "en":"A packaging label question was rejected locally before dispatch. Since then the customer approved the exact label 'Refill' in writing. The latest brief says to apply that exact wording. The design still uses the old label.",
+    "zh":"包装标签问题在发出前被本地校验拒绝。之后客户书面批准了准确标签“补充装”。最新要求是采用该措辞，而设计仍使用旧标签。"
+  }
+]

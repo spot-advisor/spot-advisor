@@ -1,0 +1,1289 @@
+{
+  "cohorts": {
+    "policy": {
+      "assigned": 96,
+      "errors": 0,
+      "raw_outcomes_sha256": "5eba4440e434690b77bc7ef67178f033086b8ba1b97b27592bf302516fe02334"
+    },
+    "review": {
+      "assigned": 16,
+      "errors": 0,
+      "raw_outcomes_sha256": "4afee53a8a23fb66f5223e611450378a563ca2849b637cf0f0db0ee693a4d29a"
+    },
+    "coding": {
+      "assigned": 12,
+      "errors": 0,
+      "raw_outcomes_sha256": "72d1ca89a1aa0ac9cf910416d9d01fa1800d7c50e76e1f8cdd23b7921aee4fa9"
+    },
+    "provenance": {
+      "assigned": 32,
+      "errors": 0,
+      "raw_outcomes_sha256": "c6a0182207dda3fa521704e77799e69c697b54aee835cec15ec4a6793a69afff"
+    }
+  },
+  "manifests": {
+    "policy": {
+      "assignments": [
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "001",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "002",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "003",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "004",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "005",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "006",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "007",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "008",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "009",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "010",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "011",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "012",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "013",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "014",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "015",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "016",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "017",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "018",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "019",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "020",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "021",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "022",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "023",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "024",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "025",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "026",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "027",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "028",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "029",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "030",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "031",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "032",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "033",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "034",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "035",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "036",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "037",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "038",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "039",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "040",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "041",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "042",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "043",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "044",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "045",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "046",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "047",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "048",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "049",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "050",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "051",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "052",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "053",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "054",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "055",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "056",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "057",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "058",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "059",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "060",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "061",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "062",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "063",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "064",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "065",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "066",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-question",
+          "hint": true,
+          "id": "067",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-question",
+          "hint": false,
+          "id": "068",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "069",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": false,
+          "id": "070",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "071",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-local",
+          "hint": true,
+          "id": "072",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "073",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "074",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "075",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "076",
+          "lang": "zh",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "077",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "078",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "079",
+          "lang": "en",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "080",
+          "lang": "en",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "081",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "settled-fork",
+          "hint": true,
+          "id": "082",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "083",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "settled-fork",
+          "hint": false,
+          "id": "084",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "085",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "086",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": false,
+          "id": "087",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "repair-obsolete",
+          "hint": true,
+          "id": "088",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "089",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": false,
+          "id": "090",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "091",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": false
+        },
+        {
+          "case": "pending-irrelevant",
+          "hint": true,
+          "id": "092",
+          "lang": "zh",
+          "repeat": 1,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "093",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "094",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        },
+        {
+          "case": "pending-relevant",
+          "hint": false,
+          "id": "095",
+          "lang": "en",
+          "repeat": 2,
+          "wait": false
+        },
+        {
+          "case": "pending-relevant",
+          "hint": true,
+          "id": "096",
+          "lang": "en",
+          "repeat": 2,
+          "wait": true
+        }
+      ],
+      "baseline": "14eacdcf1960d333e0bcd4c98f73f4f8acd57d26",
+      "cohort": "policy",
+      "created_utc": "2026-11-27T03:46:01.451964+00:00",
+      "sha256": {
+        "docs/spot-advisor-2.4-protocol.md": "3cf91828b361f0507744dd8e1a3408baf7513eef9ed69dba23393e3093e08a30",
+        "eval/direct_session.py": "739f0cff8a059cb8a278a16836d3ecb5e797e450662b4c06fa93d683e718a679",
+        "eval/gap_study24.py": "71fcf7b28d56fe37d23fff3119d532e741538974d1985db3cc567983dd4ce9d9",
+        "eval/spot24-checkpoints.json": "ff3963a4e1e1e7be897ace664ab1f5490882554aadd61c3ca66e31aa04f2d09f",
+        "skills/advisor/SKILL.md": "c0ddb1c012b73a21de7759c383a8e734f057d2f719bb409d046bca8e5db1df52",
+        "skills/advisor/scripts/ask_expert.py": "86bf4f2723433cfa7a167d4354728bedc1d6296e2bee171aa0d37b284f8c1b0c"
+      }
+    },
+    "review": {
+      "assignments": [
+        {
+          "case": "agenda",
+          "id": "001",
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "002",
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "003",
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "004",
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "005",
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "006",
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "007",
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "008",
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "009",
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "010",
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "011",
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "012",
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "013",
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "014",
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "015",
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "016",
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        }
+      ],
+      "baseline": "14eacdcf1960d333e0bcd4c98f73f4f8acd57d26",
+      "cohort": "review",
+      "created_utc": "2026-11-27T03:49:21.688206+00:00",
+      "sha256": {
+        "docs/spot-advisor-2.4-protocol.md": "3cf91828b361f0507744dd8e1a3408baf7513eef9ed69dba23393e3093e08a30",
+        "eval/direct_session.py": "739f0cff8a059cb8a278a16836d3ecb5e797e450662b4c06fa93d683e718a679",
+        "eval/gap_study24.py": "71fcf7b28d56fe37d23fff3119d532e741538974d1985db3cc567983dd4ce9d9",
+        "eval/spot24-checkpoints.json": "ff3963a4e1e1e7be897ace664ab1f5490882554aadd61c3ca66e31aa04f2d09f",
+        "skills/advisor/SKILL.md": "c0ddb1c012b73a21de7759c383a8e734f057d2f719bb409d046bca8e5db1df52",
+        "skills/advisor/scripts/ask_expert.py": "86bf4f2723433cfa7a167d4354728bedc1d6296e2bee171aa0d37b284f8c1b0c"
+      }
+    },
+    "coding": {
+      "advisor": "gpt-6.2-astra",
+      "assignments": [
+        {
+          "arm": "optional",
+          "case": "diagnostic-expiry-boundary",
+          "id": "r000",
+          "repeat": 2
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-expiry-boundary",
+          "id": "r001",
+          "repeat": 2
+        },
+        {
+          "arm": "optional",
+          "case": "diagnostic-nested-config-copy",
+          "id": "r002",
+          "repeat": 1
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-nested-config-copy",
+          "id": "r003",
+          "repeat": 1
+        },
+        {
+          "arm": "optional",
+          "case": "diagnostic-overlapping-ranges",
+          "id": "r004",
+          "repeat": 1
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-overlapping-ranges",
+          "id": "r005",
+          "repeat": 1
+        },
+        {
+          "arm": "optional",
+          "case": "diagnostic-nested-config-copy",
+          "id": "r006",
+          "repeat": 2
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-nested-config-copy",
+          "id": "r007",
+          "repeat": 2
+        },
+        {
+          "arm": "optional",
+          "case": "diagnostic-overlapping-ranges",
+          "id": "r008",
+          "repeat": 2
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-overlapping-ranges",
+          "id": "r009",
+          "repeat": 2
+        },
+        {
+          "arm": "local",
+          "case": "diagnostic-expiry-boundary",
+          "id": "r010",
+          "repeat": 1
+        },
+        {
+          "arm": "optional",
+          "case": "diagnostic-expiry-boundary",
+          "id": "r011",
+          "repeat": 1
+        }
+      ],
+      "grader_source_sha256": "d2e22399ac1d385d6fffd884fbeb8ebf4271cc9678d0496bd657f2ff43a9f1ff",
+      "harness_sha256": "26fe62b69954baed90c108ebb270f50bbfb15022479ee0ab8ca1f4451c0ec694",
+      "image": "python@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89",
+      "model": "gpt-6-luna",
+      "protocol_sha256": "ef9289bf57f41917aeee355b2ea3b85580abf61d875305328d2cbacfcddbe5fe",
+      "seed": 2403
+    },
+    "provenance": {
+      "assignments": [
+        {
+          "case": "roster",
+          "id": "p000",
+          "label": false,
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p001",
+          "label": false,
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p002",
+          "label": true,
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p003",
+          "label": false,
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p004",
+          "label": true,
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p005",
+          "label": true,
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p006",
+          "label": true,
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p007",
+          "label": true,
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p008",
+          "label": true,
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p009",
+          "label": true,
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p010",
+          "label": false,
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p011",
+          "label": false,
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p012",
+          "label": false,
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p013",
+          "label": false,
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p014",
+          "label": false,
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p015",
+          "label": false,
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p016",
+          "label": true,
+          "quote": true,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p017",
+          "label": true,
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p018",
+          "label": false,
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p019",
+          "label": true,
+          "quote": true,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p020",
+          "label": true,
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p021",
+          "label": false,
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p022",
+          "label": true,
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p023",
+          "label": true,
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "roster",
+          "id": "p024",
+          "label": false,
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p025",
+          "label": false,
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p026",
+          "label": false,
+          "quote": true,
+          "repeat": 2,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p027",
+          "label": true,
+          "quote": false,
+          "repeat": 2,
+          "valid": false
+        },
+        {
+          "case": "roster",
+          "id": "p028",
+          "label": true,
+          "quote": false,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p029",
+          "label": false,
+          "quote": false,
+          "repeat": 1,
+          "valid": true
+        },
+        {
+          "case": "agenda",
+          "id": "p030",
+          "label": false,
+          "quote": true,
+          "repeat": 1,
+          "valid": false
+        },
+        {
+          "case": "agenda",
+          "id": "p031",
+          "label": true,
+          "quote": false,
+          "repeat": 2,
+          "valid": true
+        }
+      ],
+      "created_utc": "2026-11-27T03:54:31.668589+00:00",
+      "model": "gpt-6.2-astra",
+      "seed": 2404,
+      "sha256": {
+        "docs/spot-advisor-2.4-provenance-control.md": "6a64469144fbcba92b858344f813b5608d7f7366c1a55652fb03a8dbdf3f9e9d",
+        "eval/gap_study24.py": "71fcf7b28d56fe37d23fff3119d532e741538974d1985db3cc567983dd4ce9d9",
+        "eval/provenance_control24.py": "b1beaa29b01207bcdd87572008180aa178a8df0f4543ffaa24bcdc0770dc3399",
+        "skills/advisor/scripts/ask_expert.py": "86bf4f2723433cfa7a167d4354728bedc1d6296e2bee171aa0d37b284f8c1b0c"
+      }
+    }
+  },
+  "observations_sha256": "bc968d11aa42783d3a9d7f8efce9589c67ea5a43216a03c6cebb9528adea3f2d"
+}

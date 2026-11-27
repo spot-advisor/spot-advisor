@@ -1,0 +1,108 @@
+{
+  "baseline": "14eacdcf1960d333e0bcd4c98f73f4f8acd57d26",
+  "copies": {
+    "published": {
+      "discoverable_filename": true,
+      "disabled_marker": false,
+      "cli_help_ok": true,
+      "supports": {
+        "--handoff-file": true,
+        "--audio": true,
+        "--preview": true,
+        "--status": true
+      },
+      "rule_text_sha256": "a70a3f3512c5e30956080a6e03c638f5c26b3f4d7634851fa91cc5371cfc34ec",
+      "caller_text_sha256": "ad380dd1c5c2200447ed8000f5573cc31752bdcf3c417049eba0ce3a3e303e21"
+    },
+    "agents": {
+      "discoverable_filename": true,
+      "disabled_marker": false,
+      "cli_help_ok": true,
+      "supports": {
+        "--handoff-file": false,
+        "--audio": false,
+        "--preview": true,
+        "--status": true
+      },
+      "rule_text_sha256": "c7da3521596509dffdb842f049dc48be30dd296752f893f3aa9ceada3aa5e68e",
+      "caller_text_sha256": "d3ec72f30b2ceb21bae9e72872d48f60299d244b68ff5eb9bb810bb8b0ce0069"
+    },
+    "codex": {
+      "discoverable_filename": false,
+      "disabled_marker": true,
+      "cli_help_ok": true,
+      "supports": {
+        "--handoff-file": false,
+        "--audio": false,
+        "--preview": true,
+        "--status": true
+      },
+      "caller_text_sha256": "7617bec05ffe745fc4f84cb412726044018c2d948caaa2d90b2b6ed1765070de"
+    },
+    "claude": {
+      "discoverable_filename": true,
+      "disabled_marker": false,
+      "cli_help_ok": true,
+      "supports": {
+        "--handoff-file": false,
+        "--audio": false,
+        "--preview": true,
+        "--status": true
+      },
+      "rule_text_sha256": "c7da3521596509dffdb842f049dc48be30dd296752f893f3aa9ceada3aa5e68e",
+      "caller_text_sha256": "d3ec72f30b2ceb21bae9e72872d48f60299d244b68ff5eb9bb810bb8b0ce0069"
+    }
+  },
+  "probes": {
+    "format": {
+      "en_ascii": {
+        "input": "Does this saved payroll export meet the delivery criteria?",
+        "status": "preview"
+      },
+      "en_short": {
+        "input": "Ship this CSV?",
+        "status": "unavailable"
+      },
+      "zh_fullwidth": {
+        "input": "这份工资名册导出文件现在符合交付验收要求吗？",
+        "status": "unavailable"
+      },
+      "zh_ascii": {
+        "input": "这份工资名册导出文件现在符合交付验收要求吗?",
+        "status": "preview"
+      },
+      "en_trailing_evidence": {
+        "input": "Does this saved payroll export meet the delivery criteria? I verified the file.",
+        "status": "unavailable"
+      },
+      "two_questions": {
+        "input": "Does the roster meet the criteria? Which format should payroll use?",
+        "status": "preview"
+      }
+    },
+    "follow_up_fields": {
+      "ordinary": {
+        "status": "preview",
+        "acceptance_included": true,
+        "outcome_included": true,
+        "chars": 527
+      },
+      "scoped": {
+        "status": "preview",
+        "acceptance_included": false,
+        "outcome_included": false,
+        "chars": 568
+      }
+    },
+    "exhausted_round_status": "budget_exhausted",
+    "registered_omission_flagged": true,
+    "stale_evidence_status": "unavailable",
+    "stale_evidence_error": "Evidence bytes do not match the current registered hash.",
+    "identical_evidence_budget": {
+      "first_status": "preview",
+      "first_chars": 2069,
+      "followup_status": "packet_too_large"
+    },
+    "dispatch_journals_created": 0
+  }
+}
