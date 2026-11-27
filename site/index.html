@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Spot Advisor 2.4 lets coding agents ask one focused question about text, charts or WAV speech. Install the skill and inspect the formal benchmark.">
-  <title>Spot Advisor — One focused turn, then back to the work</title>
+  <meta name="description" content="Compare repair costs for Astra alone and Luna Max with Spot Advisor, then install the skill and configure your models.">
+  <title>Spot Advisor — Low-cost coding with Astra on call</title>
   <link rel="stylesheet" href="assets/site.css">
   <script defer src="assets/commands.js"></script>
 </head>
@@ -17,8 +17,8 @@
       <span>SPOT <b>/</b> ADVISOR</span>
     </a>
     <nav aria-label="Main navigation">
-      <a href="#workflow">How it works</a>
-      <a href="#evidence">Benchmark</a>
+      <a href="#install">Setup</a>
+      <a href="#repair-study">Cost study</a>
       <a href="#market">Release</a>
       <a href="https://github.com/spot-advisor/spot-advisor">GitHub <span aria-hidden="true">↗</span></a>
       <a class="language-link" href="zh-CN/" lang="zh-CN">简体中文</a>
@@ -26,41 +26,108 @@
   </header>
 
   <main id="main">
-    <section class="hero wrap" id="top">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> <a href="https://github.com/spot-advisor/spot-advisor/releases/tag/v2.4.0">Spot Advisor v2.4.0</a></p>
-        <h1>When the next move isn’t obvious, <em>ask once.</em></h1>
-        <p class="hero-lede">Your coding agent asks for one recommendation, then tests the fix locally.</p>
-        <p class="hero-example"><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/demo/transcript.md">In one recorded run</a>, a <code>False</code> setting kept reverting to its default. The advisor suggested checking whether the key existed. A one-line fix passed all four tests.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#install">Install the skill <span aria-hidden="true">↓</span></a>
-          <a class="button button-quiet" href="#try-it" aria-describedby="preview-note">Try the offline preview <span aria-hidden="true">↓</span></a>
-        </div>
-        <p class="preview-note" id="preview-note">Local preview. No account or model calls.</p>
+    <section class="cost-hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="cost-intro">
+        <a class="release-link" href="https://github.com/spot-advisor/spot-advisor/releases/tag/v2.4.0">Spot Advisor v2.4.0</a>
+        <h1 id="hero-title">Let a low-cost model code. <em>Ask Astra when it gets stuck.</em></h1>
+        <p>We ran both workflows on the same {repair[n]} public code repairs. These USD estimates use the study’s API rates and requests with priceable usage records.</p>
+        <a class="setup-link" href="#install">Set up your executor and advisor <span aria-hidden="true">↓</span></a>
       </div>
-      <section class="hero-benchmark" aria-labelledby="benchmark-question">
-        <p class="eyebrow">Formal benchmark · v2.4</p>
-        <h2 id="benchmark-question">How often did the handoff produce a verified result?</h2>
-        <table class="benchmark-summary" aria-labelledby="benchmark-question" aria-describedby="benchmark-sample">
-          <thead>
-            <tr><th scope="col">Handoff method</th><th scope="col">Tasks passed</th><th scope="col">Median time</th></tr>
-          </thead>
+      <div class="cost-panel">
+        <table class="price-table">
+          <caption>Estimated cost of recorded, priceable requests · USD</caption>
+          <thead><tr><th scope="col">Astra alone</th><th scope="col">Luna Max <span>+ Spot Advisor</span></th></tr></thead>
           <tbody>
-            <tr class="advisor-result"><th scope="row">Spot Advisor packet</th><td>{scores[all][scoped][verified]} / {tasks}</td><td>{scores[all][scoped][median_seconds]:.1f} s</td></tr>
-            <tr><th scope="row">Free-text summary</th><td>{scores[all][summary][verified]} / {tasks}</td><td>{scores[all][summary][median_seconds]:.1f} s</td></tr>
-            <tr><th scope="row">Full checkpoint</th><td>{scores[all][full][verified]} / {tasks}</td><td>{scores[all][full][median_seconds]:.1f} s</td></tr>
+            <tr class="prices"><td>${repair[cost][astra_only]:.2f}</td><td>${repair[cost][spot_advisor]:.2f}</td></tr>
+            <tr><td><b>{repair[arms][astra_only][accepted]} / {repair[n]}</b> passed</td><td><b>{repair[arms][spot_advisor][accepted]} / {repair[n]}</b> passed</td></tr>
+            <tr><td><b>{repair[timely][astra_only]} / {repair[n]}</b> within 15 min</td><td><b>{repair[timely][spot_advisor]} / {repair[n]}</b> within 15 min</td></tr>
           </tbody>
         </table>
-        <p class="benchmark-sample" id="benchmark-sample">All three methods ran on the same {tasks} held-out text, image and audio tasks. An independent grader checked each delivery.</p>
-        <a class="text-link" href="#evidence">See the full benchmark <span aria-hidden="true">↓</span></a>
-      </section>
+        <div class="cost-meaning">
+          <p>The priced requests cost <strong>{repair[lower]:.1f}% less</strong> with Luna Max. It consulted Astra on {repair[arms][spot_advisor][tasks_with_consultation]} of {repair[n]} tasks.</p>
+          <small>The estimate excludes {repair[missing][astra_only]} unpriced Astra-only requests and {repair[missing][spot_advisor]} Luna + advisor requests. <a href="#repair-study">See receipts</a></small>
+        </div>
+        <div class="hero-actions">
+          <a class="button button-primary" id="install-fallback" href="#install">View install command</a>
+          <button class="button button-primary" id="hero-copy" type="button" data-copy="install-codex" hidden>Copy install command</button>
+          <a class="button button-quiet" href="advisor.zip" download>Download skill ZIP <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="setup-section" id="install" aria-labelledby="setup-title">
+      <div class="wrap">
+        <div class="setup-heading">
+          <h2 id="setup-title">Set up your two models</h2>
+          <fieldset class="host-choice"><legend class="visually-hidden">Choose your coding agent</legend>
+            <label><input type="radio" name="host" value="codex" checked>Codex</label>
+            <label><input type="radio" name="host" value="claude-code">Claude Code</label>
+          </fieldset>
+        </div>
+        <ol class="setup-steps" id="workflow">
+          <li><h3>Install the skill</h3>
+            <div class="host-content" data-host="codex">
+            <p>In your project directory, run</p>
+            <div class="command-line"><code id="install-codex">npx skills add spot-advisor/spot-advisor --skill advisor --agent codex</code><button type="button" class="copy-command" data-copy="install-codex" aria-label="Copy Codex install command" hidden>Copy</button></div>
+            <p>For the CLI installer, use Node.js with npx. The skill runs on Python 3.10+. First time using Codex? Run <code>codex login</code>.</p>
+            <details><summary>Installing from ZIP?</summary><p>Extract the ZIP, then place its entire <code>advisor</code> folder inside <code>.agents/skills/</code> in your project and reopen Codex.</p></details>
+          </div>
+            <div class="host-content" data-host="claude-code">
+            <p>In your project directory, run</p>
+            <div class="command-line"><code id="install-claude-code">npx skills add spot-advisor/spot-advisor --skill advisor --agent claude-code</code><button type="button" class="copy-command" data-copy="install-claude-code" aria-label="Copy Claude Code install command" hidden>Copy</button></div>
+            <p>For the CLI installer, use Node.js with npx. The skill runs on Python 3.10+. Sign in to Claude Code for execution and run <code>codex login</code> once for the Astra advisor.</p>
+            <details><summary>Installing from ZIP?</summary><p>Extract the ZIP, then place its entire <code>advisor</code> folder inside <code>.claude/skills/</code> in your project and reopen Claude Code.</p></details>
+          </div>
+          </li>
+          <li><h3>Choose who does what</h3>
+            <div class="role-pair">
+              <div><small>Executor</small><b data-host="codex">Luna</b><b data-host="claude-code">Your low-cost Claude model</b><p>Reads files, edits code and runs tests.</p></div>
+              <div><small>Advisor</small><b>Astra</b><p>Answers one focused question.</p></div>
+            </div>
+            <div data-host="codex"><div class="command-line"><code id="launch-luna">codex -m gpt-6-luna</code><button type="button" class="copy-command" data-copy="launch-luna" aria-label="Copy Luna launch command" hidden>Copy</button></div><p>Start this session in your project. The benchmark used Luna at max reasoning effort.</p></div>
+            <p data-host="claude-code">Start <code>claude</code> in your project and use <code>/model</code> to select a low-cost executor available to your account. The cost study above used Luna Max.</p>
+            <p>With Codex signed in, the default advisor is <code>gpt-6.2-astra</code>.</p>
+            <details><summary>Set Astra explicitly</summary><p>To override an existing setting, run the command for your shell before starting the executor.</p>
+              <p>PowerShell<br><code>$env:CODEX_ADVISOR_MODEL = 'gpt-6.2-astra'</code></p>
+              <p>Bash / Zsh<br><code>export CODEX_ADVISOR_MODEL=gpt-6.2-astra</code></p>
+            </details>
+          </li>
+          <li><h3>Give it a failing test</h3>
+            <blockquote id="first-prompt">Fix this failing test. Reproduce it locally first. If two plausible fixes remain after your checks, use Spot Advisor to ask Astra once. Apply the fix yourself, rerun the test, and report the result.</blockquote>
+            <button type="button" class="copy-command" data-copy="first-prompt" aria-label="Copy the example prompt" hidden>Copy</button>
+            <p class="recorded-demo"><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/demo/transcript.md">Recorded example</a> · An explicit <code>False</code> kept reverting to a default. Astra suggested checking if the key existed. The agent changed one line and all four tests passed.</p>
+          </li>
+        </ol>
+        <div class="setup-links"><a href="#try-it">Try the offline preview</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/first-consultation-24.md">First consultation walkthrough</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/install.md">Connection settings</a></div>
+      </div>
+    </section>
+
+    <section class="repair-study wrap" id="repair-study" aria-labelledby="repair-title">
+      <div class="repair-heading">
+        <p class="eyebrow">SWE-bench Pro V2</p>
+        <h2 id="repair-title">What did the repairs cost?</h2>
+        <p>For the same {repair[matched_n]} tasks with complete receipts on both sides, estimated costs were <strong>${repair[matched_cost][astra_only]:.2f}</strong> and <strong>${repair[matched_cost][spot_advisor]:.2f}</strong>. That’s {repair[matched_lower]:.1f}% lower with Luna and the advisor.</p>
+        <p class="study-scope">These are API-equivalent estimates at the study’s November 20, 2026 rates. Missing receipts leave the full-run cost unknown. Both workflows passed the same number of repairs. The study leaves their quality difference uncertain.</p>
+      </div>
+      <div><table class="repair-table"><caption>{repair[n]} paired public code repairs</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col">Astra alone</th><th scope="col">Luna Max + advisor</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Priceable request subtotal (USD)</th><td>${repair[cost][astra_only]:.2f}</td><td>${repair[cost][spot_advisor]:.2f}</td></tr>
+          <tr><th scope="row">Tasks with complete usage records</th><td>{repair[arms][astra_only][usage_complete]} / {repair[n]}</td><td>{repair[arms][spot_advisor][usage_complete]} / {repair[n]}</td></tr>
+          <tr><th scope="row">Requests missing a price</th><td>{repair[missing][astra_only]}</td><td>{repair[missing][spot_advisor]}</td></tr>
+          <tr><th scope="row">Verified repairs</th><td>{repair[arms][astra_only][accepted]} / {repair[n]}</td><td>{repair[arms][spot_advisor][accepted]} / {repair[n]}</td></tr>
+          <tr><th scope="row">Verified within 15 minutes</th><td>{repair[timely][astra_only]} / {repair[n]}</td><td>{repair[timely][spot_advisor]} / {repair[n]}</td></tr>
+          <tr><th scope="row">Cost on the same {repair[matched_n]} fully priced tasks</th><td>${repair[matched_cost][astra_only]:.2f}</td><td>${repair[matched_cost][spot_advisor]:.2f}</td></tr>
+        </tbody></table>
+        <div class="setup-links"><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/evidence.jsonl">Request receipts</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/pricing.json">Rate card</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/manifest.json">Run manifest</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/metrics.json">Graded results</a><a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/delivery.json">Timing audit</a></div>
+      </div>
     </section>
 
     <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="wrap">
         <div class="section-heading evidence-heading">
           <p class="eyebrow">Spot Advisor 2.4 · Formal benchmark</p>
-          <h2 id="evidence-title">Three ways to hand off the same task</h2>
+          <h2 id="evidence-title">What should an agent send in a handoff?</h2>
           <p>Each of {tasks} held-out tasks ran with a full checkpoint, a free-text summary, and a structured Spot Advisor packet. An independent grader checked the delivered files against the same criteria within a {deadline}-second deadline per run.</p>
         </div>
         <div class="evidence-card">
@@ -99,47 +166,12 @@
           </div>
           <a class="button button-outline" href="https://github.com/spot-advisor/spot-advisor/releases/download/paper-2.4-v1/spot-advisor-2.4-manuscript.pdf">Download paper (PDF) <span aria-hidden="true">↗</span></a>
         </div>
-        <a class="study-archive" href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/eval/results/2026-11-20/formal-collection/metrics.json">Earlier 48-task repair benchmark <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="brand-strip wrap" aria-label="Workflow summary">
-      <img src="assets/spot-advisor-hero.webp" alt="Spot Advisor: a compact evidence packet becomes one frontier judgment and a local verification check." width="1200" height="350">
-    </section>
-
-    <section class="section wrap" id="workflow">
-      <div class="section-heading">
-        <p class="eyebrow">01 — THE MOMENT IT HELPS</p>
-        <h2>Not every failure needs a stronger model.</h2>
-        <p>Run the relevant local check first. If the evidence still leaves materially different next actions, Spot Advisor helps your agent ask about that fork instead of handing off the whole task.</p>
-      </div>
-      <div class="three-steps">
-        <article class="step-card">
-          <span class="step-number">01</span>
-          <h3>Keep the work local</h3>
-          <p>Your coding agent checks the test, dependency, fixture, and current revision. It chooses what evidence belongs in the packet.</p>
-        </article>
-        <article class="step-card step-card-feature">
-          <span class="step-number">02</span>
-          <h3>Ask at the decision</h3>
-          <p>Preview a compact question with the goal, constraints, observations, and acceptance check. Send only when the answer could change the next move.</p>
-        </article>
-        <article class="step-card">
-          <span class="step-number">03</span>
-          <h3>Return to the executor</h3>
-          <p>The advisor returns a verdict, a concrete action, a verification step, and a risk. Your agent makes the edit and checks it locally.</p>
-        </article>
-      </div>
-      <div class="ownership-note">
-        <span class="ownership-symbol" aria-hidden="true">↳</span>
-        <p><strong>Small boundary, clear ownership.</strong> Spot Advisor doesn’t inspect your repository or edit files. The executor selects evidence, applies advice, and owns the final result.</p>
       </div>
     </section>
 
     <section class="try-section" id="try-it">
       <div class="wrap try-grid">
         <div class="section-heading">
-          <p class="eyebrow">02 — TRY IT BEFORE YOU INSTALL</p>
           <h2>See exactly what would be sent.</h2>
           <p>With Git and Python 3.10+ installed, run these commands in a terminal. If you already have the v2.4.0 checkout, run the last line from its root. The preview prints the request locally.</p>
           <a class="text-link" href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/demo/README.md">Follow the full demo <span aria-hidden="true">↗</span></a>
@@ -156,31 +188,9 @@ python skills/advisor/scripts/ask_expert.py --preview --state-file demo/state.js
         </div>
       </div>
       <figure class="demo-replay wrap">
-        <img src="assets/spot-advisor-demo.gif" alt="A visual replay of one recorded run: three falsey-value checks fail, Spot Advisor previews a packet and returns a key-presence recommendation, then all four checks pass." width="1280" height="720">
+        <img loading="lazy" src="assets/spot-advisor-demo.gif" alt="A visual replay of one recorded run: three falsey-value checks fail, Spot Advisor previews a packet and returns a key-presence recommendation, then all four checks pass." width="1280" height="720">
         <figcaption>One recorded local run, shown as a designed replay rather than a live screen recording. <a href="https://github.com/spot-advisor/spot-advisor/blob/main/demo/transcript.md">Read the sanitized transcript</a>.</figcaption>
       </figure>
-    </section>
-
-    <section class="section wrap install-section" id="install">
-      <div class="install-copy">
-        <p class="eyebrow">03 — PUT IT IN YOUR WORKFLOW</p>
-        <h2>One skill. Keep your coding agent.</h2>
-        <p>From your project folder, run the command for your coding agent. The installer uses Node.js and npx. Reopen the agent in that project to use the skill.</p>
-        <div class="install-links">
-          <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/first-consultation-24.md">Run your first consultation <span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/spot-advisor/spot-advisor/blob/v2.4.0/docs/install.md">Configure the advisor connection <span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-      <div class="install-box">
-        <div class="install-command">
-          <div class="command-heading"><strong>Codex</strong><button type="button" class="copy-command" data-copy="install-codex" aria-label="Copy Codex install command" hidden>Copy</button></div>
-          <code id="install-codex">npx skills add spot-advisor/spot-advisor --skill advisor --agent codex</code>
-        </div>
-        <div class="install-command">
-          <div class="command-heading"><strong>Claude Code</strong><button type="button" class="copy-command" data-copy="install-claude-code" aria-label="Copy Claude Code install command" hidden>Copy</button></div>
-          <code id="install-claude-code">npx skills add spot-advisor/spot-advisor --skill advisor --agent claude-code</code>
-        </div>
-      </div>
     </section>
 
     <section class="market-section wrap" id="market" aria-labelledby="market-title">
@@ -194,14 +204,6 @@ python skills/advisor/scripts/ask_expert.py --preview --state-file demo/state.js
       </div>
     </section>
 
-    <section class="closing wrap">
-      <p class="eyebrow">A SMALLER, CHECKABLE ASK</p>
-      <h2>Keep the executor moving.<br><em>Spend judgment where it can change the next step.</em></h2>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#try-it">Try the offline preview <span aria-hidden="true">↑</span></a>
-        <a class="button button-quiet" href="https://github.com/spot-advisor/spot-advisor">Explore the repository <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
   </main>
   <footer class="site-footer wrap">
     <a class="wordmark" href="#top"><span class="wordmark-mark" aria-hidden="true">S</span><span>SPOT <b>/</b> ADVISOR</span></a>

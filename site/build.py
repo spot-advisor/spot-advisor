@@ -1,24 +1,83 @@
 """Assemble the bilingual GitHub Pages bundle with its archived scorecard."""
 
+from hashlib import sha256
 import json
+from math import fsum
 from pathlib import Path
 import shutil
+import sys
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 
 SITE = Path(__file__).resolve().parent
 ROOT = SITE.parent
 DIST = SITE / "dist"
 FORMAL = ROOT / "eval/results/spot24-release/formal"
+REPAIRS = ROOT / "eval/results/2026-11-20/formal-collection"
+sys.path.insert(0, str(ROOT / "eval"))
+from receipt_costs import estimate, fully_observed, requests
+
 PAGES = ("index.html", "zh-CN/index.html")
 
 SOURCES = {
     SITE / "assets/commands.js": DIST / "assets/commands.js",
     SITE / "assets/site.css": DIST / "assets/site.css",
-    ROOT / "docs/assets/spot-advisor-hero.webp": DIST / "assets/spot-advisor-hero.webp",
-    ROOT / "docs/assets/spot-advisor-hero.zh-CN.webp": DIST / "assets/spot-advisor-hero.zh-CN.webp",
     ROOT / "demo/spot-advisor-demo.gif": DIST / "assets/spot-advisor-demo.gif",
     ROOT / "demo/spot-advisor-demo.zh-CN.gif": DIST / "assets/spot-advisor-demo.zh-CN.gif",
 }
+
+
+def repair_comparison() -> dict:
+    suite = "swe-bench-pro-v2"
+    metrics = json.loads((REPAIRS / "metrics.json").read_text(encoding="utf-8"))
+    manifest = json.loads((REPAIRS / "manifest.json").read_text(encoding="utf-8"))
+    evidence = (REPAIRS / "evidence.jsonl").read_text(encoding="utf-8")
+    if sha256(evidence.encode()).hexdigest() != metrics["evidence_sha256"]:
+        raise ValueError("Repair receipts differ from the archived metrics.")
+    excluded = set(metrics["excluded_before_dispatch"])
+    tasks = {task["task_id"] for task in manifest["tasks"] if task["suite"] == suite} - excluded
+    arms = ("astra_only", "spot_advisor")
+    totals = {arm: {} for arm in arms}
+    complete = {arm: set() for arm in arms}
+    missing = dict.fromkeys(arms, 0)
+    for line in evidence.splitlines():
+        row = json.loads(line)
+        if row["suite"] != suite:
+            continue
+        arm, task = row["arm"], row["task_id"]
+        if task in totals[arm]:
+            raise ValueError(f"Duplicate repair record: {task}, {arm}")
+        prices = [estimate(receipt) for receipt in requests(row)]
+        unknown = prices.count(None)
+        missing[arm] += unknown
+        totals[arm][task] = fsum(price for price in prices if price is not None)
+        if not unknown and fully_observed(row):
+            complete[arm].add(task)
+    if any(set(totals[arm]) != tasks for arm in arms):
+        raise ValueError("Repair receipts do not match the paired tasks in the manifest.")
+    matched = complete["astra_only"] & complete["spot_advisor"]
+    cost = {arm: fsum(totals[arm].values()) for arm in arms}
+    matched_cost = {arm: fsum(totals[arm][task] for task in matched) for arm in arms}
+    timely = next(window["timely_passes"] for window in metrics["deployment"]["windows"]
+                  if window["deadline_seconds"] == 900)
+    return {
+        "n": len(tasks), "arms": metrics["suites"][suite], "cost": cost, "timely": timely,
+        "missing": missing, "matched_n": len(matched), "matched_cost": matched_cost,
+        "lower": 100 * (1 - cost["spot_advisor"] / cost["astra_only"]),
+        "matched_lower": 100 * (1 - matched_cost["spot_advisor"] / matched_cost["astra_only"]),
+    }
+
+
+def write_skill_zip(destination: Path) -> None:
+    # Ship only the skill. A fixed timestamp and LF text keep downloads reproducible.
+    skill = ROOT / "skills/advisor"
+    with ZipFile(destination, "w") as archive:
+        for name in ("SKILL.md", "agents/openai.yaml", "scripts/ask_expert.py"):
+            member = ZipInfo(f"advisor/{name}")
+            member.create_system = 3
+            member.external_attr = 0o100644 << 16
+            archive.writestr(member, (skill / name).read_text(encoding="utf-8").encode(),
+                             compress_type=ZIP_DEFLATED)
 
 
 def scorecard() -> dict:
@@ -34,6 +93,7 @@ def scorecard() -> dict:
     if len(packets) != paired["n"] or paired["n"] != manifest["sample_size"]["tasks"]:
         raise ValueError("Scorecard sources disagree on the number of matched tasks.")
     return {
+        "repair": repair_comparison(),
         "scores": metrics["summary"],
         "tasks": paired["n"],
         "deadline": manifest["deadline_seconds"],
@@ -67,6 +127,7 @@ def main() -> None:
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
         print(f"Copied {source.relative_to(ROOT)} -> {destination.relative_to(ROOT)}")
+    write_skill_zip(DIST / "advisor.zip")
     for name, html in pages.items():
         destination = DIST / name
         destination.parent.mkdir(parents=True, exist_ok=True)

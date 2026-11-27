@@ -13,6 +13,11 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
+if __package__:
+    from .receipt_costs import BILLING, advisor_requests, estimate, fully_observed, request_tokens, requests, sum_known
+else:
+    from receipt_costs import BILLING, advisor_requests, estimate, fully_observed, request_tokens, requests, sum_known
+
 
 HERE = Path(__file__).resolve().parent
 ARMS = ("spot_advisor", "astra_only")
@@ -20,47 +25,12 @@ ASTRA = "gpt-6.2-astra"
 LABELS = {"spot_advisor": "Luna Max + Astra", "astra_only": "Astra only"}
 EXPECTED_FORMAL = {"swe-bench-pro-v2": 50, "diagnostic": 16, "chromium": 8}
 SUITE_LABELS = {"swe-bench-pro-v2": "SWE-bench Pro V2", "diagnostic": "Diagnostic", "chromium": "Chromium"}
-BILLING = json.loads((HERE / "pricing.json").read_text(encoding="utf-8"))
 SCHEMA = Draft202012Validator(json.loads((HERE / "telemetry_schema.json").read_text(encoding="utf-8")))
 REQUEST_TIMING_FIELDS = ("remaining_budget_seconds", "request_timeout_seconds", "deadline_reached_at_timeout")
 
 
 def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def advisor_requests(row: dict) -> list[dict]:
-    return [attempt for call in row["consultations"] for attempt in call["attempts"]
-            if attempt["dispatch_possible"]]
-
-
-def requests(row: dict) -> list[dict]:
-    return [*row["executor_attempts"], *advisor_requests(row)]
-
-
-def sum_known(values) -> int | float | None:
-    parts = list(values)
-    return None if any(value is None for value in parts) else sum(parts)
-
-
-def request_tokens(receipt: dict) -> int | None:
-    usage = receipt.get("usage") or {}
-    return sum_known(usage.get(key) for key in ("input_tokens", "output_tokens"))
-
-
-def estimate(receipt: dict) -> float | None:
-    pricing = BILLING["models"].get(receipt.get("model"))
-    usage = receipt["usage"]
-    tokens = [usage.get(key) for key in ("input_tokens", "output_tokens", "cached_input_tokens",
-                                        "cache_write_input_tokens")]
-    if pricing is None or any(count is None for count in tokens):
-        return None
-    inputs, outputs, read, write = tokens
-    if read + write > inputs:
-        return None
-    input_weight, output_weight = (2, 1.5) if inputs > BILLING["long_input_threshold"] else (1, 1)
-    return (input_weight * ((inputs - read - write) * pricing["input"] + read * pricing["cache_read"]
-                             + write * pricing["cache_write"]) + output_weight * outputs * pricing["output"]) / 1e6
 
 
 def clean(row: dict) -> dict:
@@ -150,15 +120,6 @@ def load_pairs(folder: Path) -> tuple[dict, list, list]:
     if published:
         raise ValueError("The exported records include tasks or arms outside the manifest.")
     return manifest, rows, pairs
-
-
-def fully_observed(row: dict) -> bool:
-    receipts = requests(row)
-    return (
-        not row["reroutes"] and row["verdict"] not in {"infrastructure_error", "model_rerouted"} and bool(receipts)
-        and bool(row["executor_attempts"]) and all(request_tokens(r) is not None for r in receipts)
-        and all(r.get("model") == r["requested_model"] for r in receipts)
-    )
 
 
 def frontier_tokens(row: dict) -> int | None:

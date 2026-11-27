@@ -9,7 +9,7 @@ The static bilingual landing page lives here:
 
 ## Local preview
 
-From the repository root, run <code>python site/build.py</code>, then <code>python -m http.server 8000 --directory site/dist</code> and open <code>http://localhost:8000/</code>. The standard-library build renders both pages using the [formal metrics, manifest, and per-task records](../eval/results/spot24-release/formal). It also copies the shared CSS, hero art, and demo replays.
+From the repository root, run <code>python site/build.py</code>, then <code>python -m http.server 8000 --directory site/dist</code> and open <code>http://localhost:8000/</code>. The standard-library build prices the [paired repair receipts](../eval/results/2026-11-20/formal-collection) with the [study rate card](../eval/pricing.json) and renders the [handoff study](../eval/results/spot24-release/formal) below the installation guide. It also packages the [installable skill](../skills/advisor) as <code>advisor.zip</code> and copies the shared assets and demo replays.
 
 ## Official publishing
 
