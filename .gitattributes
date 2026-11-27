@@ -1,3 +1,4 @@
 /eval/results/2026-11-20/formal-collection/evidence.jsonl text eol=lf
 /eval/trigger23-proposal.txt text eol=lf
 /eval/results/spot24-gap-audit/observations.jsonl text eol=lf
+/eval/results/spot24-release/**/observations.jsonl text eol=lf

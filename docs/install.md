@@ -4,7 +4,7 @@
 
 Official release repository: [spot-advisor/spot-advisor](https://github.com/spot-advisor/spot-advisor) · Website: [spot-advisor.github.io](https://spot-advisor.github.io/).
 
-For the 2.4 candidate, use the [install, rollback and first consultation walkthrough](first-consultation-24.md). It covers scoped text, images and original audio from Codex and Claude Code.
+For version 2.4, use the [install, rollback and first consultation walkthrough](first-consultation-24.md). It covers scoped text, images and original audio from Codex and Claude Code.
 
 ---
 
@@ -101,7 +101,7 @@ For exact local evidence, select `--snippet PATH:FIRST-LAST`, `--diff`, or `--er
 [`skills/advisor/scripts/ask_expert.py`](../skills/advisor/scripts/ask_expert.py) defaults to `--transport auto`, routing as follows:
 
 1. **Direct Codex (`--transport auto` #1 default / `--transport codex`):** Uses `~/.codex/auth.json` (`codex login`) directly against ChatGPT OAuth for `gpt-6.2-astra` (default), `gpt-6.2-sol`, or `gpt-6-luna`. No gateway or separate API key required.
-2. **OpenAI-Compatible Gateway (`--transport gateway`):** Set `EXPERTS_BASE_URL` and `EXPERTS_API_KEY`. The route must implement both `/responses/input_tokens` and `/chat/completions`. The preflight must succeed before generation. Automatic mode uses this route for image attachments and can use it for explicitly selected non-Codex models.
+2. **OpenAI-compatible gateway (`--transport gateway`).** Configure `EXPERTS_BASE_URL` and the gateway credential. Text and image routes require both `/responses/input_tokens` and `/chat/completions`. Audio uses bounded PCM bytes and an exact audio-capable model on `/chat/completions`. A scoped screenshot can also use direct Codex vision. See the [tested release paths](release-2.4.md).
 3. **Claude Code CLI (`--transport claude`):** Invokes `claude -p --no-session-persistence --tools ""` for text consultations when Codex auth and gateway are unavailable.
 
 ---

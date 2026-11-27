@@ -2,7 +2,7 @@
   <img src="docs/assets/spot-advisor-hero.zh-CN.webp" alt="Spot Advisor：一份精简的证据材料交给前沿顾问，返回可执行的下一步和验证方法。" width="900">
 </p>
 
-<h1 align="center">Spot Advisor 2.2</h1>
+<h1 align="center">Spot Advisor 2.4</h1>
 
 <p align="center"><strong>按需调用前沿判断，然后继续手头的工作。</strong></p>
 
@@ -18,7 +18,7 @@
 
 Spot Advisor 是面向编程智能体的技能。它会引导当前智能体整理一份精简、可检查的问题材料，在确有判断分岔时向前沿模型咨询。顾问根据材料给出建议和验证方法；修改代码、运行本地检查仍由当前智能体负责。
 
-**成熟度：**公开研究原型。技能和离线预览可以使用；48 个任务的研究尚未证明修复质量相当、整轮节省或外部用户采用。详见[市场定位与下一项实验](docs/market-position.md)。
+2.4 支持按范围提交文本、图表图片和原始 PCM WAV 语音。运行已安装脚本的 `--doctor` 可查看实际版本和后端配置。[首次使用指南](docs/first-consultation-24.md) · [发布验收记录](docs/release-2.4.md)
 
 **安装：**<code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **先试用：**[离线预览](#离线试一试) · **完整走一遍：**[终端演示](demo/README.md)
 
@@ -115,8 +115,10 @@ python skills/advisor/scripts/ask_expert.py --preview --protocol v2 --question "
 
 ## 研究与论文
 
-**Stan Chen** · *Frontier Advice or Frontier Execution? Time to verification and patch changes in paired software repairs*
+2.4 研究在配对任务上比较完整记录、自由摘要和结构化交接包。[2.4 论文源码与复现](paper/compression24/README.md)
+
+早期配对修复研究由 **Stan Chen** 撰写，题为 *Frontier Advice or Frontier Execution?*
 
 [阅读 arXiv 论文草稿（PDF）](paper/spot-advisor-preprint.pdf) · [研究与复现](paper/README.md) · [实验方案](docs/research-protocol.md) · [引用软件](CITATION.cff)
 
-仓库里的 PDF 是当前论文草稿。[路线图](ROADMAP.md)记录了后续关于咨询时机、提问方式，以及每项独立验证通过的修复所需成本的研究。[技能源码](skills/advisor/SKILL.md)使用 MIT 许可证。
+上面的 PDF 对应早期修复研究。[2.4 证据包](paper/compression24/README.md)对应本次多模态发布。软件使用 [MIT 许可证](LICENSE)。

@@ -1,0 +1,2571 @@
+{
+  "additional_routes": {
+    "rc-route-claude": {
+      "advice_fields": null,
+      "error": "Advisor reply did not meet the v2 format or visible length.",
+      "model": "default",
+      "status": "invalid_advice",
+      "transport": "claude",
+      "usage_normalized": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 1081,
+        "output_tokens": 130,
+        "reasoning_output_tokens": null
+      }
+    },
+    "rc-route-claude-v2": {
+      "advice_fields": {
+        "do": "Edit the deadline check in `expiry.py` to use greater-than-or-equal comparison.",
+        "risk": "Ensure deadline units and timezone handling remain unchanged so the comparison stays valid.",
+        "verdict": "Change the comparison from `now > deadline` to `now >= deadline`.",
+        "verify": "Test that an entry is expired at the exact deadline, not expired before it, and expired after it."
+      },
+      "error": null,
+      "model": "default",
+      "status": "ok",
+      "transport": "claude",
+      "usage_normalized": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 850,
+        "output_tokens": 122,
+        "reasoning_output_tokens": null
+      }
+    },
+    "rc2-audio-0": {
+      "advice_fields": null,
+      "error": "Expert API returned HTTP 502: Audio gateway response body omitted.",
+      "model": null,
+      "status": "unavailable",
+      "transport": null,
+      "usage_normalized": {
+        "cache_write_input_tokens": null,
+        "cached_input_tokens": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "reasoning_output_tokens": null
+      }
+    },
+    "rc2-audio-1": {
+      "advice_fields": null,
+      "error": "Expert API returned HTTP 502: Audio gateway response body omitted.",
+      "model": null,
+      "status": "unavailable",
+      "transport": null,
+      "usage_normalized": {
+        "cache_write_input_tokens": null,
+        "cached_input_tokens": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "reasoning_output_tokens": null
+      }
+    },
+    "rc2-audio-2": {
+      "advice_fields": {
+        "decision": "ACTION",
+        "do": "Write `rising` on line 1 and `1.0` on line 2 of `answer.txt` per brief:1-2.",
+        "risk": "Exact onset formatting (e.g., `1` vs `1.0`) may depend on downstream parser tolerances.",
+        "verdict": "ACTION because clip 1 clearly plays a lower tone at ~0.2s–0.7s and a higher tone at ~1.0s–1.5s, matching check:1-1.",
+        "verify": "Confirm `answer.txt` contains `rising` on the first line and `1.0` (or `1`) on the second line."
+      },
+      "error": null,
+      "model": "gemini-subscription-argon",
+      "status": "ok",
+      "transport": "gateway",
+      "usage_normalized": {
+        "cache_write_input_tokens": null,
+        "cached_input_tokens": null,
+        "input_tokens": 7089,
+        "output_tokens": 241,
+        "reasoning_output_tokens": null
+      }
+    }
+  },
+  "audio_parser_replay": {
+    "assigned": 18,
+    "offline_parser_admitted": 18,
+    "original_admitted": 13
+  },
+  "automated_testers": "Spot Advisor on two independent native host sessions",
+  "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+  "delivery_regressions": {
+    "rc-final-delivery": [
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Change only the visible text of the /agenda link to «Voir le programme».",
+          "risk": "The current check applies only to the pre-edit revision.",
+          "verdict": "REWORK — check:1-1 shows «Détails» on the reviewed revision, not the approved label «Voir le programme».",
+          "verify": "Parse the saved revision and confirm the heading «Rencontre samedi» and a link with href /agenda and visible text exactly «Voir le programme»."
+        },
+        "id": "001",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the CSV with columns in the required order, moving each value with its column.",
+          "risk": "A header-only edit would swap the meaning of the payroll values.",
+          "verdict": "REWORK — check:1-1 records `name,department` for this revision; payroll requires `department,name`.",
+          "verify": "Parse the saved revision and confirm the header is exactly `department,name` and the only data rows are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "002",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Reorder both columns in the saved CSV, keeping each department paired with its name.",
+          "risk": "The current column order may cause import rejection or field misassignment.",
+          "verdict": "REWORK — check:1-1 shows this revision has the header `name,department`; the payroll import requires `department,name`.",
+          "verify": "Parse the corrected revision and confirm the header is `department,name` and the only records are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "003",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the saved CSV as `department,name` followed by `Sales,Ada` and `Ops,Ben`, one row per line.",
+          "risk": "The current CSV does not meet the payroll import requirement.",
+          "verdict": "REWORK — check:1-1 for this revision shows `name,department`; payroll requires `department,name`.",
+          "verify": "Reparse the saved CSV and register the check against the new revision: the ordered header must be `department,name`, with exactly the two specified staff records."
+        },
+        "id": "004",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770 unchanged.",
+          "risk": "None identified.",
+          "verdict": "ACCEPT — check:1-1 confirms the reviewed revision meets the French invitation brief and uses the approved link label.",
+          "verify": "The observation registered to this revision reports the heading «Rencontre samedi» and the exact visible label «Voir le programme» linking to `/agenda`."
+        },
+        "id": "005",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved artifact meets the cited brief and the exact-label requirement.",
+          "verify": "check:1-1, registered to this revision, reports the French heading «Rencontre samedi» and a link to /agenda with the exact approved label «Voir le programme»."
+        },
+        "id": "006",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parse registered to the delivery revision confirms the required header and both staff rows.",
+          "verify": "The header is exactly `department,name`, followed by exactly two records: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "007",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace «Détails» with «Voir le programme» in the saved invitation.",
+          "risk": "The existing check covers only the reviewed revision, not the correction.",
+          "verdict": "REWORK — check:1-1 shows «Détails» on the `/agenda` link, but the approved label is «Voir le programme».",
+          "verify": "Parse the corrected revision and confirm the heading remains «Rencontre samedi» and the `/agenda` link displays exactly «Voir le programme»."
+        },
+        "id": "008",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Change only the visible text of the /agenda link to «Voir le programme».",
+          "risk": "None beyond the identified label mismatch.",
+          "verdict": "REWORK — check:1-1 records «Détails» as the visible link text in this revision, not the required «Voir le programme».",
+          "verify": "Parse the revised artifact and confirm the heading is «Rencontre samedi», the href is /agenda, and the visible link text is exactly «Voir le programme»."
+        },
+        "id": "009",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace the visible label of the /agenda link with «Voir le programme».",
+          "risk": "None beyond the confirmed label mismatch.",
+          "verdict": "REWORK — check:1-1 shows «Détails» on the reviewed revision, not the required «Voir le programme».",
+          "verify": "Parse the saved revision and confirm the heading remains «Rencontre samedi», the link href is /agenda, and its visible text is exactly «Voir le programme»."
+        },
+        "id": "010",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the revision-specific evidence confirms the requested French heading and agenda link with the approved label.",
+          "verify": "For revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770, check:1-1 recorded the heading «Rencontre samedi» and a link to `/agenda` labeled exactly «Voir le programme»."
+        },
+        "id": "011",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the observation registered for this revision confirms it meets the brief.",
+          "verify": "“Rencontre samedi” is the French event heading. The link points to `/agenda` and its visible label is exactly “Voir le programme”."
+        },
+        "id": "012",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed revision unchanged.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved CSV meets the brief and the payroll import requirement.",
+          "verify": "The parse registered to this revision confirms the exact header `department,name` and exactly two records: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "013",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed CSV.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parse registered to this exact revision confirms the required header and both staff rows.",
+          "verify": "The parsed header is exactly `department,name`, followed by exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "014",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver this revision to the requester.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parsed CSV for revision db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773 meets the delivery requirements.",
+          "verify": "check:1-1 recorded the required header `department,name` in that order and exactly two records: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "015",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Re-export the payroll CSV with department first and name second, preserving both staff records.",
+          "risk": "The current column order could cause an import failure or swapped field values.",
+          "verdict": "REWORK — check:1-1 confirms this revision has the header `name,department`, not the required `department,name`.",
+          "verify": "Parse the corrected revision and confirm the header is `department,name` and the only rows are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "016",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      }
+    ],
+    "rc1-delivery": [
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace “Détails” with “Voir le programme”, preserving the heading and the /agenda link target.",
+          "risk": "The current check covers only the reviewed revision, not the correction.",
+          "verdict": "REWORK — check:1-1 records “Détails” as the visible link text in this revision; the approved label is “Voir le programme”.",
+          "verify": "Luna should parse the saved revision and register evidence against its digest showing the heading “Rencontre samedi” and a link to /agenda with visible text exactly “Voir le programme”."
+        },
+        "id": "001",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Reorder the saved CSV columns, moving each department value with its column.",
+          "risk": "The corrected revision remains unverified until it is parsed.",
+          "verdict": "REWORK — check:1-1 confirms this revision has header `name,department`; payroll requires `department,name`.",
+          "verify": "Parse the revised CSV and confirm the header is exactly `department,name` and the only data rows are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "002",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the CSV in the required column order, preserving each staff member’s department.",
+          "risk": "A payroll importer enforcing the required header will reject the current revision.",
+          "verdict": "REWORK — check:1-1 records `name,department` for this revision; the required header is `department,name`.",
+          "verify": "Parse the corrected revision and record the exact header `department,name` and exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "003",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Reorder the CSV columns, moving each value with its column.",
+          "risk": "The current column order could cause the import to fail or map values to the wrong fields.",
+          "verdict": "REWORK — the revision’s header is `name,department`; the payroll import requires `department,name`.",
+          "verify": "Parse the revised CSV and confirm the exact header `department,name` and exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "004",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "NEEDS_EVIDENCE",
+          "do": "Provide the event team’s approval message or decision record naming «Voir le programme» as the approved label for this invitation.",
+          "risk": "The displayed wording may be correct without having been approved.",
+          "verdict": "NEEDS_EVIDENCE — check:1-1 confirms the link label, but not the event team’s approval of it.",
+          "verify": "For revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770, check:1-1 records the French heading «Rencontre samedi» and the /agenda link labeled «Voir le programme». Match the approval record to that exact label."
+        },
+        "id": "005",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "NEEDS_EVIDENCE"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved-artifact check is registered to the exact revision under review and confirms the brief is met.",
+          "verify": "check:1-1 confirms the French event heading «Rencontre samedi» and a link to `/agenda` with the exact approved label «Voir le programme»."
+        },
+        "id": "006",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the CSV parse registered for this exact revision confirms the required header order and both requested staff rows.",
+          "verify": "Recorded header: `department,name`. Exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "007",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Luna, change only the visible text of the /agenda link to «Voir le programme».",
+          "risk": "The current observation does not verify the corrected revision.",
+          "verdict": "REWORK — check:1-1 is registered to this revision and shows the visible label «Détails», not the approved «Voir le programme».",
+          "verify": "Luna, parse the saved new revision and record that its heading is «Rencontre samedi», its link href is /agenda, and its visible link text is exactly «Voir le programme»."
+        },
+        "id": "008",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace «Détails» with «Voir le programme» on the /agenda link.",
+          "risk": "Check:1-1 does not verify the corrected revision.",
+          "verdict": "REWORK — check:1-1 records «Détails» for this revision, but the approved link label is «Voir le programme».",
+          "verify": "Parse the saved revision and confirm the heading remains «Rencontre samedi» and the link has href `/agenda` and visible text exactly «Voir le programme»."
+        },
+        "id": "009",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Luna, change only the visible text of the /agenda link to «Voir le programme».",
+          "risk": "The current observation does not verify the revised artifact.",
+          "verdict": "REWORK — check:1-1 records «Détails» as the visible link label for this revision; acceptance requires exactly «Voir le programme».",
+          "verify": "Parse the revised artifact and register a fresh observation confirming the heading «Rencontre samedi», href `/agenda`, and visible label «Voir le programme»."
+        },
+        "id": "010",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "NEEDS_EVIDENCE",
+          "do": "Provide the event team’s approval record, citing the message or document line that explicitly approves «Voir le programme» for this invitation.",
+          "risk": "The label is present, but its approval remains unverified.",
+          "verdict": "NEEDS_EVIDENCE — check:1-1 confirms the heading and link for this revision, but not the event team’s approval of the label.",
+          "verify": "The approved wording must match the visible label exactly. check:1-1 already records «Rencontre samedi», the href `/agenda`, and the label «Voir le programme»."
+        },
+        "id": "011",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "NEEDS_EVIDENCE"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770.",
+          "risk": "None.",
+          "verdict": "ACCEPT — check:1-1 confirms the requested heading and link in the exact delivery revision.",
+          "verify": "The saved invitation has the French heading «Rencontre samedi» and a link to `/agenda` with the exact approved label «Voir le programme»."
+        },
+        "id": "012",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed CSV unchanged.",
+          "risk": "None.",
+          "verdict": "ACCEPT — check:1-1 confirms the required header and both staff rows for this exact revision.",
+          "verify": "The saved CSV parsed with header `department,name` in that order and exactly two records: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "013",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parse registered for the reviewed revision confirms the required header and both staff rows.",
+          "verify": "The parsed header is exactly `department,name`, in that order. The only records are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "014",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed CSV.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved CSV meets the cited scope and header requirement for this exact revision.",
+          "verify": "`check:1-1` is registered to this revision and reports the ordered header `department,name` and exactly two records: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "015",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "e4ab1311545970cce005fb5d80e905d0c3230e006f4940c3a50c07700ae5e10a",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the CSV with header `department,name` and data rows `Sales,Ada` and `Ops,Ben`.",
+          "risk": "The current revision fails the payroll import requirement.",
+          "verdict": "REWORK — check:1-1 is registered to this revision and shows `name,department`, contrary to the required `department,name` order.",
+          "verify": "Parse the saved replacement and register the result against its revision; confirm the exact header order and both staff rows, with no extra rows."
+        },
+        "id": "016",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      }
+    ],
+    "rc2-delivery": [
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace the visible link text with «Voir le programme», preserving the heading and the /agenda destination.",
+          "risk": "The revised invitation remains unverified until the check is recorded against its new revision.",
+          "verdict": "REWORK — check:1-1 shows «Détails» in the reviewed revision; the approved link label is «Voir le programme».",
+          "verify": "Parse the saved replacement revision and confirm the heading is «Rencontre samedi» and the link displays exactly «Voir le programme» with href=\"/agenda\"."
+        },
+        "id": "001",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the CSV in the required column order, moving each row’s values with its columns.",
+          "risk": "Swapping only the header would mislabel the payroll values.",
+          "verdict": "REWORK — check:1-1 shows `name,department` for this revision; the required header is `department,name`.",
+          "verify": "Reparse the saved revision and confirm the header is `department,name` and the only data rows are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "002",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Reorder both CSV columns, keeping each department paired with its name.",
+          "risk": "The payroll importer may reject the current revision or misread its fields.",
+          "verdict": "REWORK — check:1-1 shows this revision has the header `name,department`; payroll requires `department,name`.",
+          "verify": "Parse the revised CSV and confirm the header is exactly `department,name` and the only data rows are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "003",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Reorder the CSV columns to `department,name`, moving each row’s values with their columns.",
+          "risk": "The current header order could cause an import failure.",
+          "verdict": "REWORK — check:1-1 shows this revision has `name,department`; payroll requires `department,name`.",
+          "verify": "Parse the saved revision and confirm the header is exactly `department,name` and the only records are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "004",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parsed invitation matches the brief and uses the approved French link label.",
+          "verify": "For this revision, check:1-1 records the heading « Rencontre samedi » and the exact visible label « Voir le programme » linking to `/agenda`."
+        },
+        "id": "005",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed revision unchanged.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the observation registered for this revision confirms the French heading and the agenda link with its approved label.",
+          "verify": "The heading is «Rencontre samedi»; the link points to `/agenda` and displays exactly «Voir le programme»."
+        },
+        "id": "006",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "None.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved CSV’s parsed contents match the payroll brief for this exact revision.",
+          "verify": "The revision-registered parse shows the exact header `department,name` and exactly two data rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "007",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace only the visible text of the /agenda link with «Voir le programme».",
+          "risk": "check:1-1 covers only the reviewed revision, not the correction.",
+          "verdict": "REWORK — check:1-1 shows «Détails» instead of the required «Voir le programme» on the reviewed revision.",
+          "verify": "Parse the saved replacement revision and confirm the heading is still «Rencontre samedi», the link href is /agenda, and its visible text is exactly «Voir le programme»."
+        },
+        "id": "008",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Change only the visible label of the /agenda link to «Voir le programme».",
+          "risk": "The current check does not verify the edited revision.",
+          "verdict": "REWORK — check:1-1 records «Détails» as the visible link label for this revision, not the approved «Voir le programme».",
+          "verify": "Parse the saved revision after the edit and confirm the heading is «Rencontre samedi», the href is /agenda, and the visible label is exactly «Voir le programme»."
+        },
+        "id": "009",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Replace «Détails» with «Voir le programme», leaving the heading and `/agenda` destination unchanged.",
+          "risk": "The current check cannot verify the corrected revision.",
+          "verdict": "REWORK — check:1-1 records «Détails» as the visible link label in the reviewed revision; the approved label is «Voir le programme».",
+          "verify": "Parse the saved revision and confirm that the heading is «Rencontre samedi» and that the link to `/agenda` displays exactly «Voir le programme»."
+        },
+        "id": "010",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "d291ba6a7e5c05905a74a5ccd471359d1b851b37337347c72992a443f90b93c6",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Détails.",
+              "registered_for_revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "d3a8c7aa8cfc26cfe56336b8caf14684e9b0ffb4e72ed297720792e61d12f024",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved invitation matches the brief and the approved link wording.",
+          "verify": "For that revision, check:1-1 records the French heading « Rencontre samedi » and the exact approved label « Voir le programme » linking to /agenda."
+        },
+        "id": "011",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-1 Prepare a French event invitation with a heading and a link to /agenda.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "agenda",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver revision 65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770.",
+          "risk": "None.",
+          "verdict": "ACCEPT — check:1-1 is registered for this exact revision and confirms the approved link wording.",
+          "verify": "The parsed French heading is «Rencontre samedi»; the link points to `/agenda` and displays exactly «Voir le programme»."
+        },
+        "id": "012",
+        "packet": {
+          "acceptance": [
+            "The event team approved the exact link label «Voir le programme»."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "0aee97c66de74fd7d7219b545f1891ebf91255a05861f0dbfd001f288adddf12",
+              "observed": "Parsed heading: Rencontre samedi. Link href: /agenda. Visible link text: Voir le programme.",
+              "registered_for_revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "65df725acaf17aa4ec664c8dc2cc1b664f01f853b91e526779d63448943cf770",
+          "scope": "brief:1-2 Prepare a French event invitation with a heading and a link to /agenda.\nThe event team approved the exact link label «Voir le programme».",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed revision unchanged.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved CSV is ready for delivery.",
+          "verify": "The parse registered for this exact revision shows the required header `department,name` in that order and exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "013",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed CSV unchanged.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the parse registered for this exact revision confirms the required header and both staff rows.",
+          "verify": "The header is `department,name` in that order. The only records are `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "014",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "ACCEPT",
+          "do": "Deliver the reviewed revision.",
+          "risk": "None.",
+          "verdict": "ACCEPT — the saved CSV for the reviewed revision meets the brief and payroll header requirement.",
+          "verify": "Revision-matched check:1-1 reports the ordered header `department,name` and exactly two rows: `Sales,Ada` and `Ops,Ben`."
+        },
+        "id": "015",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "bf7191378b67cae28d139bfc64fae3dcdb2afb0102d0e944d17a707cb3affdbb",
+              "observed": "Parsed CSV header (ordered): ['department', 'name']; records: [{'department': 'Sales', 'name': 'Ada'}, {'department': 'Ops', 'name': 'Ben'}].",
+              "registered_for_revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "db45832572e1e42c2df1a42d21e9e0d7d4f42baf5ecbc116804c03e4dad07773",
+          "scope": "brief:1-1 Prepare a payroll CSV containing the two staff rows for Ada and Ben.",
+          "unquoted_updates": []
+        },
+        "quote": false,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": true,
+        "verdict": "ACCEPT"
+      },
+      {
+        "artifact_hash": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+        "caller_sha256_lf": "96c39ef40bdc19cd278896dfc416fa6bcb6fdf2a2f11f38ba664539363e74231",
+        "case": "roster",
+        "decision_fields": {
+          "decision": "REWORK",
+          "do": "Rewrite the CSV with header `department,name` and data rows `Sales,Ada` and `Ops,Ben`.",
+          "risk": "The current column order places names where the payroll importer expects departments.",
+          "verdict": "REWORK — check:1-1 shows this revision’s header is `name,department`, not the required `department,name`.",
+          "verify": "Parse the saved replacement revision and confirm the header order is exactly `department,name` and the only records are Ada in Sales and Ben in Ops."
+        },
+        "id": "016",
+        "packet": {
+          "acceptance": [
+            "Payroll imports require the header department,name in exactly that order."
+          ],
+          "checks": [
+            "Parsed the saved artifact and recorded its actual contents."
+          ],
+          "constraints_or_corrections": [],
+          "evidence": [
+            {
+              "log_sha256": "c11345db03bc71f9f951263571260a9e5223b80b508becdb92dcdc1dbaf6f399",
+              "observed": "Parsed CSV header (ordered): ['name', 'department']; records: [{'name': 'Ada', 'department': 'Sales'}, {'name': 'Ben', 'department': 'Ops'}].",
+              "registered_for_revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+              "source": "check:1-1"
+            }
+          ],
+          "phase": "delivery",
+          "question": "Is this exact revision ready for delivery to the requester?",
+          "revision": "e34a7e67377e99298f3c96250ae0aeb0d6b2729a60b455a13303a67d2da8c0c8",
+          "scope": "brief:1-2 Prepare a payroll CSV containing the two staff rows for Ada and Ben.\nPayroll imports require the header department,name in exactly that order.",
+          "unquoted_updates": []
+        },
+        "quote": true,
+        "revision_bound": true,
+        "status": "ok",
+        "valid": false,
+        "verdict": "REWORK"
+      }
+    ]
+  },
+  "earlier_hosts": {
+    "native24-catalog": [
+      {
+        "advice": "Read the current local check, then change the expiration comparison in `expiry.py` from `now > deadline` to `now >= deadline` (equivalently, `deadline <= now`).",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "codex",
+        "modality": "text",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Save M in answer.txt.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "codex",
+        "modality": "image",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": null,
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": null,
+        "host": "codex",
+        "modality": "audio",
+        "model": "gemini-subscription-argon",
+        "provider_status": "invalid_advice",
+        "verified": true
+      },
+      {
+        "advice": "In `expiry.py`, make the deadline comparison inclusive: `now > deadline` should be `now >= deadline` (equivalently, `deadline <= now`).",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "text",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Save `M` in `answer.txt`.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "image",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Write `falling` on line 1 and `1.0` on line 2 of `answer.txt` per `brief:1-2`.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "audio",
+        "model": "gemini-subscription-argon",
+        "provider_status": "ok",
+        "verified": true
+      }
+    ],
+    "native24-first": [
+      {
+        "advice": null,
+        "caller_sha256_lf": null,
+        "decision": null,
+        "host": "codex",
+        "modality": "text",
+        "model": null,
+        "provider_status": null,
+        "verified": false
+      },
+      {
+        "advice": null,
+        "caller_sha256_lf": null,
+        "decision": null,
+        "host": "codex",
+        "modality": "image",
+        "model": null,
+        "provider_status": null,
+        "verified": false
+      },
+      {
+        "advice": null,
+        "caller_sha256_lf": null,
+        "decision": null,
+        "host": "codex",
+        "modality": "audio",
+        "model": null,
+        "provider_status": null,
+        "verified": false
+      },
+      {
+        "advice": "Provide the comparison line from `expiry.py` and the relevant assertion from the current local check at the cited revision. The intended predicate is `now >= deadline`, not `now > deadline`.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "NEEDS_EVIDENCE",
+        "host": "claude",
+        "modality": "text",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Save `M` in `answer.txt`.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "image",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Write `rising` on line 1 and `1.15` on line 2 of `answer.txt`.",
+        "caller_sha256_lf": "d7c77dfc2a8e8798167ee60692f465fcd6432097c7d9d913e5652e47bc01c4b3",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "audio",
+        "model": "gemini-subscription-argon",
+        "provider_status": "ok",
+        "verified": true
+      }
+    ],
+    "native24-freeze": [
+      {
+        "advice": "Luna, read and quote the deadline comparison in `expiry.py` and the relevant assertion in the current local check, with file and line references.",
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": "NEEDS_EVIDENCE",
+        "host": "codex",
+        "modality": "text",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Save `M` in `answer.txt`.",
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": "ACTION",
+        "host": "codex",
+        "modality": "image",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Write `rising` on line 1 and `1.0` on line 2 of `answer.txt`.",
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": "ACTION",
+        "host": "codex",
+        "modality": "audio",
+        "model": "gemini-subscription-argon",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "In `expiry.py`, change the expiration comparison from `now > deadline` to `now >= deadline`.",
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "text",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": "Save `M` in `answer.txt`.",
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": "ACTION",
+        "host": "claude",
+        "modality": "image",
+        "model": "gpt-6.2-astra",
+        "provider_status": "ok",
+        "verified": true
+      },
+      {
+        "advice": null,
+        "caller_sha256_lf": "606c1d8ab3aab6376e3d8f871ea6c87c696be75aa952e027dbe69afe3951eb88",
+        "decision": null,
+        "host": "claude",
+        "modality": "audio",
+        "model": "gemini-subscription-argon",
+        "provider_status": "invalid_advice",
+        "verified": true
+      }
+    ]
+  },
+  "hosts": {
+    "claude": {
+      "session": {
+        "entrypoint": "claude -p",
+        "is_error": false,
+        "turn": "success",
+        "turns": 30
+      },
+      "trials": [
+        {
+          "advice": "In `expiry.py:2`, change `return now > deadline` to `return now >= deadline`.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "In `expiry.py:2`, change `return now > deadline` to `return now >= deadline`.",
+            "risk": "The revised code has not yet been checked.",
+            "verdict": "ACTION — the current local check shows that `>` incorrectly returns `False` at the exact deadline.",
+            "verify": "With `deadline=20`, `expired(now, 20)` returns `[False, True, True]` for `now` values `[19, 20, 21]`."
+          },
+          "advisor_ok": true,
+          "artifact": "def expired(now, deadline):\n    return now >= deadline\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "ff969a3d41550ccbcdb02f5159faea8cac932820a16bffe0096605c0c94c0992",
+          "installation_verified": true,
+          "modality": "text",
+          "model": "gpt-6.2-astra",
+          "packet": {
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+                "log_sha256": "c3523fca5cb3a4930f727f01e64918177d69a7d5ae2cce359b43b2762334e26d",
+                "observed": "expiry.py:2 contains 'return now > deadline'. Actual expired(now,20) for now=19,20,21: [False, False, True]. The deadline case expects True.",
+                "registered_for_revision": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which comparison should change to satisfy the deadline rule?",
+            "revision": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+            "scope": "brief:1-2 Repair the deadline comparison in expiry.py.\nAt the exact deadline an entry is expired.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "codex",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 518,
+            "output_tokens": 100,
+            "reasoning_output_tokens": 0
+          },
+          "verified": true
+        },
+        {
+          "advice": "Save `M` in `answer.txt`.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "Save `M` in `answer.txt`.",
+            "risk": "The local check verified image identity, not the contents of `answer.txt`.",
+            "verdict": "ACTION — M is the visible label of the tallest bar.",
+            "verify": "Read back `answer.txt` and confirm it contains only the uppercase label `M`."
+          },
+          "advisor_ok": true,
+          "artifact": "M\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "a8acfd69eca7a2af7cf532115a8fc6126e84b6c35e6cbbf752cf9b2861bfccf7",
+          "installation_verified": true,
+          "modality": "image",
+          "model": "gpt-6.2-astra",
+          "packet": {
+            "attached_image_sha256": [
+              "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42"
+            ],
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+                "log_sha256": "ac49f8dc286f65460b751322e4566901d483afe6ff3af344d8a6eded5c87a6e4",
+                "observed": "Image decoded; there are three labeled bars. The local check measured file identity only.",
+                "registered_for_revision": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which visible label should the executor save?",
+            "revision": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+            "scope": "brief:1-2 Read the attached chart and save the label of the tallest bar in answer.txt.\nUse the exact visible label.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "codex",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 618,
+            "output_tokens": 66,
+            "reasoning_output_tokens": 0
+          },
+          "verified": true
+        },
+        {
+          "advice": "Write \"The cedar gate opens at noon.\" on line 1 of answer.txt and \"1.1\" on line 2.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "Write \"The cedar gate opens at noon.\" on line 1 of answer.txt and \"1.1\" on line 2.",
+            "risk": "Exact onset measurement near 1.1 seconds and capitalization of \"cedar gate\" carry minor perceptual uncertainty.",
+            "verdict": "ACTION because clip 1 clearly speaks \"The cedar gate opens at noon.\" from approximately 1.1s to 3.0s, matching check:1-1.",
+            "verify": "Confirm answer.txt contains the exact transcript on line 1 and the numeric start time on line 2 per brief:1-2."
+          },
+          "advisor_ok": true,
+          "artifact": "The cedar gate opens at noon.\n1.1\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "9b0a06c667ce4106413955c141af4246f531bfd1646827a05e79050ef60390de",
+          "installation_verified": true,
+          "modality": "audio",
+          "model": "gemini-subscription-argon",
+          "packet": {
+            "attached_audio_sha256": [
+              "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233"
+            ],
+            "audio_clip_seconds": [
+              3.061
+            ],
+            "audio_source_end_seconds": 3.061,
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+                "log_sha256": "387979b82f0e5b4e09917575558194e675cf613ff282f87e7a422fe42b95143d",
+                "observed": "The original mono PCM WAV decodes at 16 kHz. There is no local transcript.",
+                "registered_for_revision": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which words are spoken, and when does the first word begin?",
+            "revision": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+            "scope": "brief:1-2 Listen to the dispatch message and write the exact spoken words on the first line of answer.txt.\nOn the second line write approximately when speech begins, in seconds as a number.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "gateway",
+          "usage": {
+            "cache_write_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 7196,
+            "output_tokens": 227,
+            "reasoning_output_tokens": null
+          },
+          "verified": true
+        }
+      ]
+    },
+    "codex": {
+      "session": {
+        "entrypoint": "codex app-server",
+        "items": {
+          "agentMessage": 6,
+          "commandExecution": 23,
+          "fileChange": 5,
+          "imageView": 1,
+          "reasoning": 12,
+          "userMessage": 1
+        },
+        "model": "gpt-6-astra",
+        "turn": "completed"
+      },
+      "trials": [
+        {
+          "advice": "In `expiry.py:2`, change `return now > deadline` to `return now >= deadline`.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "In `expiry.py:2`, change `return now > deadline` to `return now >= deadline`.",
+            "risk": "The cited check covers the current revision, not the proposed edit.",
+            "verdict": "ACTION — the current `>` comparison leaves an entry unexpired at its deadline.",
+            "verify": "With deadline `20`, `expired` should return `[False, True, True]` for `now` values `[19, 20, 21]`."
+          },
+          "advisor_ok": true,
+          "artifact": "def expired(now, deadline):\n    return now >= deadline\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "01977485347d0e5f3f19c7bf3192d22b3a8dc04bee593111bb020aae7fa3bb57",
+          "installation_verified": true,
+          "modality": "text",
+          "model": "gpt-6.2-astra",
+          "packet": {
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+                "log_sha256": "c3523fca5cb3a4930f727f01e64918177d69a7d5ae2cce359b43b2762334e26d",
+                "observed": "expiry.py:2 contains 'return now > deadline'. Actual expired(now,20) for now=19,20,21: [False, False, True]. The deadline case expects True.",
+                "registered_for_revision": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which comparison should change to satisfy the deadline rule?",
+            "revision": "15ce06a252e96aadb7e4036287d406c20643d6cefcac66c0f589a1809d4fee76",
+            "scope": "brief:1-2 Repair the deadline comparison in expiry.py.\nAt the exact deadline an entry is expired.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "codex",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 518,
+            "output_tokens": 96,
+            "reasoning_output_tokens": 0
+          },
+          "verified": true
+        },
+        {
+          "advice": "Write `M` to `answer.txt`.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "Write `M` to `answer.txt`.",
+            "risk": "The local check confirms chart identity only; the file write is unverified.",
+            "verdict": "ACTION — M is the tallest bar’s exact visible label.",
+            "verify": "Read back `answer.txt` and confirm its only label is uppercase `M`."
+          },
+          "advisor_ok": true,
+          "artifact": "M\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "42097422722a4c0bb086b9434939223f169e99acac564e8be0e28ebc888d7f8f",
+          "installation_verified": true,
+          "modality": "image",
+          "model": "gpt-6.2-astra",
+          "packet": {
+            "attached_image_sha256": [
+              "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42"
+            ],
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+                "log_sha256": "ac49f8dc286f65460b751322e4566901d483afe6ff3af344d8a6eded5c87a6e4",
+                "observed": "Image decoded; there are three labeled bars. The local check measured file identity only.",
+                "registered_for_revision": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which visible label should the executor save?",
+            "revision": "87c027ba210797adafd92dd14277c20210005be9ca3e647af9f4d8c38c02eb42",
+            "scope": "brief:1-2 Read the attached chart and save the label of the tallest bar in answer.txt.\nUse the exact visible label.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "codex",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 618,
+            "output_tokens": 65,
+            "reasoning_output_tokens": 0
+          },
+          "verified": true
+        },
+        {
+          "advice": "Write \"The cedar gate opens at noon.\" on line 1 of answer.txt and \"0.65\" on line 2 per brief:1-2.",
+          "advice_fields": {
+            "decision": "ACTION",
+            "do": "Write \"The cedar gate opens at noon.\" on line 1 of answer.txt and \"0.65\" on line 2 per brief:1-2.",
+            "risk": "Speech onset timing is estimated by ear at approximately 0.65 seconds without sample-level waveform inspection.",
+            "verdict": "ACTION because clip 1 clearly contains the spoken dispatch message starting around 0.65 seconds through 2.45 seconds, aligning with check:1-1.",
+            "verify": "Confirm answer.txt has the exact sentence on line 1 and the numeric onset time in seconds on line 2."
+          },
+          "advisor_ok": true,
+          "artifact": "The cedar gate opens at noon.\n1.20\n",
+          "caller_sha256_lf": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803",
+          "decision": "ACTION",
+          "final_file_sha256": "ee0747c5d64be4d5fb2e2992e53e7fcebc411540c8100ca72150a8265e9a62c7",
+          "installation_verified": true,
+          "modality": "audio",
+          "model": "gemini-subscription-argon",
+          "packet": {
+            "attached_audio_sha256": [
+              "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233"
+            ],
+            "audio_clip_seconds": [
+              3.061
+            ],
+            "audio_source_end_seconds": 3.061,
+            "checks": [
+              "Read the current local check."
+            ],
+            "constraints_or_corrections": [],
+            "evidence": [
+              {
+                "checked_artifact_sha256": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+                "log_sha256": "387979b82f0e5b4e09917575558194e675cf613ff282f87e7a422fe42b95143d",
+                "observed": "The original mono PCM WAV decodes at 16 kHz. There is no local transcript.",
+                "registered_for_revision": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+                "source": "check:1-1"
+              }
+            ],
+            "phase": "decision",
+            "question": "Which words are spoken, and when does the first word begin?",
+            "revision": "2b739f771f0c383c75f3d0ce7bd7543076f3ce2b0773f9d50642010cb38a4233",
+            "scope": "brief:1-2 Listen to the dispatch message and write the exact spoken words on the first line of answer.txt.\nOn the second line write approximately when speech begins, in seconds as a number.",
+            "unquoted_updates": []
+          },
+          "preview": "preview",
+          "skill_version": "2.4.0",
+          "status": "ok",
+          "transport": "gateway",
+          "usage": {
+            "cache_write_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 7193,
+            "output_tokens": 228,
+            "reasoning_output_tokens": null
+          },
+          "verified": true
+        }
+      ]
+    }
+  },
+  "install": {
+    ".agents": {
+      "clean_install": true,
+      "reported_version": "2.4.0",
+      "rollback_exact": true,
+      "upgraded": true
+    },
+    ".claude": {
+      "clean_install": true,
+      "reported_version": "2.4.0",
+      "rollback_exact": true,
+      "upgraded": true
+    }
+  }
+}

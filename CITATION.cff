@@ -2,6 +2,8 @@ cff-version: 1.2.0
 message: "If you use spot-advisor in your research or engineering workflows, please cite it using this metadata."
 title: "Spot Advisor"
 type: software
+version: 2.4.0
+date-released: 2026-11-27
 authors:
   - family-names: Chen
     given-names: Stan

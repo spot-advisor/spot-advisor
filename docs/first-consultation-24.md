@@ -1,11 +1,11 @@
-# First consultation on the 2.4 candidate
+# First consultation on Spot Advisor 2.4
 
-Start from the candidate checkout. Use a fresh project for these exercises. Python 3.10+ runs the skill. Install Pillow for images. Set up a Codex login or Claude Code for text. The scoped Codex vision route accepts images. Original PCM WAV requires an audio-capable chat-completions gateway, its exact model name and the gateway credentials. Both host applications can launch that same caller.
+Start from the release checkout. Use a fresh project for these exercises. Python 3.10+ runs the skill. Install Pillow for images. Set up a Codex login or Claude Code for text. The scoped Codex vision route accepts images. Original PCM WAV requires an audio-capable chat-completions gateway, its exact model name and the gateway credentials. Both host applications can launch that same caller.
 
 | Host | Candidate install in the project | Text | Picture | WAV |
 | --- | --- | --- | --- | --- |
 | Codex | `.agents/skills/advisor` | Codex subscription | Scoped Codex vision | Configured audio gateway |
-| Claude Code | `.claude/skills/advisor` | Claude CLI or Codex subscription | Scoped Codex vision or configured image gateway | Configured audio gateway |
+| Claude Code | `.claude/skills/advisor` | Scoped Codex subscription | Scoped Codex vision | Configured audio gateway |
 
 Install from the checkout by running `python scripts/install_skill.py PROJECT/.agents/skills/advisor` for Codex or substituting `.claude/skills/advisor` for Claude Code. The command prints the installed path and the backup path if it replaced an earlier copy. To roll back run the same command with `--restore-from BACKUP`. Reopen the host in the project and run the installed caller with `--doctor`. It reports the invoked path, version, local configuration and other visible copies. A live exercise below checks the configured backend.
 

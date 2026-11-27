@@ -1,0 +1,711 @@
+{
+  "assignments": [
+    {
+      "arm": "scoped",
+      "case": "audio-003",
+      "id": "audio-003-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-003",
+      "id": "audio-003-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "full",
+      "case": "audio-003",
+      "id": "audio-003-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-004",
+      "id": "text-004-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "summary",
+      "case": "text-004",
+      "id": "text-004-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-004",
+      "id": "text-004-full",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-005",
+      "id": "text-005-full",
+      "modality": "text"
+    },
+    {
+      "arm": "summary",
+      "case": "text-005",
+      "id": "text-005-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-005",
+      "id": "text-005-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-002",
+      "id": "text-002-full",
+      "modality": "text"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-002",
+      "id": "text-002-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "summary",
+      "case": "text-002",
+      "id": "text-002-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "audio-005",
+      "id": "audio-005-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-005",
+      "id": "audio-005-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "audio-005",
+      "id": "audio-005-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-004",
+      "id": "image-004-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "image-004",
+      "id": "image-004-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "image-004",
+      "id": "image-004-full",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "image-006",
+      "id": "image-006-full",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "image-006",
+      "id": "image-006-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-006",
+      "id": "image-006-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "audio-002",
+      "id": "audio-002-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "audio-002",
+      "id": "audio-002-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-002",
+      "id": "audio-002-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "audio-001",
+      "id": "audio-001-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "full",
+      "case": "audio-001",
+      "id": "audio-001-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-001",
+      "id": "audio-001-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-001",
+      "id": "text-001-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-001",
+      "id": "text-001-full",
+      "modality": "text"
+    },
+    {
+      "arm": "summary",
+      "case": "text-001",
+      "id": "text-001-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "image-003",
+      "id": "image-003-full",
+      "modality": "image"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-003",
+      "id": "image-003-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "image-003",
+      "id": "image-003-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "text-006",
+      "id": "text-006-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-006",
+      "id": "text-006-full",
+      "modality": "text"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-006",
+      "id": "text-006-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "summary",
+      "case": "text-003",
+      "id": "text-003-summary",
+      "modality": "text"
+    },
+    {
+      "arm": "scoped",
+      "case": "text-003",
+      "id": "text-003-scoped",
+      "modality": "text"
+    },
+    {
+      "arm": "full",
+      "case": "text-003",
+      "id": "text-003-full",
+      "modality": "text"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-005",
+      "id": "image-005-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "image-005",
+      "id": "image-005-full",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "image-005",
+      "id": "image-005-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "image-001",
+      "id": "image-001-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "image-001",
+      "id": "image-001-full",
+      "modality": "image"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-001",
+      "id": "image-001-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-004",
+      "id": "audio-004-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "full",
+      "case": "audio-004",
+      "id": "audio-004-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "audio-004",
+      "id": "audio-004-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "audio-006",
+      "id": "audio-006-summary",
+      "modality": "audio"
+    },
+    {
+      "arm": "scoped",
+      "case": "audio-006",
+      "id": "audio-006-scoped",
+      "modality": "audio"
+    },
+    {
+      "arm": "full",
+      "case": "audio-006",
+      "id": "audio-006-full",
+      "modality": "audio"
+    },
+    {
+      "arm": "summary",
+      "case": "image-002",
+      "id": "image-002-summary",
+      "modality": "image"
+    },
+    {
+      "arm": "scoped",
+      "case": "image-002",
+      "id": "image-002-scoped",
+      "modality": "image"
+    },
+    {
+      "arm": "full",
+      "case": "image-002",
+      "id": "image-002-full",
+      "modality": "image"
+    }
+  ],
+  "audio_advisor": "gemini-subscription-argon",
+  "candidate_commit": "84117982a934eadd8b58f488dfa6b6d74f55ab7b",
+  "cases": [
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "9fa914a256d5dc36b468d6f878c1d46ff0ab3ef145360b0912dd87519bbbc59b",
+      "checkpoint_sha256": "8b9f379bf0582ae3062a7333d2ed8c1650a8395794ca0ef71c53caf6777d5224",
+      "grade_sha256": "3e817c5091362d62345cd986856ffe2fe546e5377949c5f093059aa6acd9b6cf",
+      "id": "audio-003",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "503621cb1bb511afe60349d869db90f3113652f1b5b341cb3b28ab9d7cf3890d",
+        "observation.txt": "831945dbed07903422637b17aa56cb23300e57e3029dceb9277eca4c00fb11e1",
+        "state.json": "0fbc72a5ec1b34c64bf45e6a22f3d13bcc2dd0012e3b926d1d149637fa6b2b92"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 599,
+      "source": "google/fleurs",
+      "source_key": "1848"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "fe97055e700d2944b12f858b6d3f3adf046a1c3eedd0ffddbe4f7cbcfe5e8ae0",
+      "checkpoint_sha256": "11192311719f0c9a1cd6a4fd16d9499750611f3ec7df2900e237d15784b96601",
+      "grade_sha256": "a7041b4a53a27b5cb834ef5fe12945fa3057293cf0a9a9af33a5fd308f3e3b85",
+      "id": "text-004",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "959942ce07ad1971b662aed6bb471fc9693382433c760024a44f5851dfc763f9",
+        "handoff.json": "b02ed3aa788bbd66c72cefd6a82c2832b07c796ced907e594bc145c07d089f42",
+        "observation.txt": "ac0e4caa9a8504495d6f4c50e0fcd41f2199adddd76c8b94021bc0e54c6593f4",
+        "state.json": "d52092a5a06c2d82cd1a58a23c824517a3ce0bd872d477c9d8cbc2263ac174f8"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 155,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "292"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "394aea5eb1a71583326606a0268eecad826824dbb1414ae0f97c3b9359ef08e0",
+      "checkpoint_sha256": "8ee85b226519f2d9caaf26f880dcfc58ec63fb797fef4e8a859f8e8f2ee8cd4c",
+      "grade_sha256": "e65da392f4f5ffe79a0c669c724c55f2858fa66e31be150349fdd6592535ebe5",
+      "id": "text-005",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "9ca9dcb27ac173df029937513507eb2b8a98e8a27cd52a53072c64e0392b83f5",
+        "handoff.json": "333188ce59ffcb9480fa1dbd3a3c105d2cea9e1a1af54b80b370e66ee45640dc",
+        "observation.txt": "2db6ff9573180821a01160fb020716331e26199792e8fb84e36bac63f4d8644e",
+        "state.json": "5578bf76897d2b5030c1bf90ccd591611e8077f2ee7d303b1edc968bb2090abf"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 145,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "280"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "c6b9f6866b75d0da4d274d7fb91dc75d7e107a4f1e2ebbd3a5e4a9c9aa94d6ca",
+      "checkpoint_sha256": "441cee52dbe31f2739448c70aec840131ec2651e8f641e028a3c424285e7db9c",
+      "grade_sha256": "f571432eae0394a7b86386546bb60c5a0e1b346e5dcec88ce2dce9d74e682888",
+      "id": "text-002",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "04e4fae332a777bd171a7ab3d5cbe8f47d954072cda54c4c105739f524a2ce21",
+        "handoff.json": "cd61875aec191dd9154c8a47a8ebb91c9db92127e7272312941ba7f7044c3afb",
+        "observation.txt": "7b9af855bc31390bb369e315bdfc3d1c053a75a0affc92033947aa73b92dd175",
+        "state.json": "64bcec896439d614ce48f51e3e767410a7ac11ad3e2eca812dac3424bde30217"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 191,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "408"
+    },
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "2bf66d95e9d8ea18db62283f6718edbb1940520a4d68016735ebbdb1eb03a025",
+      "checkpoint_sha256": "29c387e374b3bccb451bc1cd68130350aac5ae35b4b265dece6268138fbd87e3",
+      "grade_sha256": "e6c94ac68dab79d50b00cc0e55a90992f879901e4bed7c31081cdbc906ccdbb6",
+      "id": "audio-005",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "dd2a0040228589bb25df162d02fee24d849a039b11b0e09a24c4d865cac89e92",
+        "observation.txt": "d6672d6ff030781bb892ee8146a539090508ef1724cd85ca870d79be0acc413d",
+        "state.json": "4b940b6a795870daf6665607b60e146fef3028d6da5f610a4378bcc5f42263c3"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 584,
+      "source": "google/fleurs",
+      "source_key": "1874"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "92c988b82ea6e6a0256fce0888d6e32955cfb4748dcd7217de13e2822eb43c78",
+      "checkpoint_sha256": "cd5df874bd0cfdc4c79cdbab1af8a5a925b45dfac9219512ecfc392964562f17",
+      "grade_sha256": "7b352cb6094e2fc76dffd23f641e15c1102acc0eb956bd284856437422111261",
+      "id": "image-004",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "9f1652d1a2a3cae9f5e2c2d92483af29741c0d59af81ef8b95f24a33e78dc4fc",
+        "handoff.json": "21dd1879d3aa26718825a0c782f18248361b8e5a5c4ce7463e87f34c02ea09a1",
+        "observation.txt": "3830b59fe0a9cdfe8de747fcead4886c9f95473207ba3595abcca855873b6855",
+        "state.json": "2cf58f6bfde25f2c2dc53e335b23d39fbea3756ceb38077a4dc086f6c1b850b0"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 1015,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "92c988b82ea6e6a0256fce0888d6e32955cfb4748dcd7217de13e2822eb43c78"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "784f34be941391dd2f9d87b2b852b21cfdafce77a908475d1b4cb2155673cd6a",
+      "checkpoint_sha256": "b4c15dbce3a0f2fcbba5a7eba15f684633a513393adab112d85b9632ccf10c00",
+      "grade_sha256": "d579a6d5d165cd1988a7148e54fdd4245e5eefe95d841969c91a69a83996ac8e",
+      "id": "image-006",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "4b5613ab4410a14f6b25a307c7f4fce61f13224c0ff64213f147414edfe2f0e6",
+        "handoff.json": "5c891b1dd2cda54a395cac81b7c2b31bef5162971e0aefbab423ad07c631ec9d",
+        "observation.txt": "f06b0dd00b67cfcf396accc792409c99764927b91b27a494abe24ed017072fa9",
+        "state.json": "b99975eacf2a3d17e71bf5811957021365d9792dd62e4b613a29617b13410a73"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 1800,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "784f34be941391dd2f9d87b2b852b21cfdafce77a908475d1b4cb2155673cd6a"
+    },
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "5252d9182f413d512394deaff39e5c923fb064e8e8cbdb8b949983c82cd72097",
+      "checkpoint_sha256": "994969b649517d0665475b3bc47be13afd3e61e3d11bf1b9ed6270001f8462f9",
+      "grade_sha256": "0ce2ae12c403e6b46af6c2f2d4989ab965cfa61ad967361b16f9f9b2ff81460a",
+      "id": "audio-002",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "30b9afb37381a8fe8fb3da2f202f5eb2ce067316b205fce77d6627010bc5fab2",
+        "observation.txt": "0fb3f8662194f2beb2e884e322e8ef9c7533fc8805c359c1607c955dc7518ca5",
+        "state.json": "8a1352dc950105e3572b6f99c6071cf09ca0a4ea4c7f086a5f4fab95d2546cc2"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 39,
+      "source": "google/fleurs",
+      "source_key": "1752"
+    },
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "e80cf5085dded15a00755c3a9308b09696919960e98896a25490c4064cc24203",
+      "checkpoint_sha256": "c67380ceac7eaa179ad550fea84171aad9a9263d8d2eace63acefa77b60fd234",
+      "grade_sha256": "84e17f19604fddd07b9a5d95292a4aa7f896fa0bc3d620f09f2facdfd4104cdd",
+      "id": "audio-001",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "de1532196c10002877128e9cd8b15888f3777d406f833e44e1da8b40ee7851b8",
+        "observation.txt": "746fb96a4e58bb9d1403e21c634f9de1dcd675602277f0378b02ef82ee12e7d5",
+        "state.json": "9b1f0d25e590ef94796fbd9e0e3c870791ae81157fd0d59df97ddef887a5b317"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 8,
+      "source": "google/fleurs",
+      "source_key": "1846"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "ae23c20f7546f53e570ad6e44e3703d412b3dbde23bda8cec7a73ad73ec0aa6a",
+      "checkpoint_sha256": "68e92463fd9d2e901cb8e0038832c578dd698f7165d5ba615c238ca69e85361b",
+      "grade_sha256": "7a97b46270a5575486c9bc481bb979874eda95ae0189c8d93d1d015f177b1807",
+      "id": "text-001",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "a343324ac1d36a08fd6d40e8f6f087b520fd553c0b557e9f3d5715d78da7b504",
+        "handoff.json": "5a481cc26fb045e7e5fbaaf26b9d4e9c9ea2a8de3a85a9c9acf9b2fc2962d29f",
+        "observation.txt": "b4ff8a445b332b26d45c1589e53de0c5ce5b85bb34853d702ed5a8009a07941d",
+        "state.json": "24704dea502a3e2c0148fea1c153e078fdf8562646ce8423ddf0b492ba887d1b"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 99,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "226"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "f403523583ccd290f9e4bc9447619d2d2ff4897acd22885f4e3ebe300a1f1581",
+      "checkpoint_sha256": "aaf71856afbd1261389a7fc082d9d3c99904656ff04900297a9799976c5d04d1",
+      "grade_sha256": "b40a63964d2e6ac643df68e742fbc767096256af94738b80f7d7b02701638554",
+      "id": "image-003",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "6d0edfd51abcefd9659571a14177535c08b14b5a2a63d08cf4f1a1cb081d72ae",
+        "handoff.json": "29ff28c21c41ca9836f7f20cf6ee92bb65e952b6f51e6831254d50004a4ad884",
+        "observation.txt": "3830b59fe0a9cdfe8de747fcead4886c9f95473207ba3595abcca855873b6855",
+        "state.json": "95d3cdc32bb6b1fe3a8342e414f713895f4e4796fa11d0f22471b8129c8ad2b0"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 2050,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "f403523583ccd290f9e4bc9447619d2d2ff4897acd22885f4e3ebe300a1f1581"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "cebd856536afd9b1738e2458f072365fb6413748bb5a3a7e68adf823943ee1dc",
+      "checkpoint_sha256": "82ceff5cf617105e15b9706f3b569a24e2279235e5c060b5d0dfabd88eccb859",
+      "grade_sha256": "9f53b96e3dd1feceaa684205a425b467b6a90706f3aa26f81d114431aec7fa95",
+      "id": "text-006",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "4934ceadd35bd1417e7737db29e8331cdd92a2123938545d705eb9d4cbb256eb",
+        "handoff.json": "728cf2abd1568fe9d04adb6d67a5ac4c711d0184bbdb8f1fda1d9c974ce84f1a",
+        "observation.txt": "6be4c95da01eda5383b836d307ffe7dbb55ad001c1b67534a568ac9606727a13",
+        "state.json": "18f80cef313a82ace53d2e4dffb2ae4e0716b4a33b850788e48c3db61697527e"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 11,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "59"
+    },
+    {
+      "asset": "core.py",
+      "bytes_sha256": "2b89c5dffc5f807a047bdc6c7f5bf6d448b8bb03e9b478d0159eaab8d620f57a",
+      "checkpoint_sha256": "6230bd8849f380475cb9fd45d7c84870c5740c4ccd5926f33ea7a7cdbbc03d6d",
+      "grade_sha256": "d8c612329cbd864722f0cf4a3b1a17544ad602d0afc460130ad64e20802c97b7",
+      "id": "text-003",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "packet_inputs": {
+        "brief.txt": "56fa9e039dd861953b123386b069e187c003f48f117ba5e5007319fe3c13ac5b",
+        "handoff.json": "e6818b17a360a668c5d8b9461a148010edddebaf613a18f45174b44c5c7a6535",
+        "observation.txt": "ba68e49a887196e3e2044ed8e1376b72f3f7e60467b41db7568ad2b65eaf76b3",
+        "state.json": "f47c832505d92249e552beabf673360ea4348ab8754acf3df5e0cfe790262fa9"
+      },
+      "phase": "pilot",
+      "revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "row": 79,
+      "source": "google-research-datasets/mbpp",
+      "source_key": "140"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "844b77e8f21c4e61a9a44e42395adab3c05b569a13279f160da7393d0315478d",
+      "checkpoint_sha256": "4af6919a970d374f4a98308a4e70f60e93c5f83d5f3f3bae74331920e3362cfb",
+      "grade_sha256": "bf38b374ef13aceb1df91fb37854af657e96749ad8c4e88678b87b5e456aec5f",
+      "id": "image-005",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "644786e3c2adaea69902e7fbba60dfdebf8e1b1ec629cfd5294c3871f8d5f479",
+        "handoff.json": "15938e16e83f31d6a9ed008c6813e3a27b2815b6f1436c054b956c53ff220481",
+        "observation.txt": "a9038dd5822fbd6503cb7539558f2e6e31c7784700f0854cc192bf5b4f5abb9f",
+        "state.json": "acd7dc77ebadf66a47201f4dfb3d202a999aab14fb713f597ff803321bfc49ac"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 362,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "844b77e8f21c4e61a9a44e42395adab3c05b569a13279f160da7393d0315478d"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "c4876af5dde3c399985d03e2f6c278927413a13602f7c859d9e078b0aac581d7",
+      "checkpoint_sha256": "521e18bef0efb0cabdb04cd5dfe0e502fee315e6f1ff17fdc61a9d062e974656",
+      "grade_sha256": "de6d4497e5f1c133ebcd24fa77ec3b56dbd6af619b7a617e7eed0c4f10b6599a",
+      "id": "image-001",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "2a631a8b038c709b593d833e8bd7ed21ae6cf9b19629f13623a19550ab3f6a67",
+        "handoff.json": "de1adbedbbefc6297e5bc2d6c80eeb1db4d76e6f543e1cc8b1255f21f55d8b6d",
+        "observation.txt": "d1d9a2b4313de1b1105c587ecc0c1c2f416786fdf8fd41c71bffeae35b99796d",
+        "state.json": "ecd6928c215b169506320dd2a36b655f32e13a417c5e72a66f06477abe38ee74"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 501,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "c4876af5dde3c399985d03e2f6c278927413a13602f7c859d9e078b0aac581d7"
+    },
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "85f7ac11546072efaeacaadf982277eb82d5aed093c405de4ce6d244962d20e0",
+      "checkpoint_sha256": "530db4e4e5b2241850ccab0a86985f79c188f62b404a1ac0e08bde5b7b7cd7f4",
+      "grade_sha256": "a23593ff2801758d0eaca4a4beab6111e65543511c84cf1f1ac3a570618518a3",
+      "id": "audio-004",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "ce8b0877fad55207ac94426fdc25495a1389d892cfc35a246f20f90c86e26f08",
+        "observation.txt": "9fba114a1bc7e5a123695cfb176d476cda822f43e4883257f7f15f1ce2f059a4",
+        "state.json": "f049e1f6ded2c92816b93c258b894bc58002ecd273ed24a3415a6e73a8e0f7e8"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 40,
+      "source": "google/fleurs",
+      "source_key": "2005"
+    },
+    {
+      "asset": "sound.wav",
+      "bytes_sha256": "59a1ccb4881b38f433dd1e43678e7cb7c4ee3773ca173044ac25d08addcefb4b",
+      "checkpoint_sha256": "dd9922ba3045ca7d0a38a46f7d0dd4ac2c6fdc3165344d84812512600602a931",
+      "grade_sha256": "1f49c678308ab07038a9fec3480fa77fb6c2204d10e52973611c628496c253c2",
+      "id": "audio-006",
+      "license": "CC BY 4.0",
+      "modality": "audio",
+      "packet_inputs": {
+        "brief.txt": "1ed6763ee84cd2c3568d86174fec9f52e90cf7356bebf548ebf748cb599b3d6c",
+        "handoff.json": "bf87df09e100e5b492d2762b00480806c7cfaa73f50307df45e6d793790c5f0c",
+        "observation.txt": "d9a551e2399f348e6f0791bba60c48de2da0b332cabeb7f739f85ae9fc40b293",
+        "state.json": "50cab20b3e11ca893cba339d0d1f867c88b616dc9689d83060880611798d1680"
+      },
+      "phase": "pilot",
+      "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+      "row": 30,
+      "source": "google/fleurs",
+      "source_key": "1909"
+    },
+    {
+      "asset": "view.png",
+      "bytes_sha256": "e530305fef205d978f8978f73030036a985438998b82605083946a872c9a51b0",
+      "checkpoint_sha256": "7baba2d7b1b7c8b63023d043b6cdc1cfa024e57edc8e8b7963e900fc62ee1b98",
+      "grade_sha256": "14c2e95af2f75f0a50ea595c29838f751dbcf5783a98921a5423b9616c70bb73",
+      "id": "image-002",
+      "license": "GPL-3.0 dataset card",
+      "modality": "image",
+      "packet_inputs": {
+        "brief.txt": "0b9d3a07b86afdc6099137d4ee583f896672132b3c5af9edac7ea136f70c027d",
+        "handoff.json": "11e23b5374940f003422bd907f13a31837ab6d31363425f5ba4a2119e7bbda73",
+        "observation.txt": "3830b59fe0a9cdfe8de747fcead4886c9f95473207ba3595abcca855873b6855",
+        "state.json": "ff5e0b9c7bd4554d5abf755ffd323c6cdc61cda526a1591746b105279006aa01"
+      },
+      "phase": "pilot",
+      "revision": "b605b6e08b57faf4359aeb2fe6a3ca595f99b6c5",
+      "row": 2030,
+      "source": "HuggingFaceM4/ChartQA",
+      "source_key": "e530305fef205d978f8978f73030036a985438998b82605083946a872c9a51b0"
+    }
+  ],
+  "deadline_seconds": 180,
+  "executor": "gpt-6-luna",
+  "files": {
+    "docs/compression-confirmation-24.md": "b9a325b4c26f6d1828c1e458321f03e2756a648a1210eeeb75089e77c39426e0",
+    "eval/compression_inputs24.py": "678dd4a47ffb773a268f7307629a16fed4ad7180154dede50a91a5f355bd4c0f",
+    "eval/compression_report24.py": "1f1acf317ac5198825aa0e39ee1d5bca92e15d03781f206f5b2a115fd0ed2423",
+    "eval/compression_study24.py": "bab90f7146a0413a1f5e0d2a5b487c288e877655f94755272abbfe40cac252b8",
+    "eval/direct_session.py": "2755d6d621eeb2a117e5d4cbf123d2182793a8ea51c62c5465599788fbda0c97",
+    "eval/pricing.json": "73ab11f1edde4134d25cef756eed84af0abc756682b379666d036358d8f4f161",
+    "eval/telemetry_schema.json": "811813fba207e97c3c7b45643b46f28fc9e3be6ded6650495351d611b62f0346",
+    "skills/advisor/SKILL.md": "dce57ab69a80dd821d5538e58ca33a2f832344081bf87207102b762eb8b2ea1f",
+    "skills/advisor/scripts/ask_expert.py": "848575feb1a40a03499f8cd2960ce01318c6a7b7de759792d6a59fb93749d803"
+  },
+  "observations_sha256": "fdd525229877de906a59831cea335f1512289829e8a38ad7dbbdf997e9276b43",
+  "phase": "pilot",
+  "python_image": "python@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89",
+  "sample_size": null,
+  "selection_sha256": "593e2bce4280b23552fc1404fe823733e042fe8c2248d72ef68590214449034e",
+  "text_image_advisor": "gpt-6.2-astra"
+}

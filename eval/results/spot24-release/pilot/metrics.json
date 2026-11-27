@@ -1,0 +1,633 @@
+{
+  "paired_scoped_minus_full": {
+    "all": {
+      "cost_ratio_upper_95": null,
+      "difference": 0.0,
+      "full_only": 1,
+      "lower_95": -0.17232390087464763,
+      "n": 18,
+      "noninferior": false,
+      "scoped_only": 1
+    },
+    "audio": {
+      "cost_ratio_upper_95": null,
+      "difference": 0.0,
+      "full_only": 1,
+      "lower_95": -0.409860686647953,
+      "n": 6,
+      "noninferior": false,
+      "scoped_only": 1
+    },
+    "image": {
+      "cost_ratio_upper_95": 1.0145831319343965,
+      "difference": 0.0,
+      "full_only": 0,
+      "lower_95": -0.3107839813059143,
+      "n": 6,
+      "noninferior": false,
+      "scoped_only": 0
+    },
+    "text": {
+      "cost_ratio_upper_95": 1.1326538657263063,
+      "difference": 0.0,
+      "full_only": 0,
+      "lower_95": -0.3107839813059143,
+      "n": 6,
+      "noninferior": false,
+      "scoped_only": 0
+    }
+  },
+  "phase": "pilot",
+  "summary": {
+    "all": {
+      "full": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 12,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 50853
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 2858
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 12,
+            "known_total": 36
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 17
+        },
+        "correct": 15,
+        "cost_known": 12,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 18,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 8601
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 2827
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 18,
+            "known_total": 2058
+          }
+        },
+        "known_dollars": 0.1298238,
+        "median_seconds": 12.335,
+        "n": 18,
+        "submitted": 18,
+        "verified": 15
+      },
+      "scoped": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 12,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 53474
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 3366
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 12,
+            "known_total": 10
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 17
+        },
+        "correct": 15,
+        "cost_known": 12,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 18,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 8740
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 2459
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 18,
+            "known_total": 1686
+          }
+        },
+        "known_dollars": 0.13526749999999998,
+        "median_seconds": 11.242,
+        "n": 18,
+        "submitted": 18,
+        "verified": 15
+      },
+      "summary": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 12,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 47588
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 2975
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 12,
+            "known_total": 53
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 17
+        },
+        "correct": 16,
+        "cost_known": 12,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 18,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 18,
+            "known_total": 15650
+          },
+          "output_tokens": {
+            "known_rows": 18,
+            "known_total": 8150
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 18,
+            "known_total": 4233
+          }
+        },
+        "known_dollars": 0.1305374,
+        "median_seconds": 17.723999999999997,
+        "n": 18,
+        "submitted": 18,
+        "verified": 16
+      }
+    },
+    "audio": {
+      "full": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 41763
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1461
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 5
+        },
+        "correct": 5,
+        "cost_known": 0,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 3348
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1430
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 1194
+          }
+        },
+        "known_dollars": 0,
+        "median_seconds": 51.4095,
+        "n": 6,
+        "submitted": 6,
+        "verified": 5
+      },
+      "scoped": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 43537
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 2003
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 5
+        },
+        "correct": 5,
+        "cost_known": 0,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 3495
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1005
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 768
+          }
+        },
+        "known_dollars": 0,
+        "median_seconds": 67.5935,
+        "n": 6,
+        "submitted": 6,
+        "verified": 5
+      },
+      "summary": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 39409
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1439
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 0,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "invalid_advice": 1,
+          "ok": 5
+        },
+        "correct": 5,
+        "cost_known": 0,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 6261
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 2697
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 1498
+          }
+        },
+        "known_dollars": 0,
+        "median_seconds": 82.92750000000001,
+        "n": 6,
+        "submitted": 6,
+        "verified": 5
+      }
+    },
+    "image": {
+      "full": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 6392
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 422
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 36
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 4,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2576
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 346
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 226
+          }
+        },
+        "known_dollars": 0.0684466,
+        "median_seconds": 6.8505,
+        "n": 6,
+        "submitted": 6,
+        "verified": 4
+      },
+      "scoped": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 6564
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 393
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 10
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 4,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2573
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 419
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 299
+          }
+        },
+        "known_dollars": 0.0686988,
+        "median_seconds": 8.685,
+        "n": 6,
+        "submitted": 6,
+        "verified": 4
+      },
+      "summary": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 5661
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 499
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 53
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 5,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 4888
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 3075
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 1910
+          }
+        },
+        "known_dollars": 0.0672743,
+        "median_seconds": 14.8935,
+        "n": 6,
+        "submitted": 6,
+        "verified": 5
+      }
+    },
+    "text": {
+      "full": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2698
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 975
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 6,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2677
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1051
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 638
+          }
+        },
+        "known_dollars": 0.0613772,
+        "median_seconds": 11.57,
+        "n": 6,
+        "submitted": 6,
+        "verified": 6
+      },
+      "scoped": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 3373
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 970
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 6,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2672
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1035
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 619
+          }
+        },
+        "known_dollars": 0.0665687,
+        "median_seconds": 11.242,
+        "n": 6,
+        "submitted": 6,
+        "verified": 6
+      },
+      "summary": {
+        "advisor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 2518
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 1037
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          }
+        },
+        "advisor_status": {
+          "ok": 6
+        },
+        "correct": 6,
+        "cost_known": 6,
+        "executor": {
+          "cached_input_tokens": {
+            "known_rows": 6,
+            "known_total": 0
+          },
+          "input_tokens": {
+            "known_rows": 6,
+            "known_total": 4501
+          },
+          "output_tokens": {
+            "known_rows": 6,
+            "known_total": 2378
+          },
+          "reasoning_output_tokens": {
+            "known_rows": 6,
+            "known_total": 825
+          }
+        },
+        "known_dollars": 0.0632631,
+        "median_seconds": 16.1665,
+        "n": 6,
+        "submitted": 6,
+        "verified": 6
+      }
+    }
+  }
+}

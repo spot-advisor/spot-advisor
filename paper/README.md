@@ -1,5 +1,7 @@
 # Spot Advisor research
 
+The [2.4 evidence draft and reproduction guide](compression24/README.md) covers matched text, image and speech tasks. Its LaTeX entry point and generated tables are separate from the earlier repair manuscript below.
+
 *When Is Frontier Advice Worth Asking For?* is a working manuscript by **Stan Chen**. It examines when a coding agent should ask for one frontier-model judgment and how the resulting workflow changes independent verification, elapsed time, token use, and estimated cost.
 
 The 2.2 study compares four workflows on the same repair assignments. The evaluation records executor and advisor usage, including cached inputs, and grades final patches with the same upstream tests. A separate study design compares question formats from a common saved decision point. The [roadmap](../ROADMAP.md) describes the peer comparisons and visual pilot.

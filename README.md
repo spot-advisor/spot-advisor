@@ -2,7 +2,7 @@
   <img src="docs/assets/spot-advisor-hero.webp" alt="Spot Advisor: one focused turn, then back to the work. A compact evidence packet goes to a frontier advisor and returns as a next action with a check." width="900">
 </p>
 
-<h1 align="center">Spot Advisor 2.2</h1>
+<h1 align="center">Spot Advisor 2.4</h1>
 
 <p align="center"><strong>Frontier judgment on demand. Then back to the work.</strong></p>
 
@@ -18,11 +18,9 @@
 
 Spot Advisor is a skill for coding agents. It guides your coding agent to prepare a compact, reviewable question for a frontier model when a real decision remains. The advisor returns a recommendation and a way to check it; your coding agent keeps control of the edits and local verification.
 
-**Maturity:** public research prototype. The skill and offline preview are usable; the 48-assignment study did not establish comparable repair quality, full-run savings, or external adoption. See the [market position and next experiment](docs/market-position.md).
+Version 2.4 supports scoped text, chart images, and original PCM WAV speech through the documented backends. Run the installed caller with `--doctor` to see its version and configuration. [First consultation on either host](docs/first-consultation-24.md) · [Release evidence](docs/release-2.4.md)
 
 **Install:** <code>npx skills add spot-advisor/spot-advisor --skill advisor</code> · **Try first:** [offline preview](#try-it-offline) · **Walk through the full example:** [terminal demo](demo/README.md)
-
-**Maturity:** public research prototype. The skill and offline preview are usable; the 48-assignment study did not establish comparable repair quality, full-run savings, or external adoption. See the [market position and next experiment](docs/market-position.md).
 
 ![A visual replay of the recorded Spot Advisor demo: reproduce a bug, preview a packet, ask once, apply a small fix, and verify it. This is not a live screen recording.](demo/spot-advisor-demo.gif)
 
@@ -117,8 +115,10 @@ Astra completed grading sooner on all 36 issues both workflows passed. The study
 
 ## Research and paper
 
-**Stan Chen** · *Frontier Advice or Frontier Execution? Time to verification and patch changes in paired software repairs*
+The 2.4 study compares complete records, free summaries and structured packets on matched tasks. [2.4 paper source and reproduction](paper/compression24/README.md)
+
+Earlier paired repair study by **Stan Chen** · *Frontier Advice or Frontier Execution?*
 
 [Read the arXiv draft (PDF)](paper/spot-advisor-preprint.pdf) · [Research and reproduction](paper/README.md) · [Study protocol](docs/research-protocol.md) · [Cite the software](CITATION.cff)
 
-The repository PDF is the current manuscript draft. The [roadmap](ROADMAP.md) tracks follow-up experiments on when to ask, how to frame a useful question, and cost per independently verified repair. The skill and its source are available under the [MIT license](LICENSE).
+The linked preprint PDF covers the earlier repair study. The [2.4 evidence package](paper/compression24/README.md) accompanies the multimodal release. The software uses the [MIT license](LICENSE).
