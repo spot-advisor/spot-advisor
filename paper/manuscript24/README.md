@@ -16,6 +16,8 @@ pdflatex -no-shell-escape -halt-on-error main.tex
 
 Alternatively, extract the downloaded source ZIP into an empty directory and run the last two commands there. The bibliography is included in the main TeX file. The paper uses standard LaTeX packages and a PNG figure. The upload entry point is `main.tex`. [arXiv TeX preparation](https://info.arxiv.org/help/submit_tex.html) · [Metadata instructions](https://info.arxiv.org/help/prep.html)
 
+The [verification record](verification.json) identifies the checked commit, build epoch, replay counts and SHA-256 digests of all three release files.
+
 ## Evidence behind the claims
 
 | Result | Evidence or calculation |

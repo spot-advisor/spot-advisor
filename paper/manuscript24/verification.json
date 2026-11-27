@@ -1,0 +1,25 @@
+{
+  "checked_commit": "8abf50f70acb8580ca71aed928588e6336667ba3",
+  "checked_utc": "2026-11-27T07:15:38+00:00",
+  "software_tag": "v2.4.0",
+  "environment": "Separate clean Git clone and research Python environment on the same machine. Public benchmark inputs reconstructed from pinned source files.",
+  "grading": {
+    "phase": "formal",
+    "assignments": 540,
+    "submitted_files_regraded": 540,
+    "correct": 414,
+    "archive_sha256": "69512d6203d51c2c2749e798b076bf68ef4f3f141b7cf218fee7053a12853a7b"
+  },
+  "paper_checks": [
+    "All four tables were independently calculated from per-assignment records. The confidence bounds were checked with numerical likelihood optimization and the cost bounds with a separate paired bootstrap calculation.",
+    "Eight references, all cross references, the plain-text abstract and PDF metadata were checked. All five rendered pages were inspected.",
+    "Both source archives compiled offline with pdfLaTeX (TeX Live 2025) and disabled shell escape. A fixed build epoch yielded byte-identical PDFs, source ZIPs and metadata."
+  ],
+  "source_date_epoch": 1795737600,
+  "regression_tests_passed": 75,
+  "files": {
+    "arxiv-metadata.txt": "507cc3b3ef2d8dde243cc4981d6ad4e3b5049786cbff26628ca3226bed5a76d7",
+    "spot-advisor-2.4-manuscript-tex.zip": "d6b7647af52b0a50a5091e31d3547f8e20f6824bcd4f36fb4f73fd126296a1db",
+    "spot-advisor-2.4-manuscript.pdf": "8a5817560538be36669aae13b6548d9ac7f1a21d95fedb0938a87c937d1b9536"
+  }
+}
