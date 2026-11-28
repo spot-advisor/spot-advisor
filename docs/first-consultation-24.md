@@ -9,6 +9,8 @@ Start from the release checkout. Use a fresh project for these exercises. Python
 
 Install from the checkout by running `python scripts/install_skill.py PROJECT/.agents/skills/advisor` for Codex or substituting `.claude/skills/advisor` for Claude Code. The command prints the installed path and the backup path if it replaced an earlier copy. To roll back run the same command with `--restore-from BACKUP`. Reopen the host in the project and run the installed caller with `--doctor`. It reports the invoked path, version, local configuration and other visible copies. A live exercise below checks the configured backend.
 
+To require plan review before editing and final QA before finishing in local Codex, follow the [two-hook setup instructions](install.md#set-up-the-two-optional-codex-review-hooks). For the project-local installation above, pass the absolute path to its `scripts/ask_expert.py` with `--advisor`.
+
 Prepare a case using `python examples/first_review.py text PROJECT/case`. Choose `image` or `audio` for the other exercises, each with a new case directory. From that directory, read `brief.txt` and `question.txt`. Run the installed caller with the following arguments, replacing QUESTION with the contents of the question file.
 
 ```sh

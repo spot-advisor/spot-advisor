@@ -58,6 +58,29 @@ Copy-Item -Path '.\skills\advisor\*' -Destination $dest -Recurse -Force
 
 Choose one discoverable Codex copy. An existing `SKILL.md.disabled` marks an inactive copy. Claude Code has its own skill directory.
 
+### Set up the two optional Codex review hooks
+
+For local Codex, you can require two Spot Advisor consultations per editing turn:
+
+| When | Codex hook | What to review |
+| --- | --- | --- |
+| End of planning, before the first covered edit | `PreToolUse` | Give the advisor the proposed change and ask which assumption to test before editing. |
+| After running checks, before finishing | `Stop` | Give the advisor the actual change and check results. Ask what evidence is missing. A later covered edit requires fresh QA. |
+
+1. Install the advisor skill above and configure a [working text transport](#3-transport-setup---transport). From the root of a checkout containing the [hook installer](../integrations/codex/install.py), run:
+
+   ```sh
+   python integrations/codex/install.py
+   ```
+
+   The default advisor path is `~/.agents/skills/advisor/scripts/ask_expert.py`. If yours is elsewhere, append `--advisor "/absolute/path/to/ask_expert.py"`. The installer adds both handlers to your user-level Codex `hooks.json` alongside existing hooks.
+
+2. Open `/hooks` in Codex. Under `PreToolUse`, review and trust **Spot Advisor plan review**. Under `Stop`, review and trust **Spot Advisor final QA**. Start a fresh Codex session.
+
+3. Verify both gates in one turn in a disposable directory. Ask Codex to try creating `hook-check.txt` with `apply_patch` before a plan review. The hook should deny the edit and print a review command. Have Codex fill in the goal, evidence, and question, run the command with `--preview`, then run it without that flag to obtain a receipt. Retry the edit and read the file back. Ask Codex to try finishing before QA: `Stop` should request a QA review. Follow its command with the observed file contents as evidence, then finish.
+
+See the [Codex review gate guide](../integrations/codex/README.md) for covered tools, how to start either review proactively, and how to remove the hooks.
+
 ---
 
 ## 2. Use the 2.0 text protocol
