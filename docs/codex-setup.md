@@ -57,7 +57,11 @@ trust_level = "trusted"
 
 ---
 
-## 2. Codex-Specific Tips & Gotchas
+## 2. Optional planning and final QA gates
+
+See the [Codex review gate installer and live verification guide](../integrations/codex/README.md) to require a plan review before covered edits and a QA review before finishing.
+
+## 3. Codex-Specific Tips & Gotchas
 
 - **Never use Codex Desktop's native subagent (`spawn_agent`) as the advisor:** Native subagents start full agentic tool loops and burn tokens on unnecessary file reads and side exploration. Always call `ask_expert.py` for a **1-turn, tool-free** response while keeping all tools and heavy lifting on the caller CLI executor.
 - **ChatGPT OAuth (`~/.codex/auth.json`) vs. `codex exec -m`:** `ask_expert.py --transport codex` calls `chatgpt.com/backend-api/codex/responses` directly with your `codex login` session (`gpt-6.2-astra`, `gpt-6.2-sol`, `gpt-6-luna`). If a local `codex` CLI build rejects a slug with `model_not_found` under ChatGPT auth, `ask_expert.py --transport codex` or a custom `EXPERTS_BASE_URL` gateway avoids that CLI restriction.
